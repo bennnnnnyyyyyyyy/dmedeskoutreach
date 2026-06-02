@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
+  xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
+  <title>DMEDesk — Your DME Front Desk. Always On.</title>
+
+  <!--[if mso]>
+  <xml>
+    <o:OfficeDocumentSettings>
+      <o:AllowPNG/>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+  </xml>
+  <![endif]-->
+
+  <style>
+    /* 
+       EMAIL CLIENT COMPATIBILITY 
+    */
+    :root {
+      color-scheme: light dark;
+      supported-color-schemes: light dark;
+    }
+
+    /* Font imports */
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+    /* Outlook/Office 365 font fallback */
+    /*[if mso]>
+    <style type="text/css">
+      body, table, td, p, a, span { font-family: Arial, Helvetica, sans-serif !important; }
+  </style>
+  <![endif]*/
+
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0 !important;
+      padding: 0 !important;
+      background-color: #F8FAFC;
+      font-family: 'Inter', Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Dark mode logic */
+    @media (prefers-color-scheme: dark) {
+      body { background-color: #0F172A !important; }
+      .email-container { background: #1E293B !important; }
+      .body-cell { background: #1E293B !important; }
+      .body-text { color: #F1F5F9 !important; }
+      .body-text-muted { color: #94A3B8 !important; }
+      .divider { background: #334155 !important; }
+      .footer-cell { background: #020617 !important; }
+      .header-cell { border-bottom: 1px solid #334155 !important; }
+      .transparent-img { mix-blend-mode: screen; filter: brightness(1.1); }
+      .quote-cell { border-left: 3px solid #0D9488 !important; }
+    }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 620px) {
+      .email-wrapper { width: 100% !important; padding: 12px 10px !important; }
+      .email-container { width: 100% !important; border-radius: 12px !important; }
+      .header-cell { padding: 20px !important; }
+      .body-cell { padding: 32px 20px !important; }
+      .footer-cell { padding: 24px 20px !important; }
+      .cta-btn { width: 100% !important; text-align: center !important; }
+    }
+  </style>
+</head>
+
+<body style="margin:0;padding:0;background-color:#F0F4F8;">
+
+  <!-- Preheader text — visible in inbox preview -->
+  <div style="display:none;font-size:1px;color:#F0F4F8;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;">
+    Every missed call is a patient calling your competitor instead. DMEDesk answers 24/7.
+    &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847;
+  </div>
+
+  <!-- Outer wrapper -->
+  <table class="email-wrapper" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#F0F4F8;padding:24px 16px;">
+    <tr>
+      <td align="center">
+
+        <!-- ════════════════════════════════════════
+             MAIN CONTAINER — 600px
+        ════════════════════════════════════════ -->
+        <table class="email-container" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(15,28,46,0.08);">
+
+          <!-- ─────────────────────────────────
+               HEADER — Logo + HIPAA badge
+          ───────────────────────────────── -->
+          <tr>
+            <td class="header-cell" style="padding:18px 36px;border-bottom:1px solid #E4EAF2;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <td style="vertical-align:middle;">
+                    <a href="https://dmedesk.ai" style="text-decoration:none;">
+                      <img src="https://dmedesk.ai/assets/dmedesk-logo.png" alt="DMEDesk" width="140" class="transparent-img" style="display:block;width:140px;height:auto;border:0;" />
+                    </a>
+                  </td>
+                  <td align="right" style="vertical-align:middle;">
+                    <span style="font-family:'Inter',Arial,sans-serif;font-size:11px;font-weight:600;color:#059669;background:#F0FDF9;border:1px solid #BBF7D0;border-radius:100px;padding:4px 10px;">✓ HIPAA</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ─────────────────────────────────
+               BODY — The actual email
+          ───────────────────────────────── -->
+          <tr>
+            <td class="body-cell" style="padding:48px 48px 40px 48px;background:#ffffff;">
+
+              <!-- Salutation -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 20px 0;line-height:1.7;">
+                Hi <strong>[First Name]</strong>,
+              </p>
+
+              <!-- HOOK -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 20px 0;line-height:1.7;">
+                I noticed your practice is currently hiring for front-desk support. Congrats on the growth.
+              </p>
+
+              <!-- THE CHALLENGE -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 20px 0;line-height:1.7;">
+                <strong>[First Name]</strong>, as a veteran in the DME space, you know first-hand how difficult it is to capture every inbound referral and patient question without your staff burning out on the phones.
+              </p>
+
+              <!-- THE LOSE-LOSE -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 24px 0;line-height:1.7;">
+                It’s a lose-lose: You either <strong>hire fast</strong> to hit your targets but let service quality slip, or <strong>hire slow</strong> to maintain your bar but lose patients to voicemail and competitors who answer faster.
+              </p>
+
+              <!-- THE SOLUTION -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 24px 0;line-height:1.7;">
+                We’ve helped over 100 DMEPOS suppliers stop the "voicemail bleed" with an AI receptionist that handles HCPCS intake, LCD verification, and prior auth inquiries — 24/7, with zero hold time.
+              </p>
+
+              <!-- DIFFERENTIATOR -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin:32px 0;">
+                <tr>
+                  <td class="quote-cell" style="border-left:4px solid #009E8E;padding:12px 0 12px 24px;">
+                    <p style="font-family:'Inter',Arial,sans-serif;font-size:15px;color:#475569;margin:0;line-height:1.6;font-style:italic;">
+                      "DMEDesk handles our after-hours calls so perfectly, our patients think they're talking to a dedicated staff member in our office."
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- CTA LINE -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 32px 0;line-height:1.7;">
+                I’d love to show you how we can automate your front-desk intake. Up for a chat?
+              </p>
+
+              <!-- CTA BUTTON -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <td style="border-radius:12px;background:#009E8E;">
+                    <a href="https://dmedesk.ai/contact" class="cta-btn" style="display:inline-block;font-family:'Plus Jakarta Sans',Arial,sans-serif;font-size:16px;font-weight:700;color:#ffffff;padding:16px 36px;text-decoration:none;border-radius:12px;box-shadow: 0 4px 14px rgba(0, 158, 142, 0.2);">
+                      Book a Free 20-Min Demo →
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- SIGNATURE -->
+              <div style="margin-top:48px;">
+                <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 4px 0;line-height:1.6;">
+                  Talk soon,
+                </p>
+                <p style="font-family:'Plus Jakarta Sans',Arial,sans-serif;font-size:16px;font-weight:700;color:#1E293B;margin:0 0 2px 0;">
+                  [Your Name]
+                </p>
+                <p class="body-text-muted" style="font-family:'Inter',Arial,sans-serif;font-size:14px;color:#64748B;margin:0;">
+                  DMEDesk · <a href="https://dmedesk.ai" style="color:#009E8E;text-decoration:none;font-weight:600;">dmedesk.ai</a>
+                </p>
+              </div>
+
+              <!-- P.S. -->
+              <p class="body-text-muted" style="font-family:'Inter',Arial,sans-serif;font-size:14px;color:#64748B;margin:24px 0 0 0;line-height:1.65;">
+                <strong style="color:#1E293B;">P.S.</strong> — Go live in 2–3 weeks with full white-glove onboarding included. The only risk is another week of missed calls.
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- INTERACTIVE WIDGET PREVIEW -->
+          <tr>
+            <td style="padding: 0 48px 48px 48px; background: #ffffff;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: #F8FAFC; border-radius: 16px; padding: 24px;">
+                <tr>
+                  <td style="vertical-align: middle; width: 64px;">
+                    <img src="https://app.dmedesk.ai/media/public/2387144/01KQ0KZ0FEXHQ5WZ36Q7SVN0EJ.png" alt="AI Avatar" width="56" height="56" style="display: block; border-radius: 50%; border: 2px solid #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+                  </td>
+                  <td style="padding-left: 16px; vertical-align: middle;">
+                    <p style="font-family:'Plus Jakarta Sans',Arial,sans-serif;font-size:14px;font-weight:700;color:#1E293B;margin:0 0 4px 0;">
+                      Experience the Voice AI
+                    </p>
+                    <p style="font-family:'Inter',Arial,sans-serif;font-size:13px;color:#64748B;margin:0;">
+                      Click to start a live voice chat with our assistant.
+                    </p>
+                  </td>
+                  <td align="center" style="vertical-align: middle; padding-left: 12px;">
+                    <a href="https://app.dmedesk.ai/web-widget/widget.html?assistant_id=0284e1e9-49d2-47fb-a07f-2ad8588a17dc&mode=voice_chat" style="display:inline-block; background:#009E8E; color:#ffffff; font-family:'Plus Jakarta Sans',Arial,sans-serif; font-size:13px; font-weight:700; text-decoration:none; padding:10px 20px; border-radius:100px; white-space: nowrap;">
+                      Try it Live
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- FOOTER -->
+          <tr>
+            <td class="footer-cell" style="background:#0F172A;padding:40px;border-radius:0 0 20px 20px;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <td align="center">
+                    <img src="https://app.dmedesk.ai/media/public/2387144/01KQ0KZ0FEXHQ5WZ36Q7SVN0EJ.png" alt="DMEDesk" height="32" style="display:inline-block;height:32px;width:auto;border:0;margin-bottom:16px; filter: grayscale(1) brightness(2);" />
+                    <p style="font-family:'Inter',Arial,sans-serif;font-size:12px;color:#94A3B8;margin:0 0 12px 0;line-height:1.6;">
+                      The first AI-powered front desk for DMEPOS suppliers.<br>
+                      HIPAA Compliant · Automated Intake · 24/7 Coverage
+                    </p>
+                    <p style="font-family:'Inter',Arial,sans-serif;font-size:12px;margin:0;">
+                      <a href="https://dmedesk.ai" style="color:#CBD5E1;text-decoration:none;">Website</a>
+                      <span style="color:#334155;margin:0 8px;">|</span>
+                      <a href="mailto:hello@dmedesk.ai" style="color:#CBD5E1;text-decoration:none;">Contact Support</a>
+                      <span style="color:#334155;margin:0 8px;">|</span>
+                      <a href="#" style="color:#CBD5E1;text-decoration:none;">Unsubscribe</a>
+                    </p>
+                    <p style="font-family:'Inter',Arial,sans-serif;font-size:11px;color:#475569;margin-top:20px;">
+                      &copy; 2024 DMEDesk. All rights reserved.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+        </table>
+        <!-- /Main container -->
+
+      </td>
+    </tr>
+  </table>
+  <!-- /Outer wrapper -->
+
+</body>
+
+</html>

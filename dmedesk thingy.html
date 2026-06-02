@@ -1,0 +1,2298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DMEDesk Email personalization & Demo Hub</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #009e8e;
+      --primary-hover: #007e71;
+      --primary-light: #ecfdf5;
+      --primary-border: #bbf7d0;
+      --primary-glow: rgba(0, 158, 142, 0.15);
+      
+      --bg-main: #0b0f19;
+      --bg-card: #131926;
+      --bg-input: #1e2638;
+      --border: #242f47;
+      
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dark: #0f172a;
+      
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+      --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.25);
+      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+
+    /* Custom Scrollbar styling */
+    *::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    *::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    *::-webkit-scrollbar-thumb {
+      background-color: var(--border);
+      border-radius: 3px;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg-main);
+      font-family: 'Inter', -apple-system, sans-serif;
+      color: var(--text-main);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* App Header */
+    header {
+      background: rgba(19, 25, 38, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-logo svg {
+      width: 32px;
+      height: 32px;
+      fill: var(--primary);
+    }
+
+    .header-title h1 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .header-title p {
+      margin: 2px 0 0 0;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .header-badge {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--primary);
+      background: rgba(0, 158, 142, 0.1);
+      border: 1px solid rgba(0, 158, 142, 0.2);
+      padding: 3px 8px;
+      border-radius: 9999px;
+      letter-spacing: 0.05em;
+    }
+
+    /* main Layout */
+    .app-container {
+      display: flex;
+      flex: 1;
+      height: calc(100vh - 61px);
+      overflow: hidden;
+    }
+
+    /* Sidebar controls */
+    .sidebar {
+      width: 440px;
+      background: var(--bg-card);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .sidebar-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .sidebar-section {
+      background: rgba(11, 15, 25, 0.3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .sidebar-section-header {
+      padding: 12px 16px;
+      background: rgba(30, 38, 56, 0.2);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sidebar-section-body {
+      padding: 16px;
+    }
+
+    /* Form Fields */
+    .field-group {
+      margin-bottom: 12px;
+    }
+
+    .field-group.row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 13px;
+      transition: var(--transition);
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    /* Template select buttons & items */
+    .template-select-container {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .template-select-container select {
+      flex: 1;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 16px;
+      color: var(--text-main);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .btn:hover {
+      background: var(--border);
+      border-color: var(--text-muted);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      border-color: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.3);
+      color: #ef4444;
+    }
+
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.25);
+      border-color: #ef4444;
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 11px;
+    }
+
+    /* Sidebar Actions Panel */
+    .sidebar-actions {
+      padding: 16px 20px;
+      background: rgba(19, 25, 38, 0.95);
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .sidebar-actions .btn-primary {
+      grid-column: span 2;
+      padding: 12px;
+      font-size: 14px;
+    }
+
+    /* Parser Box styling */
+    .parser-textarea {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      height: 90px;
+      background: rgba(11, 15, 25, 0.5);
+    }
+
+    /* Right Preview panel */
+    .preview-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      background: #111827;
+      overflow: hidden;
+    }
+
+    /* Preview Toolbar */
+    .preview-toolbar {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .toolbar-left, .toolbar-center, .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Segmented Control / Tabs */
+    .tabs-group {
+      background: var(--bg-main);
+      padding: 3px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      display: inline-flex;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+    }
+
+    .tab-btn.active {
+      background: var(--bg-input);
+      color: var(--text-main);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .toolbar-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--border);
+    }
+
+    /* Zoom slider custom stylings */
+    .zoom-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .zoom-control input[type="range"] {
+      width: 80px;
+      accent-color: var(--primary);
+      cursor: pointer;
+      padding: 0;
+      background: transparent;
+      border: none;
+    }
+
+    /* Device frame simulator */
+    .preview-viewport-container {
+      flex: 1;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow-y: auto;
+      transition: background 0.3s ease;
+      background-image: radial-gradient(var(--border) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+
+    .preview-viewport-container.light-canvas {
+      background-color: #f1f5f9;
+    }
+
+    .preview-viewport-container.dark-canvas {
+      background-color: #0b0f19;
+    }
+
+    .device-wrapper {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s ease;
+      border: 6px solid #1f2937;
+      transform-origin: top center;
+    }
+
+    .device-header {
+      background: #1f2937;
+      color: #9ca3af;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      border-bottom: 1px solid #374151;
+    }
+
+    .device-header .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ef4444;
+    }
+    .device-header .dot:nth-child(2) { background: #f59e0b; }
+    .device-header .dot:nth-child(3) { background: #10b981; }
+    
+    .device-header .subject-bar {
+      flex: 1;
+      background: #111827;
+      border-radius: 4px;
+      padding: 3px 8px;
+      color: #e5e7eb;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-left: 10px;
+    }
+
+    /* Iframe rendering */
+    #preview-iframe {
+      width: 100%;
+      height: 700px;
+      border: none;
+      background: #ffffff;
+      display: block;
+    }
+
+    /* Code View box */
+    .source-editor-container {
+      flex: 1;
+      display: none;
+      flex-direction: column;
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    .source-editor-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .editor-textarea {
+      flex: 1;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+      background: #0b0f19;
+      color: #a7f3d0;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      resize: none;
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Variables highlight Checklist */
+    .checklist-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      padding: 4px 8px;
+      background: rgba(11, 15, 25, 0.2);
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+
+    .checklist-item .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #ef4444;
+      box-shadow: 0 0 8px #ef4444;
+    }
+
+    .checklist-item.filled {
+      border-color: rgba(16, 185, 129, 0.2);
+      background: rgba(16, 185, 129, 0.05);
+    }
+
+    .checklist-item.filled .dot {
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    .checklist-item code {
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+    }
+
+    .checklist-item.filled code {
+      color: var(--primary);
+    }
+
+    /* Spam score meter */
+    .spam-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .spam-meter-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .spam-progress-bar {
+      flex: 1;
+      height: 8px;
+      background: var(--bg-input);
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .spam-progress-fill {
+      height: 100%;
+      width: 100%;
+      background: var(--primary);
+      transition: width 0.3s ease, background-color 0.3s ease;
+    }
+
+    .spam-score-badge {
+      font-size: 14px;
+      font-weight: 700;
+      min-width: 42px;
+      text-align: right;
+    }
+
+    .spam-warnings {
+      font-size: 11px;
+      color: var(--text-muted);
+      max-height: 100px;
+      overflow-y: auto;
+      padding-left: 14px;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .spam-warnings li {
+      margin-bottom: 4px;
+    }
+
+    /* Toast alert notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--primary);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: var(--shadow-md);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 100;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Info tooltips */
+    .info-icon {
+      display: inline-flex;
+      cursor: help;
+      color: var(--text-muted);
+    }
+    
+    .info-icon:hover {
+      color: var(--text-main);
+    }
+
+    /* Responsive design for small monitors */
+    @media (max-width: 1024px) {
+      .app-container {
+        flex-direction: column;
+        height: auto;
+        overflow: auto;
+      }
+      .sidebar {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .preview-panel {
+        height: 800px;
+      }
+      body {
+        overflow: auto;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+    <span id="toast-text">HTML copied to clipboard!</span>
+  </div>
+
+  <!-- SVG Symbols for clean custom icons -->
+  <svg style="display: none;">
+    <symbol id="icon-logo" viewBox="0 0 24 24">
+      <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+    </symbol>
+    <symbol id="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+    </symbol>
+    <symbol id="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+      <polyline points="7 10 12 15 17 10"></polyline>
+      <line x1="12" y1="15" x2="12" y2="3"></line>
+    </symbol>
+    <symbol id="icon-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+    </symbol>
+    <symbol id="icon-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="16 18 22 12 16 6"></polyline>
+      <polyline points="8 6 2 12 8 18"></polyline>
+    </symbol>
+    <symbol id="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+      <circle cx="12" cy="12" r="3"></circle>
+    </symbol>
+  </svg>
+
+  <header>
+    <div class="header-logo">
+      <svg><use href="#icon-logo"/></svg>
+      <div class="header-title">
+        <h1>DMEDesk Email personalization Engine</h1>
+        <p>Outreach, Demo confirmation, & Calendar Integration Manager</p>
+      </div>
+    </div>
+    <div class="header-badge">HIPAA SECURED CLIENT</div>
+  </header>
+
+  <div class="app-container">
+    
+    <!-- Sidebar Control Panel -->
+    <div class="sidebar">
+      <div class="sidebar-scroll">
+        
+        <!-- Template Selection -->
+        <div class="sidebar-section">
+          <div class="sidebar-section-header">
+            <span>Template Management</span>
+            <span class="info-icon" title="Switching templates resets variables unless customized">ℹ️</span>
+          </div>
+          <div class="sidebar-section-body">
+            <div class="template-select-container">
+              <select id="template-select" onchange="loadActiveTemplate()">
+                <option value="outreach">Cold Outreach Template</option>
+                <option value="demo">Demo Confirmation Template</option>
+                <option value="followup">Demo Follow-Up Template</option>
+                <option value="noshow">No-Show Reschedule Template</option>
+              </select>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-sm" onclick="saveCurrentAsCustomTemplate()" style="flex: 1;">
+                Save Active Custom
+              </button>
+              <button class="btn btn-sm btn-danger" onclick="resetToDefaultTemplates()" title="Reset all templates back to default">
+                Reset Defaults
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Google Calendar Invite Parser -->
+        <div class="sidebar-section">
+          <div class="sidebar-section-header">
+            <span>Google Invite Parser</span>
+            <span class="info-icon" title="Paste raw google calendar invite text and parse it into variable inputs.">ℹ️</span>
+          </div>
+          <div class="sidebar-section-body" style="padding-bottom: 12px;">
+            <div class="field-group">
+              <textarea id="parser-input" class="parser-textarea" placeholder="Wednesday, May 13 · 10:00 AM – 10:45 AM&#10;Video call link:&#10;https://meet.google.com/iam-qafd-xkb"></textarea>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="triggerInviteParse()" style="width: 100%;">
+              Parse & Populate Variables
+            </button>
+          </div>
+        </div>
+
+        <!-- Variables Form -->
+        <div class="sidebar-section">
+          <div class="sidebar-section-header">
+            <span>Email Variables</span>
+          </div>
+          <div class="sidebar-section-body">
+            
+            <div class="field-group row">
+              <div>
+                <label>Prospect Name</label>
+                <input type="text" id="input-name" placeholder="Aime" oninput="updateGeneratedHTML()" />
+              </div>
+              <div>
+                <label>Company Name</label>
+                <input type="text" id="input-company" placeholder="ABC Medical" oninput="updateGeneratedHTML()" />
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label>Prospect Title</label>
+              <input type="text" id="input-title" placeholder="Practice Manager" oninput="updateGeneratedHTML()" />
+            </div>
+
+            <div class="field-group">
+              <label>Meeting Date</label>
+              <input type="date" id="input-date" onchange="updateGeneratedHTML()" />
+            </div>
+
+            <div class="field-group row">
+              <div>
+                <label>Meeting Time</label>
+                <input type="time" id="input-time" onchange="updateGeneratedHTML()" />
+              </div>
+              <div>
+                <label>Meeting Duration</label>
+                <select id="input-duration" onchange="updateGeneratedHTML()">
+                  <option value="15">15 minutes</option>
+                  <option value="30" selected>30 minutes</option>
+                  <option value="45">45 minutes</option>
+                  <option value="60">60 minutes</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label>Meeting Timezone (Inputs timezone)</label>
+              <select id="input-timezone" onchange="updateGeneratedHTML()">
+                <!-- timezone options dynamically populated in JS -->
+              </select>
+            </div>
+
+            <div class="field-group">
+              <label>Google Meet URL</label>
+              <input type="url" id="input-meet-link" placeholder="https://meet.google.com/abc-defg-hij" oninput="updateGeneratedHTML()" />
+            </div>
+
+            <div class="field-group">
+              <label>CTA Link</label>
+              <input type="url" id="input-cta-link" placeholder="https://cal.com/bendmedesk/30min" oninput="updateGeneratedHTML()" />
+            </div>
+
+            <div class="field-group row">
+              <div>
+                <label>Sender Name</label>
+                <input type="text" id="input-sender-name" placeholder="Ben Arthur" oninput="updateGeneratedHTML()" />
+              </div>
+              <div>
+                <label>Sender Email</label>
+                <input type="email" id="input-sender-email" placeholder="ben@dmedesk.ai" oninput="updateGeneratedHTML()" />
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label>Email Subject</label>
+              <input type="text" id="input-subject" placeholder="Your DMEDesk Meeting" oninput="updateGeneratedHTML(true)" />
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Checklist and Spam Panels -->
+        <div class="sidebar-section">
+          <div class="sidebar-section-header">
+            <span>Variables Check</span>
+          </div>
+          <div class="sidebar-section-body">
+            <div class="checklist-grid" id="variables-checklist">
+              <!-- Checklist items populated dynamically -->
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-section-header">
+            <span>Spam Risk analysis</span>
+          </div>
+          <div class="sidebar-section-body spam-panel">
+            <div class="spam-meter-wrapper">
+              <div class="spam-progress-bar">
+                <div class="spam-progress-fill" id="spam-fill"></div>
+              </div>
+              <div class="spam-score-badge" id="spam-score">100/100</div>
+            </div>
+            <div style="font-size: 11px; font-weight: 600;" id="spam-status">✅ Safe (Low Risk)</div>
+            <ul class="spam-warnings" id="spam-warnings-list">
+              <!-- warnings list -->
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action Panel -->
+      <div class="sidebar-actions">
+        <button class="btn btn-primary" onclick="copyHTMLAction()">
+          <svg width="16" height="16"><use href="#icon-copy"/></svg>
+          Copy Formatted Email (Real HTML)
+        </button>
+        <button class="btn" onclick="exportHTMLAction()">
+          <svg width="16" height="16"><use href="#icon-download"/></svg>
+          HTML File
+        </button>
+        <button class="btn" onclick="exportEMLAction()">
+          <svg width="16" height="16"><use href="#icon-download"/></svg>
+          EML File
+        </button>
+        <button class="btn" onclick="exportTXTAction()" style="grid-column: span 2;">
+          <svg width="16" height="16"><use href="#icon-download"/></svg>
+          Export Raw TXT (Plain text)
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Main Editor / Preview Canvas Panel -->
+    <div class="preview-panel">
+      
+      <!-- Toolbar controls -->
+      <div class="preview-toolbar">
+        
+        <!-- Left: view Switcher -->
+        <div class="toolbar-left">
+          <div class="tabs-group">
+            <button class="tab-btn active" id="tab-visual" onclick="switchView('visual')">
+              <svg width="14" height="14"><use href="#icon-eye"/></svg>
+              Live Preview
+            </button>
+            <button class="tab-btn" id="tab-source" onclick="switchView('source')">
+              <svg width="14" height="14"><use href="#icon-code"/></svg>
+              Source Editor
+            </button>
+          </div>
+        </div>
+
+        <!-- Center: Device frames simulation -->
+        <div class="toolbar-center">
+          <div class="tabs-group" id="device-group">
+            <button class="tab-btn active" id="device-desktop" onclick="setDeviceMode('desktop')">
+              Desktop
+            </button>
+            <button class="tab-btn" id="device-mobile" onclick="setDeviceMode('mobile')">
+              Mobile
+            </button>
+          </div>
+          
+          <div class="toolbar-divider"></div>
+
+          <!-- theme switcher -->
+          <div class="tabs-group">
+            <button class="tab-btn active" id="theme-light" onclick="setPreviewCanvasTheme('light')">
+              Light Canvas
+            </button>
+            <button class="tab-btn" id="theme-dark" onclick="setPreviewCanvasTheme('dark')">
+              Dark Canvas
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Scaling and quick stats -->
+        <div class="toolbar-right">
+          <div class="zoom-control">
+            <span>Zoom</span>
+            <input type="range" id="zoom-slider" min="50" max="100" value="100" oninput="adjustZoom(this.value)" />
+            <span id="zoom-value">100%</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Preview Rendering Frame -->
+      <div class="preview-viewport-container light-canvas" id="viewport-container">
+        <div class="device-wrapper" id="device-frame" style="width: 100%; max-width: 640px;">
+          <div class="device-header">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="subject-bar" id="preview-subject-bar">Subject: ...</span>
+          </div>
+          <iframe id="preview-iframe" title="Email Live Preview Frame"></iframe>
+        </div>
+      </div>
+
+      <!-- Source Editor View -->
+      <div class="source-editor-container" id="editor-container">
+        <div class="source-editor-header">
+          <label style="margin: 0;">Edit raw HTML template template code</label>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-sm" onclick="beautifyEditorHTML()">Beautify HTML</button>
+            <button class="btn btn-sm btn-primary" onclick="applySourceEdits()">Apply Edits</button>
+          </div>
+        </div>
+        <textarea class="editor-textarea" id="source-editor" oninput="onSourceEditorChange()"></textarea>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    // State management
+    let activeTemplateType = "outreach";
+    let currentGeneratedHTML = "";
+    let isEditingSource = false;
+    let localTimezone = "America/New_York";
+    let isUserEditingSubjectManually = false;
+
+    // Default templates definition (Outlook-safe table layouts with responsive triggers)
+    const defaultTemplates = {
+      outreach: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{{subject}}</title>
+  <!--[if mso]>
+  <style type="text/css">
+    body, table, td, a { font-family: Arial, sans-serif !important; }
+  </style>
+  <![endif]-->
+  <style type="text/css">
+    body { margin: 0; padding: 0; min-width: 100%; background-color: #eef2f7; }
+    table { border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    td, th { border-collapse: collapse; }
+    img { border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    @media screen and (max-width: 600px) {
+      .email-container { width: 100% !important; max-width: 100% !important; }
+      .stack-column { display: block !important; width: 100% !important; max-width: 100% !important; direction: ltr !important; margin-bottom: 12px; }
+      .padding-mobile { padding: 24px !important; }
+      .headline-mobile { font-size: 24px !important; }
+    }
+  </style>
+</head>
+<body style="margin:0;padding:0;background-color:#eef2f7;font-family:Arial,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
+  <div style="display:none;font-size:1px;color:#f3f4f6;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden">
+    Every missed patient call is revenue walking to a competitor. DMEDesk automates your intake workflows.
+  </div>
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#eef2f7;padding:32px 16px;">
+    <tr>
+      <td align="center">
+        <!--[if mso]>
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="620">
+        <tr>
+        <td>
+        <![endif]-->
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" class="email-container" style="max-width:620px;background:#ffffff;border-radius:22px;overflow:hidden;border:1px solid #dde7f2;box-shadow:0 8px 30px rgba(0,0,0,0.03);">
+          <tr>
+            <td style="height:6px;background:linear-gradient(90deg,#009e8e 0%,#00c2a8 100%)"></td>
+          </tr>
+          <tr>
+            <td class="padding-mobile" style="padding:24px 38px;border-bottom:1px solid #e7edf5;background:#ffffff">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <td style="vertical-align:middle">
+                    <img src="https://dmedesk.ai/assets/dmedesk-logo.png" alt="DMEDesk" width="145" style="display:block;width:145px;height:auto;border:0;">
+                  </td>
+                  <td align="right" style="vertical-align:middle">
+                    <span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;color:#047857;background:#ecfdf5;border:1px solid #bbf7d0;border-radius:100px;padding:5px 11px;display:inline-block">
+                      HIPAA COMPLIANT
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td class="padding-mobile" style="padding:40px 38px 20px 38px;background:#ffffff">
+              <p style="font-family:Arial,sans-serif;font-size:16px;color:#1e293b;margin:0 0 16px 0;line-height:1.7">
+                Hi {{name}},
+              </p>
+              <h1 class="headline-mobile" style="font-family:Arial,sans-serif;font-size:28px;font-weight:700;color:#0f172a;line-height:1.25;margin:0 0 20px 0;letter-spacing:-0.5px">
+                Automating Patient Intake at {{company}}
+              </h1>
+              <p style="font-family:Arial,sans-serif;font-size:16px;color:#475569;line-height:1.8;margin:0 0 24px 0">
+                Are missed patient calls and intake delays holding back your operations? DMEDesk is an AI assistant specifically built for DMEPOS suppliers. We automate routine phone systems, intake qualifications, resupplies, and status updates directly in your workflow.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td class="padding-mobile" style="padding:0 38px 20px 38px">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <!--[if mso]>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                  <tr>
+                  <td width="170" valign="top">
+                  <![endif]-->
+                  <td class="stack-column" width="31%" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;padding:20px 12px;text-align:center;vertical-align:top">
+                    <p style="font-family:Arial,sans-serif;font-size:24px;font-weight:700;color:#009e8e;margin:0 0 6px 0">24/7</p>
+                    <p style="font-family:Arial,sans-serif;font-size:12px;color:#64748b;line-height:1.4;margin:0">Patient Coverage</p>
+                  </td>
+                  <!--[if mso]>
+                  </td>
+                  <td width="15"></td>
+                  <td width="170" valign="top">
+                  <![endif]-->
+                  <td class="stack-column" width="3%" style="font-size:1px;line-height:1px;">&nbsp;</td>
+                  <td class="stack-column" width="31%" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;padding:20px 12px;text-align:center;vertical-align:top">
+                    <p style="font-family:Arial,sans-serif;font-size:24px;font-weight:700;color:#009e8e;margin:0 0 6px 0">0</p>
+                    <p style="font-family:Arial,sans-serif;font-size:12px;color:#64748b;line-height:1.4;margin:0">Hold Queue Delays</p>
+                  </td>
+                  <!--[if mso]>
+                  </td>
+                  <td width="15"></td>
+                  <td width="170" valign="top">
+                  <![endif]-->
+                  <td class="stack-column" width="3%" style="font-size:1px;line-height:1px;">&nbsp;</td>
+                  <td class="stack-column" width="31%" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;padding:20px 12px;text-align:center;vertical-align:top">
+                    <p style="font-family:Arial,sans-serif;font-size:24px;font-weight:700;color:#009e8e;margin:0 0 6px 0">2 Weeks</p>
+                    <p style="font-family:Arial,sans-serif;font-size:12px;color:#64748b;line-height:1.4;margin:0">Standard Go-Live</p>
+                  </td>
+                  <!--[if mso]>
+                  </td>
+                  </tr>
+                  </table>
+                  <![endif]-->
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td class="padding-mobile" style="padding:10px 38px 24px 38px">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#f8fafc;border-radius:18px;border:1px solid #e2e8f0;padding:24px">
+                <tr>
+                  <td>
+                    <p style="font-family:Arial,sans-serif;font-size:15px;font-weight:700;color:#0f172a;margin:0 0 14px 0">How DMEDesk powers your staff:</p>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td style="font-family:Arial,sans-serif;font-size:14px;color:#334155;line-height:1.7;padding-bottom:10px;vertical-align:top;width:20px">•</td>
+                        <td style="font-family:Arial,sans-serif;font-size:14px;color:#334155;line-height:1.7;padding-bottom:10px">Answers and qualifies inbound patient referrals and requests instantly.</td>
+                      </tr>
+                      <tr>
+                        <td style="font-family:Arial,sans-serif;font-size:14px;color:#334155;line-height:1.7;padding-bottom:10px;vertical-align:top">•</td>
+                        <td style="font-family:Arial,sans-serif;font-size:14px;color:#334155;line-height:1.7;padding-bottom:10px">Automates resupply outreach and documentation compliance reminders.</td>
+                      </tr>
+                      <tr>
+                        <td style="font-family:Arial,sans-serif;font-size:14px;color:#334155;line-height:1.7;vertical-align:top">•</td>
+                        <td style="font-family:Arial,sans-serif;font-size:14px;color:#334155;line-height:1.7">Syncs details, audio recordings, and intake summaries directly with your billing platform or EHR.</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td class="padding-mobile" style="padding:20px 38px 40px 38px;background:#ffffff">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <td style="border-radius:12px;background:#009e8e">
+                    <a href="{{cta_link}}" target="_blank" style="display:inline-block;font-family:Arial,sans-serif;font-size:16px;font-weight:700;color:#ffffff;padding:16px 28px;text-decoration:none;border-radius:12px">
+                      Schedule a 10-Min Demo →
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              <p style="font-family:Arial,sans-serif;font-size:14px;color:#64748b;margin:20px 0 0 0;line-height:1.6">
+                Or reply directly to this email to receive a customized overview deck for {{company}}.
+              </p>
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-top:36px;border-top:1px solid #f1f5f9;padding-top:24px;width:100%">
+                <tr>
+                  <td style="font-family:Arial,sans-serif;font-size:15px;color:#1e293b;line-height:1.6">
+                    <p style="margin:0 0 4px 0;color:#64748b">Best regards,</p>
+                    <p style="margin:0;font-weight:700;color:#0f172a">{{sender_name}}</p>
+                    <p style="margin:2px 0 0 0;font-size:13px;color:#64748b">{{sender_email}}</p>
+                  </td>
+                </tr>
+              </table>
+              <p style="font-family:Arial,sans-serif;font-size:11px;color:#94a3b8;margin:32px 0 0 0;text-align:center;line-height:1.6">
+                DMEDesk AI, Inc. • 100 Main St, Suite 400, New York, NY 10001<br>
+                If you'd prefer not to receive demo offers, you can <a href="#" style="color:#009e8e;text-decoration:underline">unsubscribe here</a>.
+              </p>
+            </td>
+          </tr>
+        </table>
+        <!--[if mso]>
+        </td>
+        </tr>
+        </table>
+        <![endif]-->
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`,
+
+      demo: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{{subject}}</title>
+  <!--[if mso]>
+  <style type="text/css">
+    body, table, td, a { font-family: Arial, sans-serif !important; }
+  </style>
+  <![endif]-->
+  <style type="text/css">
+    body { margin: 0; padding: 0; min-width: 100%; background-color: #eef2f7; }
+    table { border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    td, th { border-collapse: collapse; }
+    img { border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    @media screen and (max-width: 600px) {
+      .email-container { width: 100% !important; max-width: 100% !important; }
+      .padding-mobile { padding: 24px !important; }
+      .headline-mobile { font-size: 24px !important; }
+    }
+  </style>
+</head>
+<body style="margin:0;padding:0;background-color:#eef2f7;font-family:Arial,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
+  <div style="display:none;font-size:1px;color:#f3f4f6;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden">
+    Your meeting with DMEDesk is confirmed for {{meeting_date}} at {{meeting_time}}.
+  </div>
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#eef2f7;padding:32px 16px;">
+    <tr>
+      <td align="center">
+        <!--[if mso]>
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="620">
+        <tr>
+        <td>
+        <![endif]-->
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" class="email-container" style="max-width:620px;background:#ffffff;border-radius:22px;overflow:hidden;border:1px solid #dde7f2;box-shadow:0 8px 30px rgba(0,0,0,0.03);">
+          <tr>
+            <td style="height:6px;background:linear-gradient(90deg,#009e8e 0%,#00c2a8 100%)"></td>
+          </tr>
+          <tr>
+            <td class="padding-mobile" style="padding:24px 38px;border-bottom:1px solid #e7edf5;background:#ffffff">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <td style="vertical-align:middle">
+                    <img src="https://dmedesk.ai/assets/dmedesk-logo.png" alt="DMEDesk" width="145" style="display:block;width:145px;height:auto;border:0;">
+                  </td>
+                  <td align="right" style="vertical-align:middle">
+                    <span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;color:#047857;background:#ecfdf5;border:1px solid #bbf7d0;border-radius:100px;padding:5px 11px;display:inline-block">
+                      HIPAA COMPLIANT
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td class="padding-mobile" style="padding:40px 38px 10px 38px;background:#ffffff">
+              <p style="font-family:Arial,sans-serif;font-size:16px;color:#1e293b;margin:0 0 16px 0;line-height:1.7">
+                Hi {{name}},
+              </p>
+              <h1 class="headline-mobile" style="font-family:Arial,sans-serif;font-size:28px;font-weight:700;color:#0f172a;line-height:1.25;margin:0 0 20px 0;letter-spacing:-0.5px">
+                Meeting Confirmed: DMEDesk Demo
+              </h1>
+              <p style="font-family:Arial,sans-serif;font-size:16px;color:#475569;line-height:1.8;margin:0 0 20px 0">
+                Your demo has been scheduled. Below are the details for our upcoming meeting. If you need to make changes, please let me know or reschedule via the links.
+              </p>
+            </td>
+          </tr>
+          
+          <!-- Dynamic Meeting Card Section -->
+          <tr>
+            <td class="padding-mobile" style="padding:0 38px 20px 38px">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:18px;padding:24px;width:100%;box-sizing:border-box">
+                <tbody>
+                  <tr>
+                    <td>
+                      <h4 style="font-family:Arial,sans-serif;font-size:15px;font-weight:700;color:#0f172a;margin:0 0 16px 0">Your Meeting Details</h4>
+                      
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tbody>
+                          <tr>
+                            <td style="font-family:Arial,sans-serif;font-size:14px;color:#64748b;padding-bottom:10px;width:100px;vertical-align:top">Date:</td>
+                            <td style="font-family:Arial,sans-serif;font-size:14px;font-weight:600;color:#1e293b;padding-bottom:10px">{{meeting_date}}</td>
+                          </tr>
+                          <tr>
+                            <td style="font-family:Arial,sans-serif;font-size:14px;color:#64748b;padding-bottom:10px;vertical-align:top">Time:</td>
+                            <td style="font-family:Arial,sans-serif;font-size:14px;font-weight:600;color:#1e293b;padding-bottom:10px">{{meeting_time}}</td>
+                          </tr>
+                          <tr>
+                            <td style="font-family:Arial,sans-serif;font-size:14px;color:#64748b;padding-bottom:10px;vertical-align:top">Duration:</td>
+                            <td style="font-family:Arial,sans-serif;font-size:14px;font-weight:600;color:#1e293b;padding-bottom:10px">{{meeting_duration}} minutes</td>
+                          </tr>
+                          <tr>
+                            <td style="font-family:Arial,sans-serif;font-size:14px;color:#64748b;padding-bottom:18px;vertical-align:top">Video Link:</td>
+                            <td style="font-family:Arial,sans-serif;font-size:14px;font-weight:600;color:#009e8e;padding-bottom:18px">Google Meet</td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tbody>
+                          <tr>
+                            <td style="vertical-align:middle">
+                              <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="display:inline-block">
+                                <tbody>
+                                  <tr>
+                                    <td style="border-radius:10px;background:#009e8e">
+                                      <a href="{{meet_link}}" target="_blank" style="display:inline-block;font-family:Arial,sans-serif;font-size:13px;font-weight:700;color:#ffffff;padding:12px 20px;text-decoration:none;border-radius:10px">
+                                        Join Google Meet
+                                      </a>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              <span style="display:inline-block;width:10px;height:1px"></span>
+                              <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="display:inline-block">
+                                <tbody>
+                                  <tr>
+                                    <td style="border-radius:10px;border:1px solid #cbd5e1;background:#ffffff">
+                                      <a href="{{calendar_link}}" target="_blank" style="display:inline-block;font-family:Arial,sans-serif;font-size:13px;font-weight:700;color:#475569;padding:11px 18px;text-decoration:none;border-radius:10px">
+                                        Add to Calendar
+                                      </a>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          
+          <tr>
+            <td class="padding-mobile" style="padding:10px 38px 40px 38px;background:#ffffff">
+              <h3 style="font-family:Arial,sans-serif;font-size:16px;font-weight:700;color:#0f172a;margin:0 0 12px 0">What we will cover in the demo:</h3>
+              <p style="font-family:Arial,sans-serif;font-size:15px;color:#475569;line-height:1.7;margin:0 0 20px 0">
+                1. A brief walkthrough of the DMEDesk AI interface.<br>
+                2. Live demonstration of AI patient call triage and EHR parsing.<br>
+                3. Simple API configuration & custom HIPAA compliance details for {{company}}.<br>
+                4. Q&A regarding your custom workflow needs.
+              </p>
+              
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-top:36px;border-top:1px solid #f1f5f9;padding-top:24px;width:100%">
+                <tr>
+                  <td style="font-family:Arial,sans-serif;font-size:15px;color:#1e293b;line-height:1.6">
+                    <p style="margin:0 0 4px 0;color:#64748b">See you soon,</p>
+                    <p style="margin:0;font-weight:700;color:#0f172a">{{sender_name}}</p>
+                    <p style="margin:2px 0 0 0;font-size:13px;color:#64748b">{{sender_email}}</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+        <!--[if mso]>
+        </td>
+        </tr>
+        </table>
+        <![endif]-->
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`,
+
+      followup: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{{subject}}</title>
+  <!--[if mso]>
+  <style type="text/css">
+    body, table, td, a { font-family: Arial, sans-serif !important; }
+  </style>
+  <![endif]-->
+  <style type="text/css">
+    body { margin: 0; padding: 0; min-width: 100%; background-color: #eef2f7; }
+    table { border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    td, th { border-collapse: collapse; }
+    img { border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    @media screen and (max-width: 600px) {
+      .email-container { width: 100% !important; max-width: 100% !important; }
+      .padding-mobile { padding: 24px !important; }
+      .headline-mobile { font-size: 24px !important; }
+    }
+  </style>
+</head>
+<body style="margin:0;padding:0;background-color:#eef2f7;font-family:Arial,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
+  <div style="display:none;font-size:1px;color:#f3f4f6;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden">
+    Thank you for taking the time to review DMEDesk today. Let's cover the next steps.
+  </div>
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#eef2f7;padding:32px 16px;">
+    <tr>
+      <td align="center">
+        <!--[if mso]>
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="620">
+        <tr>
+        <td>
+        <![endif]-->
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" class="email-container" style="max-width:620px;background:#ffffff;border-radius:22px;overflow:hidden;border:1px solid #dde7f2;box-shadow:0 8px 30px rgba(0,0,0,0.03);">
+          <tr>
+            <td style="height:6px;background:linear-gradient(90deg,#009e8e 0%,#00c2a8 100%)"></td>
+          </tr>
+          <tr>
+            <td class="padding-mobile" style="padding:24px 38px;border-bottom:1px solid #e7edf5;background:#ffffff">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <td style="vertical-align:middle">
+                    <img src="https://dmedesk.ai/assets/dmedesk-logo.png" alt="DMEDesk" width="145" style="display:block;width:145px;height:auto;border:0;">
+                  </td>
+                  <td align="right" style="vertical-align:middle">
+                    <span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;color:#047857;background:#ecfdf5;border:1px solid #bbf7d0;border-radius:100px;padding:5px 11px;display:inline-block">
+                      HIPAA COMPLIANT
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td class="padding-mobile" style="padding:40px 38px 24px 38px;background:#ffffff">
+              <p style="font-family:Arial,sans-serif;font-size:16px;color:#1e293b;margin:0 0 16px 0;line-height:1.7">
+                Hi {{name}},
+              </p>
+              <h1 class="headline-mobile" style="font-family:Arial,sans-serif;font-size:28px;font-weight:700;color:#0f172a;line-height:1.25;margin:0 0 20px 0;letter-spacing:-0.5px">
+                Great connecting with you, {{name}}
+              </h1>
+              <p style="font-family:Arial,sans-serif;font-size:16px;color:#475569;line-height:1.8;margin:0 0 20px 0">
+                It was great showing you the DMEDesk platform today. I appreciate you taking the time to share your current intake bottlenecks and patient communication challenges at {{company}}.
+              </p>
+              <p style="font-family:Arial,sans-serif;font-size:16px;color:#475569;line-height:1.8;margin:0 0 24px 0">
+                As promised, here is the follow-up material to share with your team:
+              </p>
+              
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#f8fafc;border-radius:18px;border:1px solid #e2e8f0;padding:24px;margin-bottom:28px">
+                <tr>
+                  <td>
+                    <p style="font-family:Arial,sans-serif;font-size:15px;font-weight:700;color:#0f172a;margin:0 0 14px 0">Shared Resources & Deliverables:</p>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td style="font-family:Arial,sans-serif;font-size:14px;color:#334155;line-height:1.7;padding-bottom:10px;vertical-align:top;width:20px">•</td>
+                        <td style="font-family:Arial,sans-serif;font-size:14px;color:#334155;line-height:1.7;padding-bottom:10px"><strong>DMEDesk Product Overview (PDF)</strong>: High-level workflow layout & HIPAA audit credentials.</td>
+                      </tr>
+                      <tr>
+                        <td style="font-family:Arial,sans-serif;font-size:14px;color:#334155;line-height:1.7;padding-bottom:10px;vertical-align:top">•</td>
+                        <td style="font-family:Arial,sans-serif;font-size:14px;color:#334155;line-height:1.7;padding-bottom:10px"><strong>Integration Details</strong>: Outline of syncing options for major DME billing databases.</td>
+                      </tr>
+                      <tr>
+                        <td style="font-family:Arial,sans-serif;font-size:14px;color:#334155;line-height:1.7;vertical-align:top">•</td>
+                        <td style="font-family:Arial,sans-serif;font-size:14px;color:#334155;line-height:1.7"><strong>Custom Trial Offer</strong>: A 14-day sandboxed live-number evaluation.</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <td style="border-radius:12px;background:#009e8e">
+                    <a href="{{cta_link}}" target="_blank" style="display:inline-block;font-family:Arial,sans-serif;font-size:16px;font-weight:700;color:#ffffff;padding:16px 28px;text-decoration:none;border-radius:12px">
+                      Schedule Next Evaluation Step →
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-top:36px;border-top:1px solid #f1f5f9;padding-top:24px;width:100%">
+                <tr>
+                  <td style="font-family:Arial,sans-serif;font-size:15px;color:#1e293b;line-height:1.6">
+                    <p style="margin:0 0 4px 0;color:#64748b">Warm regards,</p>
+                    <p style="margin:0;font-weight:700;color:#0f172a">{{sender_name}}</p>
+                    <p style="margin:2px 0 0 0;font-size:13px;color:#64748b">{{sender_email}}</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+        <!--[if mso]>
+        </td>
+        </tr>
+        </table>
+        <![endif]-->
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`,
+
+      noshow: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{{subject}}</title>
+  <!--[if mso]>
+  <style type="text/css">
+    body, table, td, a { font-family: Arial, sans-serif !important; }
+  </style>
+  <![endif]-->
+  <style type="text/css">
+    body { margin: 0; padding: 0; min-width: 100%; background-color: #eef2f7; }
+    table { border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    td, th { border-collapse: collapse; }
+    img { border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    @media screen and (max-width: 600px) {
+      .email-container { width: 100% !important; max-width: 100% !important; }
+      .padding-mobile { padding: 24px !important; }
+      .headline-mobile { font-size: 24px !important; }
+    }
+  </style>
+</head>
+<body style="margin:0;padding:0;background-color:#eef2f7;font-family:Arial,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
+  <div style="display:none;font-size:1px;color:#f3f4f6;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden">
+    Sorry we missed each other for our scheduled DMEDesk demo. Reschedule at your convenience.
+  </div>
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#eef2f7;padding:32px 16px;">
+    <tr>
+      <td align="center">
+        <!--[if mso]>
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="620">
+        <tr>
+        <td>
+        <![endif]-->
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" class="email-container" style="max-width:620px;background:#ffffff;border-radius:22px;overflow:hidden;border:1px solid #dde7f2;box-shadow:0 8px 30px rgba(0,0,0,0.03);">
+          <tr>
+            <td style="height:6px;background:linear-gradient(90deg,#009e8e 0%,#00c2a8 100%)"></td>
+          </tr>
+          <tr>
+            <td class="padding-mobile" style="padding:24px 38px;border-bottom:1px solid #e7edf5;background:#ffffff">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <td style="vertical-align:middle">
+                    <img src="https://dmedesk.ai/assets/dmedesk-logo.png" alt="DMEDesk" width="145" style="display:block;width:145px;height:auto;border:0;">
+                  </td>
+                  <td align="right" style="vertical-align:middle">
+                    <span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;color:#047857;background:#ecfdf5;border:1px solid #bbf7d0;border-radius:100px;padding:5px 11px;display:inline-block">
+                      HIPAA COMPLIANT
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td class="padding-mobile" style="padding:40px 38px 24px 38px;background:#ffffff">
+              <p style="font-family:Arial,sans-serif;font-size:16px;color:#1e293b;margin:0 0 16px 0;line-height:1.7">
+                Hi {{name}},
+              </p>
+              <h1 class="headline-mobile" style="font-family:Arial,sans-serif;font-size:28px;font-weight:700;color:#0f172a;line-height:1.25;margin:0 0 20px 0;letter-spacing:-0.5px">
+                Sorry we missed you today
+              </h1>
+              <p style="font-family:Arial,sans-serif;font-size:16px;color:#475569;line-height:1.8;margin:0 0 18px 0">
+                It looks like we missed each other for our scheduled DMEDesk demo earlier. No worries at all — I know how hectic managing a DMEPOS office can get, especially with prior authorizations and deliveries.
+              </p>
+              <p style="font-family:Arial,sans-serif;font-size:16px;color:#475569;line-height:1.8;margin:0 0 24px 0">
+                Whenever you're ready, you can pick a new date and time that fits your schedule using the button below:
+              </p>
+              
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:28px">
+                <tr>
+                  <td style="border-radius:12px;background:#009e8e">
+                    <a href="{{cta_link}}" target="_blank" style="display:inline-block;font-family:Arial,sans-serif;font-size:16px;font-weight:700;color:#ffffff;padding:16px 28px;text-decoration:none;border-radius:12px">
+                      Reschedule Demo Appointment →
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="font-family:Arial,sans-serif;font-size:15px;color:#475569;line-height:1.8;margin:0">
+                If you have any questions or would prefer to handle this via email, feel free to reply with a few slots that work for you.
+              </p>
+
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-top:36px;border-top:1px solid #f1f5f9;padding-top:24px;width:100%">
+                <tr>
+                  <td style="font-family:Arial,sans-serif;font-size:15px;color:#1e293b;line-height:1.6">
+                    <p style="margin:0 0 4px 0;color:#64748b">Best regards,</p>
+                    <p style="margin:0;font-weight:700;color:#0f172a">{{sender_name}}</p>
+                    <p style="margin:2px 0 0 0;font-size:13px;color:#64748b">{{sender_email}}</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+        <!--[if mso]>
+        </td>
+        </tr>
+        </table>
+        <![endif]-->
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`
+    };
+
+    // Timezone list to populate select dropdown
+    const timezones = [
+      { value: "America/New_York", label: "Eastern Time (New York)" },
+      { value: "America/Chicago", label: "Central Time (Chicago)" },
+      { value: "America/Denver", label: "Mountain Time (Denver)" },
+      { value: "America/Los_Angeles", label: "Pacific Time (Los Angeles)" },
+      { value: "UTC", label: "Coordinated Universal Time (UTC)" }
+    ];
+
+    // Variables metadata for checklist
+    const variablesMetadata = [
+      { key: "name", label: "{{name}} (Prospect Name)" },
+      { key: "company", label: "{{company}} (Company Name)" },
+      { key: "title", label: "{{title}} (Prospect Title)" },
+      { key: "meeting_date", label: "{{meeting_date}}" },
+      { key: "meeting_time", label: "{{meeting_time}}" },
+      { key: "meeting_duration", label: "{{meeting_duration}}" },
+      { key: "meet_link", label: "{{meet_link}}" },
+      { key: "calendar_link", label: "{{calendar_link}}" },
+      { key: "cta_link", label: "{{cta_link}}" },
+      { key: "sender_name", label: "{{sender_name}}" },
+      { key: "sender_email", label: "{{sender_email}}" }
+    ];
+
+    // Toast alert helper
+    function showToast(text, isError = false) {
+      const toast = document.getElementById("toast");
+      const toastText = document.getElementById("toast-text");
+      toastText.innerText = text;
+      
+      if (isError) {
+        toast.style.background = "#ef4444";
+      } else {
+        toast.style.background = "var(--primary)";
+      }
+      
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3000);
+    }
+
+    // Initialize application state
+    window.addEventListener("DOMContentLoaded", () => {
+      // Detect browser local timezone
+      try {
+        localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "America/New_York";
+      } catch (e) {
+        console.error("Could not resolve browser timezone", e);
+      }
+
+      // Populate timezone select list
+      const tzSelect = document.getElementById("input-timezone");
+      tzSelect.innerHTML = "";
+      
+      // Ensure localTimezone is included in options
+      let tzOptions = [...timezones];
+      if (!tzOptions.find(tz => tz.value === localTimezone)) {
+        tzOptions.unshift({ value: localTimezone, label: `Local Timezone (${localTimezone})` });
+      }
+      
+      tzOptions.forEach(tz => {
+        const option = document.createElement("option");
+        option.value = tz.value;
+        option.text = tz.label;
+        if (tz.value === localTimezone) {
+          option.selected = true;
+        }
+        tzSelect.appendChild(option);
+      });
+
+      // Render default checklist items
+      const checklistContainer = document.getElementById("variables-checklist");
+      checklistContainer.innerHTML = "";
+      variablesMetadata.forEach(meta => {
+        const item = document.createElement("div");
+        item.className = "checklist-item";
+        item.id = `chk-${meta.key}`;
+        item.innerHTML = `<span class="dot"></span><code>${meta.label}</code>`;
+        checklistContainer.appendChild(item);
+      });
+
+      // Set inputs defaults
+      document.getElementById("input-name").value = "Aime";
+      document.getElementById("input-company").value = "ABC Medical Solutions";
+      document.getElementById("input-title").value = "Practice Operations Director";
+      document.getElementById("input-meet-link").value = "https://meet.google.com/iam-qafd-xkb";
+      document.getElementById("input-cta-link").value = "https://cal.com/bendmedesk/30min";
+      document.getElementById("input-sender-name").value = "Ben Arthur";
+      document.getElementById("input-sender-email").value = "ben@dmedesk.ai";
+
+      // Set date picker default to tomorrow
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      document.getElementById("input-date").value = tomorrow.toISOString().substring(0, 10);
+      document.getElementById("input-time").value = "10:00";
+
+      // Load active template structure
+      loadActiveTemplate();
+    });
+
+    // Switch active template structure
+    function loadActiveTemplate() {
+      const type = document.getElementById("template-select").value;
+      activeTemplateType = type;
+      
+      // Load custom template if exists in localStorage, otherwise default
+      const body = localStorage.getItem(`dmedesk_tpl_${type}`) || defaultTemplates[type];
+      document.getElementById("source-editor").value = body;
+      
+      // Generate standard subject line (unless user has manually written one already)
+      if (!isUserEditingSubjectManually) {
+        updateSubjectLine(type);
+      }
+      
+      updateGeneratedHTML();
+      showToast(`Loaded ${type} template.`);
+    }
+
+    // Dynamic subject line generator
+    function updateSubjectLine(type) {
+      const company = document.getElementById("input-company").value || "Your Company";
+      const subjectInput = document.getElementById("input-subject");
+      
+      let subject = "Your DMEDesk Meeting Is Scheduled";
+      if (type === "outreach") {
+        subject = `Automating Patient Intake at ${company}`;
+      } else if (type === "demo") {
+        // Find formatted dates and times
+        const dateTimes = getNormalizedDateTimeStrings();
+        subject = `DMEDesk Demo Confirmation — ${dateTimes.dateStr} at ${dateTimes.timeStr}`;
+      } else if (type === "followup") {
+        subject = `DMEDesk Demo Follow-up — Next Steps for ${company}`;
+      } else if (type === "noshow") {
+        subject = `Rescheduling our DMEDesk Demo`;
+      }
+      
+      subjectInput.value = subject;
+      document.getElementById("preview-subject-bar").innerText = `Subject: ${subject}`;
+    }
+
+    // Retrieve normalized date & time details in America/New_York
+    function getNormalizedDateTimeStrings() {
+      const dateVal = document.getElementById("input-date").value;
+      const timeVal = document.getElementById("input-time").value;
+      const tzVal = document.getElementById("input-timezone").value;
+      
+      if (!dateVal || !timeVal) {
+        return { dateStr: "[Schedule Date]", timeStr: "[Schedule Time]", dateObj: null };
+      }
+      
+      // Parse in designated timezone using the offset-resolution logic
+      const targetDate = parseInTimezone(dateVal, timeVal, tzVal);
+      
+      if (isNaN(targetDate.getTime())) {
+        return { dateStr: "[Schedule Date]", timeStr: "[Schedule Time]", dateObj: null };
+      }
+      
+      // Format to America/New_York
+      const optionsDate = {
+        timeZone: 'America/New_York',
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      };
+      
+      const optionsTime = {
+        timeZone: 'America/New_York',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+      };
+      
+      const optionsTZ = {
+        timeZone: 'America/New_York',
+        timeZoneName: 'short'
+      };
+      
+      const dateStr = targetDate.toLocaleDateString('en-US', optionsDate);
+      const timePart = targetDate.toLocaleTimeString('en-US', optionsTime);
+      const tzPart = targetDate.toLocaleTimeString('en-US', optionsTZ).split(' ').pop();
+      
+      return {
+        dateStr,
+        timeStr: `${timePart} ${tzPart}`,
+        dateObj: targetDate
+      };
+    }
+
+    // Resolves UTC timestamp for date/time strings inside selected timezone
+    function parseInTimezone(dateStr, timeStr, timeZone) {
+      const localStr = `${dateStr}T${timeStr}:00`;
+      let guess = new Date(`${localStr}Z`); // Treat as UTC first
+      
+      for (let i = 0; i < 3; i++) {
+        const parts = new Intl.DateTimeFormat('en-US', {
+          timeZone,
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false
+        }).formatToParts(guess);
+        
+        const y = parts.find(p => p.type === 'year').value;
+        const m = parts.find(p => p.type === 'month').value;
+        const d = parts.find(p => p.type === 'day').value;
+        let h = parts.find(p => p.type === 'hour').value;
+        const min = parts.find(p => p.type === 'minute').value;
+        
+        if (h === "24") h = "00";
+        
+        const formattedLocal = `${y}-${m}-${d}T${h}:${min}:00`;
+        const diffMs = Date.parse(`${formattedLocal}Z`) - Date.parse(`${localStr}Z`);
+        
+        if (diffMs === 0) {
+          return guess;
+        }
+        guess = new Date(guess.getTime() - diffMs);
+      }
+      return guess;
+    }
+
+    // Main text template render compiler
+    function updateGeneratedHTML(isSubjectTrigger = false) {
+      if (isSubjectTrigger) {
+        isUserEditingSubjectManually = true;
+        const subjectVal = document.getElementById("input-subject").value;
+        document.getElementById("preview-subject-bar").innerText = `Subject: ${subjectVal}`;
+      }
+
+      // Gather input values
+      const name = document.getElementById("input-name").value || "Aime";
+      const company = document.getElementById("input-company").value || "ABC Medical";
+      const title = document.getElementById("input-title").value || "Practice Manager";
+      const meetLink = document.getElementById("input-meet-link").value || "https://meet.google.com/iam-qafd-xkb";
+      const ctaLink = document.getElementById("input-cta-link").value || "https://cal.com/bendmedesk/30min";
+      const senderName = document.getElementById("input-sender-name").value || "Ben Arthur";
+      const senderEmail = document.getElementById("input-sender-email").value || "ben@dmedesk.ai";
+      const subject = document.getElementById("input-subject").value || "Your DMEDesk Meeting";
+      const duration = document.getElementById("input-duration").value || "30";
+
+      // Date normalization
+      const dateTimes = getNormalizedDateTimeStrings();
+      
+      // Calendar URL generation
+      let calendarLink = "#";
+      if (dateTimes.dateObj) {
+        const startCalStr = dateTimes.dateObj.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+        const endDt = new Date(dateTimes.dateObj.getTime() + duration * 60000);
+        const endCalStr = endDt.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+        
+        const titleText = encodeURIComponent(`DMEDesk Demo - ${company}`);
+        const detailsText = encodeURIComponent(`DMEDesk Demo Meeting Session\nJoin Video Link: ${meetLink}\n\nThis schedule is normalized to America/New_York (Eastern Time).`);
+        const locationVal = encodeURIComponent(meetLink);
+        
+        calendarLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${titleText}&dates=${startCalStr}/${endCalStr}&details=${detailsText}&location=${locationVal}`;
+      }
+
+      // Update Variables Checklist indicators
+      const checklistStates = {
+        name: !!document.getElementById("input-name").value,
+        company: !!document.getElementById("input-company").value,
+        title: !!document.getElementById("input-title").value,
+        meeting_date: !!document.getElementById("input-date").value,
+        meeting_time: !!document.getElementById("input-time").value,
+        meeting_duration: !!duration,
+        meet_link: !!document.getElementById("input-meet-link").value,
+        calendar_link: !!dateTimes.dateObj,
+        cta_link: !!document.getElementById("input-cta-link").value,
+        sender_name: !!document.getElementById("input-sender-name").value,
+        sender_email: !!document.getElementById("input-sender-email").value
+      };
+      updateChecklistUI(checklistStates);
+
+      // Get templates body
+      const activeTemplateBody = document.getElementById("source-editor").value;
+
+      // Compile string replacements
+      currentGeneratedHTML = activeTemplateBody
+        .replaceAll("{{name}}", name)
+        .replaceAll("{{company}}", company)
+        .replaceAll("{{title}}", title)
+        .replaceAll("{{meeting_date}}", dateTimes.dateStr)
+        .replaceAll("{{meeting_time}}", dateTimes.timeStr)
+        .replaceAll("{{meeting_duration}}", duration)
+        .replaceAll("{{meet_link}}", meetLink)
+        .replaceAll("{{calendar_link}}", calendarLink)
+        .replaceAll("{{cta_link}}", ctaLink)
+        .replaceAll("{{sender_name}}", senderName)
+        .replaceAll("{{sender_email}}", senderEmail)
+        .replaceAll("{{subject}}", subject);
+
+      // Update live preview iframe frame
+      const iframe = document.getElementById("preview-iframe");
+      if (iframe) {
+        iframe.srcdoc = currentGeneratedHTML;
+      }
+
+      // Analyze spam risk details
+      runSpamCheck(subject, currentGeneratedHTML);
+    }
+
+    // Update Checklist status icons
+    function updateChecklistUI(states) {
+      for (const [key, value] of Object.entries(states)) {
+        const item = document.getElementById(`chk-${key}`);
+        if (item) {
+          if (value) {
+            item.classList.add("filled");
+          } else {
+            item.classList.remove("filled");
+          }
+        }
+      }
+    }
+
+    // Google invite copy-paste parser algorithm
+    function triggerInviteParse() {
+      const text = document.getElementById("parser-input").value;
+      if (!text.trim()) {
+        showToast("Please paste calendar invite text first.", true);
+        return;
+      }
+
+      // Extract Meet URL link
+      const meetMatch = text.match(/https:\/\/meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}/i);
+      if (meetMatch) {
+        document.getElementById("input-meet-link").value = meetMatch[0];
+      }
+
+      // Clean characters
+      const cleanText = text.replace(/[\u2013\u2014-]/g, '-').replace(/\s+/g, ' ');
+
+      // Time range: e.g. "10:00 AM - 10:45 AM"
+      const timeRegex = /(\d{1,2}:\d{2}\s*(?:AM|PM|am|pm|a\.m\.|p\.m\.))\s*-\s*(\d{1,2}:\d{2}\s*(?:AM|PM|am|pm|a\.m\.|p\.m\.))/i;
+      const timeMatch = cleanText.match(timeRegex);
+      
+      let startTime24 = "10:00";
+      let durationVal = "30";
+
+      if (timeMatch) {
+        const startStr = timeMatch[1].trim().replace(/\./g, '').toUpperCase();
+        const endStr = timeMatch[2].trim().replace(/\./g, '').toUpperCase();
+        
+        // Convert to 24 Hour formats
+        startTime24 = convertTo24Hour(startStr);
+        document.getElementById("input-time").value = startTime24;
+        
+        // Duration Calculation
+        try {
+          const dummyStart = new Date(`2000-01-01 ${startStr}`);
+          const dummyEnd = new Date(`2000-01-01 ${endStr}`);
+          if (!isNaN(dummyStart) && !isNaN(dummyEnd)) {
+            const diffMin = Math.round((dummyEnd - dummyStart) / 60000);
+            if (diffMin > 0) {
+              durationVal = diffMin.toString();
+              document.getElementById("input-duration").value = durationVal;
+            }
+          }
+        } catch(e) {
+          console.error("Failed duration math", e);
+        }
+      }
+
+      // Date parsing check: e.g. "Wednesday, May 13" or "May 13, 2026"
+      const dateRegex = /(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)?,?\s*(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+(\d{1,2})(?:st|nd|rd|th)?,?\s*(\d{4})?/i;
+      const dateMatch = cleanText.match(dateRegex);
+      
+      const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      const monthAbbrs = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      let targetYear = new Date().getFullYear();
+
+      if (dateMatch) {
+        const monthName = dateMatch[1];
+        const dayNum = parseInt(dateMatch[2]);
+        if (dateMatch[3]) {
+          targetYear = parseInt(dateMatch[3]);
+        }
+        
+        let monthIdx = months.findIndex(m => m.toLowerCase() === monthName.toLowerCase());
+        if (monthIdx === -1) {
+          monthIdx = monthAbbrs.findIndex(m => m.toLowerCase() === monthName.toLowerCase());
+        }
+        
+        if (monthIdx !== -1) {
+          const padMonth = String(monthIdx + 1).padStart(2, '0');
+          const padDay = String(dayNum).padStart(2, '0');
+          document.getElementById("input-date").value = `${targetYear}-${padMonth}-${padDay}`;
+        }
+      }
+
+      // Automatically assume Google Calendar copy was from rep's local browser timezone
+      const localZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "America/New_York";
+      const tzSelect = document.getElementById("input-timezone");
+      if (tzSelect) {
+        tzSelect.value = localZone;
+      }
+
+      // Compile generated HTML updates
+      updateGeneratedHTML();
+      
+      // Auto-trigger switch template back if on outreach
+      if (activeTemplateType === "outreach") {
+        document.getElementById("template-select").value = "demo";
+        loadActiveTemplate();
+      }
+
+      showToast("Invite details successfully parsed!");
+    }
+
+    // Convert AM/PM to HH:MM format helper
+    function convertTo24Hour(timeStr) {
+      const match = timeStr.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+      if (!match) return "10:00";
+      
+      let hours = parseInt(match[1]);
+      const mins = match[2];
+      const ampm = match[3].toUpperCase();
+      
+      if (ampm === "PM" && hours < 12) hours += 12;
+      if (ampm === "AM" && hours === 12) hours = 0;
+      
+      return `${String(hours).padStart(2, '0')}:${mins}`;
+    }
+
+    // Rule-based Spam score checker heuristic
+    function runSpamCheck(subject, bodyText) {
+      let score = 100;
+      const warnings = [];
+
+      // Check subject criteria
+      if (subject === subject.toUpperCase() && subject.trim().length > 4) {
+        score -= 20;
+        warnings.push("Subject line is in ALL CAPS. This triggers spam filters.");
+      }
+
+      const spamTriggers = [
+        { word: "free", penalty: 10, label: "'Free'" },
+        { word: "guarantee", penalty: 10, label: "'Guarantee'" },
+        { word: "no risk", penalty: 10, label: "'No Risk'" },
+        { word: "earn", penalty: 8, label: "'Earn'" },
+        { word: "save cash", penalty: 8, label: "'Save Cash'" },
+        { word: "act now", penalty: 10, label: "'Act Now'" },
+        { word: "100%", penalty: 8, label: "'100%'" }
+      ];
+
+      spamTriggers.forEach(trigger => {
+        const regexSub = new RegExp(`\\b${trigger.word}\\b`, 'gi');
+        if (regexSub.test(subject)) {
+          score -= trigger.penalty;
+          warnings.push(`Spam keyword ${trigger.label} found in Subject line.`);
+        }
+      });
+
+      // Check excessive exclamation marks
+      if (/\!{2,}/g.test(subject) || /\!{2,}/g.test(bodyText)) {
+        score -= 15;
+        warnings.push("Excessive exclamation marks (e.g. '!!') detected.");
+      }
+
+      // Check email template sizes
+      const doc = new DOMParser().parseFromString(bodyText, 'text/html');
+      const textLength = doc.body.textContent.trim().length;
+      if (textLength < 80) {
+        score -= 15;
+        warnings.push("Email content is very short (< 80 characters).");
+      }
+
+      // Check unsubscribe footer on Cold Outreach
+      if (activeTemplateType === "outreach") {
+        if (!bodyText.toLowerCase().includes("unsubscribe")) {
+          score -= 25;
+          warnings.push("No unsubscribe links found in Cold Outreach template.");
+        }
+      }
+
+      // Check image ALT attributes
+      const images = doc.querySelectorAll('img');
+      let missingAlt = false;
+      images.forEach(img => {
+        if (!img.getAttribute('alt')) {
+          missingAlt = true;
+        }
+      });
+      if (missingAlt) {
+        score -= 10;
+        warnings.push("Images missing descriptive 'alt' tag attributes.");
+      }
+
+      // Clamp score
+      score = Math.max(0, score);
+
+      // Render score indicators
+      const scoreBadge = document.getElementById("spam-score");
+      const scoreFill = document.getElementById("spam-fill");
+      const statusText = document.getElementById("spam-status");
+      const warningList = document.getElementById("spam-warnings-list");
+
+      scoreBadge.innerText = `${score}/100`;
+      scoreFill.style.width = `${score}%`;
+      warningList.innerHTML = "";
+
+      if (score >= 85) {
+        scoreFill.style.background = "#10b981"; // green
+        statusText.innerText = "✅ Excellent (Low Spam Risk)";
+        statusText.style.color = "#10b981";
+      } else if (score >= 60) {
+        scoreFill.style.background = "#f59e0b"; // orange
+        statusText.innerText = "⚠️ Moderate Spam Risk";
+        statusText.style.color = "#f59e0b";
+      } else {
+        scoreFill.style.background = "#ef4444"; // red
+        statusText.innerText = "🚨 Critical Spam Risk";
+        statusText.style.color = "#ef4444";
+      }
+
+      if (warnings.length > 0) {
+        warnings.forEach(warn => {
+          const li = document.createElement("li");
+          li.innerText = warn;
+          warningList.appendChild(li);
+        });
+      } else {
+        const li = document.createElement("li");
+        li.innerText = "No spam issues detected.";
+        warningList.appendChild(li);
+      }
+    }
+
+    // Save custom templates to localStorage
+    function saveCurrentAsCustomTemplate() {
+      const type = document.getElementById("template-select").value;
+      const body = document.getElementById("source-editor").value;
+      
+      localStorage.setItem(`dmedesk_tpl_${type}`, body);
+      showToast(`Custom ${type} template successfully saved.`);
+    }
+
+    // Reset templates to defaults
+    function resetToDefaultTemplates() {
+      if (confirm("Reset templates? This will overwrite your custom modifications.")) {
+        for (const key in defaultTemplates) {
+          localStorage.removeItem(`dmedesk_tpl_${key}`);
+        }
+        loadActiveTemplate();
+        showToast("Restored all default templates.");
+      }
+    }
+
+    // Switch Visual / HTML Source Tabs
+    function switchView(mode) {
+      const visualTab = document.getElementById("tab-visual");
+      const sourceTab = document.getElementById("tab-source");
+      const viewport = document.getElementById("viewport-container");
+      const editor = document.getElementById("editor-container");
+      const deviceGroup = document.getElementById("device-group");
+
+      if (mode === "visual") {
+        visualTab.classList.add("active");
+        sourceTab.classList.remove("active");
+        viewport.style.display = "flex";
+        editor.style.display = "none";
+        deviceGroup.style.display = "inline-flex";
+        isEditingSource = false;
+        
+        // Sync editor state to preview
+        updateGeneratedHTML();
+      } else {
+        visualTab.classList.remove("active");
+        sourceTab.classList.add("active");
+        viewport.style.display = "none";
+        editor.style.display = "flex";
+        deviceGroup.style.display = "none";
+        isEditingSource = true;
+      }
+    }
+
+    // Device View Mode frame toggling
+    function setDeviceMode(device) {
+      const desktopBtn = document.getElementById("device-desktop");
+      const mobileBtn = document.getElementById("device-mobile");
+      const frame = document.getElementById("device-frame");
+
+      if (device === "desktop") {
+        desktopBtn.classList.add("active");
+        mobileBtn.classList.remove("active");
+        frame.style.width = "100%";
+        frame.style.maxWidth = "640px";
+      } else {
+        desktopBtn.classList.remove("active");
+        mobileBtn.classList.add("active");
+        frame.style.width = "375px";
+        frame.style.maxWidth = "375px";
+      }
+    }
+
+    // Canvas Background options
+    function setPreviewCanvasTheme(theme) {
+      const lightBtn = document.getElementById("theme-light");
+      const darkBtn = document.getElementById("theme-dark");
+      const container = document.getElementById("viewport-container");
+
+      if (theme === "light") {
+        lightBtn.classList.add("active");
+        darkBtn.classList.remove("active");
+        container.classList.remove("dark-canvas");
+        container.classList.add("light-canvas");
+      } else {
+        lightBtn.classList.remove("active");
+        darkBtn.classList.add("active");
+        container.classList.remove("light-canvas");
+        container.classList.add("dark-canvas");
+      }
+    }
+
+    // Zoom scaling
+    function adjustZoom(val) {
+      const frame = document.getElementById("device-frame");
+      document.getElementById("zoom-value").innerText = `${val}%`;
+      const scale = val / 100;
+      frame.style.transform = `scale(${scale})`;
+    }
+
+    // Apply manual edits made directly in HTML Source editor
+    function applySourceEdits() {
+      updateGeneratedHTML();
+      showToast("Source changes applied successfully.");
+    }
+
+    // Trigger update automatically on source code keypresses
+    function onSourceEditorChange() {
+      // Live sync variables behind the scenes
+      updateGeneratedHTML();
+    }
+
+    // Format & Beautify HTML Source
+    function beautifyEditorHTML() {
+      const editor = document.getElementById("source-editor");
+      const rawHTML = editor.value;
+      
+      const formatted = formatHTMLCode(rawHTML);
+      editor.value = formatted;
+      showToast("HTML source code beautified.");
+    }
+
+    // HTML source code formatting utility
+    function formatHTMLCode(html) {
+      let formatted = '';
+      let indent = '';
+      const tab = '  ';
+      
+      const tokens = html.split(/(<\/?[a-zA-Z0-9_\-]+(?:\s+[a-zA-Z0-9_\-]+(?:=(?:"[^"]*"|'[^']*'|[^>\s]+))?)*\s*\/?>)/);
+      
+      for (let i = 0; i < tokens.length; i++) {
+        let token = tokens[i];
+        if (!token) continue;
+        token = token.trim();
+        if (!token) continue;
+        
+        if (token.startsWith('</')) {
+          indent = indent.substring(tab.length);
+          formatted += '\n' + indent + token;
+        } else if (token.startsWith('<') && !token.startsWith('<!') && !token.endsWith('/>') && !token.startsWith('<meta') && !token.startsWith('<link') && !token.startsWith('<img') && !token.startsWith('<br') && !token.startsWith('<hr')) {
+          formatted += '\n' + indent + token;
+          indent += tab;
+        } else {
+          formatted += '\n' + indent + token;
+        }
+      }
+      return formatted.trim();
+    }
+
+    /* Clipboard Copy Action (Rich Format HTML) */
+    async function copyHTMLAction() {
+      try {
+        const htmlBlob = new Blob([currentGeneratedHTML], { type: "text/html" });
+        const plainTextBlob = new Blob([stripHTML(currentGeneratedHTML)], { type: "text/plain" });
+        
+        const data = [
+          new ClipboardItem({
+            "text/html": htmlBlob,
+            "text/plain": plainTextBlob
+          })
+        ];
+        
+        await navigator.clipboard.write(data);
+        showToast("Rich formatted HTML copied to clipboard!");
+      } catch (err) {
+        console.error("ClipboardItem failed. Fallback to copyText", err);
+        try {
+          await navigator.clipboard.writeText(currentGeneratedHTML);
+          showToast("Plain HTML source code copied to clipboard.");
+        } catch(e) {
+          showToast("Failed to copy clipboard data.", true);
+        }
+      }
+    }
+
+    // Export HTML output file
+    function exportHTMLAction() {
+      const filename = `dmedesk-${activeTemplateType}-email.html`;
+      downloadBlob(currentGeneratedHTML, filename, "text/html");
+      showToast(`Exported ${filename}`);
+    }
+
+    // Export Outlook/Thunderbird EML format
+    function exportEMLAction() {
+      const subject = document.getElementById("input-subject").value || "DMEDesk Notification";
+      const senderName = document.getElementById("input-sender-name").value || "DMEDesk Representative";
+      const senderEmail = document.getElementById("input-sender-email").value || "info@dmedesk.ai";
+      
+      const emlContent = `Subject: ${subject}
+From: "${senderName}" <${senderEmail}>
+MIME-Version: 1.0
+Content-Type: text/html; charset="utf-8"
+
+${currentGeneratedHTML}`;
+
+      const filename = `dmedesk-${activeTemplateType}-email.eml`;
+      downloadBlob(emlContent, filename, "message/rfc822");
+      showToast(`Exported ${filename}`);
+    }
+
+    // Export TXT output (strip tags)
+    function exportTXTAction() {
+      const plainText = stripHTML(currentGeneratedHTML);
+      const filename = `dmedesk-${activeTemplateType}-email.txt`;
+      downloadBlob(plainText, filename, "text/plain");
+      showToast(`Exported ${filename}`);
+    }
+
+    // Strip HTML Tags helper
+    function stripHTML(html) {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      let text = doc.body.textContent || "";
+      // Clean duplicate carriage returns
+      text = text.replace(/\n\s*\n/g, '\n\n').trim();
+      return text;
+    }
+
+    // File trigger download helper
+    function downloadBlob(content, filename, contentType) {
+      const blob = new Blob([content], { type: contentType });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+  </script>
+</body>
+</html>
