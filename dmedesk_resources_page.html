@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="assets/favicon.png?v=transparent1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resources &mdash; DMEDesk</title>
+<meta name="description" content="DMEDesk documentation, platform guides, terms of service, and support resources for DMEPOS suppliers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal:#009E8E;--teal-dark:#007A6D;--teal-light:#E6F7F5;--teal-mid:#CCF0EC;
+  --purple:#5B3FD9;--purple-light:#EEE9FF;
+  --ink:#0F1C2E;--ink-2:#2D3F56;--muted:#6B7E96;
+  --line:#E4EAF2;--white:#FFFFFF;--off:#F7F9FC;
+  --shadow-1:0 1px 3px rgba(15,28,46,.06),0 4px 12px rgba(15,28,46,.05);
+  --shadow-2:0 4px 20px rgba(15,28,46,.09),0 1px 3px rgba(15,28,46,.05);
+  --r:12px;--r-lg:20px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--ink);font-family:'Inter',sans-serif;font-size:16px;line-height:1.65;overflow-x:hidden}
+a{text-decoration:none;color:var(--teal)}
+a:hover{color:var(--teal-dark)}
+
+/* NAV */
+header{position:fixed;top:0;left:0;right:0;z-index:300;height:66px;background:rgba(255,255,255,0.97);border-bottom:1.5px solid var(--line);display:flex;align-items:center;padding:0 6vw;gap:2rem}
+.logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.45rem;font-weight:800;letter-spacing:-0.04em;color:var(--ink);display:flex;align-items:center;gap:0;white-space:nowrap;text-decoration:none}
+.logo-badge{display:inline-block;width:9px;height:9px;background:var(--teal);border-radius:50%;margin-left:3px;margin-bottom:8px}
+.nav-links{display:flex;gap:.25rem;list-style:none;margin-left:auto}
+.nav-links a{font-family:'Plus Jakarta Sans',sans-serif;font-size:.875rem;font-weight:600;color:var(--muted);padding:.45rem .85rem;border-radius:8px;transition:color .18s,background .18s}
+.nav-links a:hover{color:var(--ink);background:var(--off)}
+.nav-links a.active{color:var(--teal);background:var(--teal-light)}
+.nav-demo{font-family:'Plus Jakarta Sans',sans-serif;font-size:.875rem;font-weight:700;background:var(--teal);color:#fff;padding:.55rem 1.3rem;border-radius:8px;transition:background .2s,transform .15s;display:inline-block}
+.nav-demo:hover{background:var(--teal-dark);transform:translateY(-1px);color:#fff}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px}
+.hamburger svg{width:24px;height:24px;stroke:var(--ink)}
+
+/* HERO */
+.hero{padding:140px 6vw 60px;text-align:center}
+.hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-0.04em;line-height:1.2;margin-bottom:12px}
+.hero h1 span{background:linear-gradient(135deg,var(--teal),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--muted);font-size:1.1rem;max-width:600px;margin:0 auto}
+
+/* TABS */
+.tab-bar{display:flex;justify-content:center;gap:8px;margin:40px 6vw 0;flex-wrap:wrap}
+.tab-btn{font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;font-weight:600;padding:.65rem 1.6rem;border-radius:10px;border:1.5px solid var(--line);background:var(--white);color:var(--muted);cursor:pointer;transition:all .2s}
+.tab-btn:hover{border-color:var(--teal);color:var(--ink)}
+.tab-btn.active{background:var(--teal);color:#fff;border-color:var(--teal)}
+
+/* CONTENT LAYOUT */
+.resource-wrap{display:flex;max-width:1200px;margin:40px auto 80px;padding:0 6vw;gap:40px}
+.sidebar{width:240px;flex-shrink:0;position:sticky;top:90px;align-self:flex-start;max-height:calc(100vh - 120px);overflow-y:auto}
+.sidebar h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sidebar a{display:block;font-size:.875rem;font-weight:500;color:var(--muted);padding:6px 12px;border-left:2px solid transparent;margin-bottom:2px;border-radius:0 6px 6px 0;transition:all .15s}
+.sidebar a:hover{color:var(--ink);background:var(--off)}
+.sidebar a.active{color:var(--teal);border-left-color:var(--teal);background:var(--teal-light)}
+.content{flex:1;min-width:0}
+.content section{margin-bottom:48px}
+.content h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.5rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:16px;padding-top:24px}
+.content h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.15rem;font-weight:700;margin:24px 0 10px;color:var(--ink-2)}
+.content p,.content li{color:var(--ink-2);line-height:1.75;margin-bottom:12px}
+.content ul,.content ol{padding-left:24px;margin-bottom:16px}
+.content li{margin-bottom:6px}
+.content .highlight{background:var(--teal-light);border-left:3px solid var(--teal);padding:16px 20px;border-radius:0 var(--r) var(--r) 0;margin:20px 0;font-size:.95rem}
+.content .warning{background:#FEF2F2;border-left:3px solid #DC2626;padding:16px 20px;border-radius:0 var(--r) var(--r) 0;margin:20px 0;font-size:.95rem}
+.content code{background:var(--off);padding:2px 6px;border-radius:4px;font-size:.875rem;font-family:'JetBrains Mono',monospace}
+.content table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:.9rem}
+.content th{background:var(--off);font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;text-align:left;padding:10px 14px;border-bottom:2px solid var(--line)}
+.content td{padding:10px 14px;border-bottom:1px solid var(--line)}
+
+/* FOOTER */
+footer{background:var(--ink);padding:48px 6vw 32px;color:rgba(255,255,255,.5);font-size:.85rem;display:flex;flex-wrap:wrap;align-items:center;gap:24px}
+.footer-logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:800;color:#fff;text-decoration:none}
+.footer-logo span{color:var(--teal)}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap}
+.footer-links a{color:rgba(255,255,255,.5);font-size:.85rem;transition:color .2s}
+.footer-links a:hover{color:#fff}
+.footer-copy{margin-left:auto}
+
+/* MOBILE */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .hamburger{display:block}
+  .resource-wrap{flex-direction:column}
+  .sidebar{width:100%;position:static;max-height:none;display:flex;flex-wrap:wrap;gap:4px}
+  .sidebar h4{width:100%}
+  .sidebar a{border-left:none;border-bottom:2px solid transparent;padding:6px 10px;font-size:.8rem}
+  .sidebar a.active{border-bottom-color:var(--teal);border-left:none}
+  .hero h1{font-size:1.8rem}
+  .footer-copy{margin-left:0;width:100%}
+}
+
+/* HIDDEN TABS */
+.tab-content{display:none}
+.tab-content.active{display:flex}
+</style>
+<link rel="stylesheet" href="assets/dmedesk-experience.css?v=20260504-widgetflash3">
+</head>
+<body>
+
+<!-- NAV -->
+<header>
+  <a class="logo" href="index"><img src="assets/dmedesk-logo.png" style="height:36px;width:auto;display:block" alt="DMEDesk"></a>
+  <button class="site-menu-button" type="button" aria-label="Menu" aria-expanded="false"><span></span></button>
+  <ul class="nav-links">
+    <li><a href="index">Home</a></li>
+    <li><a href="features">Features</a></li>
+    <li><a href="how-it-works">How It Works</a></li>
+    <li><a href="integrations">Integrations</a></li>
+    <li><a href="resources" class="active" aria-current="page">Resources</a></li>
+    <li><a href="contact">Contact</a></li>
+    <li><a href="https://app.dmedesk.ai/login">Login</a></li>
+    <li class="mobile-demo-link"><a href="contact">Book a Demo</a></li>
+  </ul>
+  <a class="nav-demo" href="contact">Book a Demo</a>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>DMEDesk <span>Resources</span></h1>
+  <p>Platform documentation, setup guides, and legal terms &mdash; everything you need to get the most out of DMEDesk.</p>
+</div>
+
+<!-- TABS -->
+<div class="tab-bar">
+  <button class="tab-btn active" data-tab="docs" onclick="switchTab('docs')">Documentation</button>
+  <button class="tab-btn" data-tab="terms" onclick="switchTab('terms')">Terms of Service</button>
+</div>
+
+<!-- ============================================== -->
+<!-- DOCUMENTATION TAB -->
+<!-- ============================================== -->
+<div class="resource-wrap tab-content active" id="tab-docs">
+  <nav class="sidebar" id="docs-sidebar">
+    <h4>Documentation</h4>
+    <a href="#getting-started" class="active">Getting Started</a>
+    <a href="#call-handling">Call Handling</a>
+    <a href="#ai-configuration">AI Configuration</a>
+    <a href="#integrations-doc">Integrations</a>
+    <a href="#outbound">Outbound Campaigns</a>
+    <a href="#compliance-doc">Compliance & HIPAA</a>
+    <a href="#analytics">Analytics & Reporting</a>
+    <a href="#troubleshooting">Troubleshooting</a>
+    <a href="#glossary">Glossary</a>
+  </nav>
+  <div class="content">
+
+    <section id="getting-started">
+      <h2>Getting Started</h2>
+      <p>DMEDesk is an AI voice receptionist purpose-built for DMEPOS suppliers. This guide covers everything from initial setup to going live with your first AI agent.</p>
+
+      <h3>Prerequisites</h3>
+      <ul>
+        <li>An active DMEDesk subscription</li>
+        <li>A phone number to forward to DMEDesk (or we can provision one for you)</li>
+        <li>Your business details: company name, hours of operation, locations</li>
+      </ul>
+
+      <h3>Onboarding Timeline</h3>
+      <div class="highlight">Most DMEDesk clients go live within 5&ndash;7 business days from signup.</div>
+      <table>
+        <thead><tr><th>Day</th><th>Step</th><th>Details</th></tr></thead>
+        <tbody>
+          <tr><td>1&ndash;2</td><td>Discovery Call</td><td>We review your call volume, workflows, and business rules. You provide your intake forms and scripting preferences.</td></tr>
+          <tr><td>2&ndash;3</td><td>Agent Configuration</td><td>We build your custom AI agent &mdash; greeting, call flows, escalation rules, and operating hours.</td></tr>
+          <tr><td>3&ndash;4</td><td>Integration Setup</td><td>Connect DMEDesk to your existing tools &mdash; CRMs, calendars, notification channels, and any DMEPOS-specific workflows.</td></tr>
+          <tr><td>4&ndash;5</td><td>Testing & QA</td><td>Run test calls across all scenarios. Verify data flows, escalation paths, and recording quality.</td></tr>
+          <tr><td>5&ndash;7</td><td>Go Live</td><td>Forward your main line to DMEDesk. We monitor the first 48 hours and fine-tune based on real calls.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Phone Number Setup</h3>
+      <p>You have two options for connecting your phone line to DMEDesk:</p>
+      <ul>
+        <li><strong>Call forwarding</strong> &mdash; Forward your existing business number to the DMEDesk number we assign. This is the fastest option and requires no changes to your current phone provider.</li>
+        <li><strong>Number porting</strong> &mdash; Transfer your existing number directly to DMEDesk's telephony infrastructure. This takes 5&ndash;10 business days depending on your carrier.</li>
+      </ul>
+    </section>
+
+    <section id="call-handling">
+      <h2>Call Handling</h2>
+      <p>DMEDesk handles inbound and outbound calls with AI-powered conversation management built specifically for DMEPOS workflows.</p>
+
+      <h3>Inbound Call Flow</h3>
+      <ol>
+        <li><strong>Ring & Greet</strong> &mdash; Caller dials your number. DMEDesk answers within 2 rings with a custom greeting that includes your business name and AI disclosure (required by law in several states).</li>
+        <li><strong>Intent Detection</strong> &mdash; The AI identifies the caller's purpose: new order, reorder, delivery status, insurance question, prescription follow-up, or general inquiry.</li>
+        <li><strong>Information Gathering</strong> &mdash; Based on the intent, the AI collects the required information: patient name, date of birth, insurance ID, referring physician, equipment type, etc.</li>
+        <li><strong>Data Logging</strong> &mdash; All collected information is logged in your connected systems in real time &mdash; no manual data entry required.</li>
+        <li><strong>Warm Transfer or Resolution</strong> &mdash; If the call requires human intervention, DMEDesk transfers the call to your staff with a live summary so they never start from scratch. Otherwise, the AI resolves the call directly.</li>
+      </ol>
+
+      <h3>Call Types</h3>
+      <table>
+        <thead><tr><th>Type</th><th>Description</th><th>AI Resolution Rate</th></tr></thead>
+        <tbody>
+          <tr><td>New Patient Intake</td><td>Full intake: demographics, insurance, equipment needs, physician info</td><td>~85%</td></tr>
+          <tr><td>Reorder / Resupply</td><td>Existing patient reordering supplies (CPAP, diabetic, ostomy, etc.)</td><td>~95%</td></tr>
+          <tr><td>Delivery Status</td><td>Patient checking on equipment delivery or shipping timeline</td><td>~90%</td></tr>
+          <tr><td>Insurance Questions</td><td>Coverage verification inquiries, copay questions</td><td>~70% (complex cases escalate)</td></tr>
+          <tr><td>Prescription Follow-Up</td><td>Missing Rx, expired prescription, fax status</td><td>~80%</td></tr>
+        </tbody>
+      </table>
+
+      <h3>After-Hours Handling</h3>
+      <p>DMEDesk operates 24/7. After-hours calls follow the same flow but with adjusted escalation rules &mdash; urgent calls can be routed to an on-call number, while non-urgent calls are logged and queued for next-business-day follow-up with the caller receiving a callback confirmation.</p>
+    </section>
+
+    <section id="ai-configuration">
+      <h2>AI Configuration</h2>
+      <p>Every DMEDesk agent is configured to match your specific business requirements. The AI uses objective-based prompting &mdash; not rigid scripts &mdash; so it can handle unexpected caller requests naturally while staying within your defined guardrails.</p>
+
+      <h3>Configurable Parameters</h3>
+      <ul>
+        <li><strong>Greeting & AI Disclosure</strong> &mdash; Customize the opening message. AI disclosure is mandatory and included automatically.</li>
+        <li><strong>Business Hours</strong> &mdash; Set operating hours per location. DMEDesk adjusts its behavior and escalation rules accordingly.</li>
+        <li><strong>Escalation Rules</strong> &mdash; Define when and how calls transfer to live staff: by topic, by caller frustration level, by specific keyword triggers, or by request.</li>
+        <li><strong>Required Fields</strong> &mdash; Specify which data points the AI must collect before ending a call (e.g., always get DOB + insurance ID for new patients).</li>
+        <li><strong>Equipment Catalog</strong> &mdash; Upload your HCPCS-coded product catalog so the AI can accurately discuss equipment, identify reorder needs, and capture correct item details.</li>
+        <li><strong>Location Routing</strong> &mdash; For multi-location operations, route calls to the appropriate staff or branch based on caller area code, ZIP, or stated location.</li>
+      </ul>
+
+      <h3>Voice & Personality</h3>
+      <p>DMEDesk agents use natural-sounding AI voices. You can select from multiple voice options and adjust the conversational tone to match your brand &mdash; professional, warm, clinical, or casual. The AI adapts its language complexity based on caller cues.</p>
+    </section>
+
+    <section id="integrations-doc">
+      <h2>Integrations</h2>
+      <p>DMEDesk connects to 250+ tools through native integrations and API/webhook connectivity. Data flows are encrypted end-to-end, and any protected health information (PHI) is routed through HIPAA-compliant pipelines only.</p>
+
+      <div class="highlight">For a full list of supported integrations, visit the <a href="integrations">Integrations page</a>.</div>
+
+      <h3>How Integrations Work</h3>
+      <p>When a call is completed, DMEDesk can automatically:</p>
+      <ul>
+        <li>Log the intake record in your connected systems</li>
+        <li>Create a calendar event for follow-up</li>
+        <li>Send a Slack or email notification to your team</li>
+        <li>Update your CRM with the caller's information</li>
+        <li>Trigger a follow-up workflow (e.g., send a confirmation SMS to the patient)</li>
+      </ul>
+
+      <h3>Supported Integration Categories</h3>
+      <table>
+        <thead><tr><th>Category</th><th>Examples</th></tr></thead>
+        <tbody>
+          <tr><td>CRM & Sales</td><td>HubSpot, Salesforce, GoHighLevel, Pipedrive</td></tr>
+          <tr><td>Calendar & Scheduling</td><td>Google Calendar, Cal.com, Calendly</td></tr>
+          <tr><td>Communication</td><td>Slack, Microsoft Teams, Gmail, Twilio SMS</td></tr>
+          <tr><td>Automation</td><td>Webhooks, REST API, Zapier, Make</td></tr>
+          <tr><td>Forms & Data</td><td>Google Sheets, Airtable, Typeform</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Custom API / Webhook</h3>
+      <p>For workflows not covered by native integrations, DMEDesk supports custom webhooks and REST API endpoints. You can push call data to any system that accepts HTTP requests. Full API documentation is provided upon onboarding.</p>
+    </section>
+
+    <section id="outbound">
+      <h2>Outbound Campaigns</h2>
+      <p>DMEDesk isn't just for inbound calls. You can configure outbound call campaigns to automate patient follow-ups, prescription reminders, delivery confirmations, and reorder outreach.</p>
+
+      <h3>Campaign Types</h3>
+      <ul>
+        <li><strong>Prescription Follow-Up</strong> &mdash; AI calls prescribers' offices to check on fax status, missing documents, or prior authorization updates.</li>
+        <li><strong>Patient Notification</strong> &mdash; Inform patients about delivery schedules, order confirmations, or required actions (e.g., "Your CPAP mask is eligible for resupply").</li>
+        <li><strong>Missing Documentation</strong> &mdash; Follow up with patients or facilities to collect missing paperwork (CMN, AOB, insurance cards).</li>
+        <li><strong>Reorder Outreach</strong> &mdash; Proactively contact patients approaching resupply windows for recurring equipment.</li>
+      </ul>
+
+      <h3>Campaign Configuration</h3>
+      <p>Each campaign is configured with a contact list (uploaded via spreadsheet or connected CRM), a call script objective, operating hours, retry logic, and outcome tracking. Calls are placed in compliance with TCPA requirements &mdash; all contacts must have prior express consent, and opt-out is honored immediately.</p>
+
+      <h3>Call Outcomes</h3>
+      <p>Every outbound call logs a structured outcome: answered (with detailed notes), voicemail left, no answer, busy, or wrong number. Outcomes are written back to your connected spreadsheet or CRM automatically.</p>
+    </section>
+
+    <section id="compliance-doc">
+      <h2>Compliance & HIPAA</h2>
+      <p>DMEDesk is built with healthcare compliance at its core. Every feature is designed to meet or exceed HIPAA, TCPA, and CMS regulatory requirements for DMEPOS suppliers.</p>
+
+      <h3>HIPAA</h3>
+      <ul>
+        <li>Business Associate Agreement (BAA) executed with every client before go-live</li>
+        <li>All call recordings, transcripts, and patient data encrypted at rest and in transit (AES-256 / TLS 1.3)</li>
+        <li>PHI routed exclusively through HIPAA-compliant data pipelines &mdash; never through general-purpose automation tools</li>
+        <li>Role-based access control: your team only sees what they need to see</li>
+        <li>Automatic audit logging for all data access and modifications</li>
+      </ul>
+
+      <h3>TCPA / FCC</h3>
+      <ul>
+        <li>AI voice = "artificial voice" under TCPA. DMEDesk includes mandatory AI disclosure on every call opener.</li>
+        <li>Prior express consent required for all outbound calls. Consent records are tracked per contact.</li>
+        <li>One-press opt-out honored immediately on both inbound and outbound calls.</li>
+        <li>Consent revocation rules compliant with the April 2025 FCC update.</li>
+      </ul>
+
+      <h3>CMS Requirements</h3>
+      <ul>
+        <li>DMEDesk provides an interactive phone presence &mdash; not an answering machine &mdash; as required by CMS for DMEPOS suppliers.</li>
+        <li>Calls are answered live (by AI or transferred to staff), never sent to voicemail during operating hours.</li>
+        <li>All interactions are documented and audit-ready.</li>
+      </ul>
+
+      <h3>State-Level AI Disclosure</h3>
+      <p>Several states now require explicit AI disclosure during phone calls. DMEDesk's AI agent automatically identifies itself as an AI assistant at the beginning of every call, satisfying requirements in states like Texas (SB 140) and others with similar laws.</p>
+    </section>
+
+    <section id="analytics">
+      <h2>Analytics & Reporting</h2>
+      <p>The DMEDesk dashboard provides real-time and historical visibility into your call operations.</p>
+
+      <h3>Dashboard Metrics</h3>
+      <ul>
+        <li>Total calls handled (inbound + outbound)</li>
+        <li>AI resolution rate vs. escalation rate</li>
+        <li>Average call duration</li>
+        <li>Call volume by hour, day, and week</li>
+        <li>Top call intents (intake, reorder, delivery status, etc.)</li>
+        <li>Missed call rate and after-hours volume</li>
+      </ul>
+
+      <h3>Call Recordings & Transcripts</h3>
+      <p>Every call is recorded and transcribed. Recordings are accessible from the dashboard with full text search across transcripts. All recordings are encrypted and retained per your configured retention policy (default: 90 days, configurable up to 7 years for compliance).</p>
+
+      <h3>Exports</h3>
+      <p>Export call logs, analytics summaries, and transcript data as CSV or PDF for compliance audits, internal reporting, or insurance documentation.</p>
+    </section>
+
+    <section id="troubleshooting">
+      <h2>Troubleshooting</h2>
+
+      <h3>Calls not being answered</h3>
+      <p>Check that call forwarding is active on your phone provider. Verify the forwarding number matches the DMEDesk number assigned during onboarding. If using number porting, confirm the port has completed with your carrier.</p>
+
+      <h3>AI not collecting required information</h3>
+      <p>Review your agent configuration under "Required Fields." Ensure the fields are marked as mandatory and that the AI prompt includes instructions to collect them. Contact support if the issue persists after configuration changes.</p>
+
+      <h3>Data not syncing to connected tools</h3>
+      <p>Check the integration status in your DMEDesk dashboard under Settings &rarr; Integrations. Look for error indicators or failed sync attempts. Common causes: expired API tokens, changed webhook URLs, or rate limiting from the destination service.</p>
+
+      <h3>Poor call quality or latency</h3>
+      <p>Call quality depends on the caller's phone connection, not DMEDesk's infrastructure. If you receive reports of choppy audio, check if the issue is consistent across all calls or isolated to specific callers. For SIP-based connections, verify your network supports the required bandwidth and ports.</p>
+
+      <h3>Need help?</h3>
+      <div class="highlight">Contact DMEDesk support at <a href="mailto:support@dmedesk.ai">support@dmedesk.ai</a> or through the in-dashboard chat. Response time: under 4 hours during business hours (Mon&ndash;Fri, 9 AM&ndash;6 PM EST).</div>
+    </section>
+
+    <section id="glossary">
+      <h2>Glossary</h2>
+      <table>
+        <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+        <tbody>
+          <tr><td>AOB</td><td>Assignment of Benefits &mdash; patient authorization allowing the supplier to bill insurance directly</td></tr>
+          <tr><td>BAA</td><td>Business Associate Agreement &mdash; HIPAA-required contract between covered entities and their service providers</td></tr>
+          <tr><td>CMN</td><td>Certificate of Medical Necessity &mdash; physician-signed form required for certain DME items</td></tr>
+          <tr><td>CPAP</td><td>Continuous Positive Airway Pressure &mdash; a common DME product for sleep apnea treatment</td></tr>
+          <tr><td>DMEPOS</td><td>Durable Medical Equipment, Prosthetics, Orthotics, and Supplies</td></tr>
+          <tr><td>HCPCS</td><td>Healthcare Common Procedure Coding System &mdash; codes used to identify DME products for account</td></tr>
+          <tr><td>LCD</td><td>Local Coverage Determination &mdash; Medicare contractor-level coverage policy</td></tr>
+          <tr><td>NCD</td><td>National Coverage Determination &mdash; CMS-level coverage policy</td></tr>
+          <tr><td>NPI</td><td>National Provider Identifier &mdash; 10-digit number identifying healthcare providers</td></tr>
+          <tr><td>PECOS</td><td>Provider Enrollment, Chain, and Ownership System &mdash; Medicare enrollment database</td></tr>
+          <tr><td>PHI</td><td>Protected Health Information &mdash; any health data tied to an identifiable individual</td></tr>
+          <tr><td>Prior Auth</td><td>Prior Authorization &mdash; insurer approval required before coverage of certain equipment</td></tr>
+          <tr><td>TCPA</td><td>Telephone Consumer Protection Act &mdash; federal law regulating automated calls and texts</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- TERMS OF SERVICE TAB -->
+<!-- ============================================== -->
+<div class="resource-wrap tab-content" id="tab-terms">
+  <nav class="sidebar" id="terms-sidebar">
+    <h4>Terms of Service</h4>
+    <a href="#t-intro" class="active">Introduction</a>
+    <a href="#t-definitions">Definitions</a>
+    <a href="#t-account">Account & Access</a>
+    <a href="#t-services">Services</a>
+    <a href="#t-data">Data & Privacy</a>
+    <a href="#t-hipaa">HIPAA & BAA</a>
+    <a href="#t-ai-disclosure">AI Disclosure</a>
+    <a href="#t-tcpa">TCPA Compliance</a>
+    <a href="#t-account-terms">Account Terms</a>
+    <a href="#t-sla">Service Level</a>
+    <a href="#t-ip">Intellectual Property</a>
+    <a href="#t-limitations">Limitations of Liability</a>
+    <a href="#t-termination">Termination</a>
+    <a href="#t-disputes">Disputes</a>
+    <a href="#t-changes">Changes to Terms</a>
+    <a href="#t-contact">Contact</a>
+  </nav>
+  <div class="content">
+
+    <section id="t-intro">
+      <h2>Introduction</h2>
+      <p>These Terms of Service ("Terms") govern your use of the DMEDesk platform, including the AI voice receptionist, dashboard, integrations, and related services (collectively, the "Service"). By accessing or using DMEDesk, you agree to be bound by these Terms.</p>
+      <p>DMEDesk is operated by DMEDesk LLC ("DMEDesk," "we," "us," or "our"). If you are using the Service on behalf of an organization, you represent that you have the authority to bind that organization to these Terms.</p>
+      <p><strong>Effective Date:</strong> April 1, 2026</p>
+    </section>
+
+    <section id="t-definitions">
+      <h2>Definitions</h2>
+      <ul>
+        <li><strong>"Client"</strong> &mdash; The DMEPOS supplier, healthcare organization, or authorized entity that subscribes to DMEDesk.</li>
+        <li><strong>"End User"</strong> &mdash; Any individual who interacts with DMEDesk via phone call, including patients, caregivers, and referral sources.</li>
+        <li><strong>"Agent"</strong> &mdash; The AI voice assistant configured for your account.</li>
+        <li><strong>"PHI"</strong> &mdash; Protected Health Information as defined by HIPAA.</li>
+        <li><strong>"Dashboard"</strong> &mdash; The web-based management interface for configuring and monitoring your DMEDesk account.</li>
+      </ul>
+    </section>
+
+    <section id="t-account">
+      <h2>Account & Access</h2>
+      <p>You must provide accurate and complete information when creating your DMEDesk account. You are responsible for maintaining the confidentiality of your login credentials and for all activities that occur under your account.</p>
+      <p>DMEDesk reserves the right to suspend or terminate accounts that violate these Terms, engage in fraudulent activity, or pose a risk to the security or integrity of the Service.</p>
+      <p>You must notify us immediately at <a href="mailto:security@dmedesk.ai">security@dmedesk.ai</a> if you suspect unauthorized access to your account.</p>
+    </section>
+
+    <section id="t-services">
+      <h2>Services</h2>
+      <p>DMEDesk provides AI-powered voice call handling, including inbound reception, outbound campaign management, call recording, transcription, data logging, and integration with third-party tools. The Service is designed for DMEPOS suppliers and related healthcare organizations.</p>
+      <p>We reserve the right to modify, update, or discontinue features of the Service with reasonable notice. Critical changes affecting data handling or compliance will be communicated at least 30 days in advance.</p>
+    </section>
+
+    <section id="t-data">
+      <h2>Data & Privacy</h2>
+      <p>DMEDesk collects and processes data necessary to provide the Service, including call recordings, transcripts, caller information, and usage analytics. All data is encrypted at rest (AES-256) and in transit (TLS 1.3).</p>
+      <p>We do not sell, rent, or share your data or your patients' data with third parties for marketing purposes. Data is shared only with service providers necessary to operate DMEDesk, all of whom are bound by confidentiality and data protection agreements.</p>
+      <p>Call recordings and transcripts are retained per your configured retention policy. You may request deletion of your data at any time, subject to regulatory retention requirements.</p>
+    </section>
+
+    <section id="t-hipaa">
+      <h2>HIPAA & Business Associate Agreement</h2>
+      <p>DMEDesk functions as a Business Associate under HIPAA when processing PHI on your behalf. A Business Associate Agreement (BAA) is executed with every client prior to the Service handling any PHI.</p>
+      <div class="warning"><strong>Important:</strong> You must not use DMEDesk to process PHI until a BAA is fully executed between your organization and DMEDesk. Contact your account manager or email <a href="mailto:compliance@dmedesk.ai">compliance@dmedesk.ai</a> if your BAA is not yet in place.</div>
+      <p>Both parties agree to comply with applicable HIPAA regulations, including the Privacy Rule, Security Rule, and Breach Notification Rule. DMEDesk maintains administrative, physical, and technical safeguards to protect PHI as required by 45 CFR &sect; 164.308&ndash;312.</p>
+    </section>
+
+    <section id="t-ai-disclosure">
+      <h2>AI Disclosure</h2>
+      <p>DMEDesk uses artificial intelligence to handle phone calls. In compliance with federal and state regulations (including Texas SB 140 and FCC guidance), the DMEDesk AI agent identifies itself as an AI assistant at the beginning of every call.</p>
+      <p>By using DMEDesk, you acknowledge and agree that callers to your business will be informed they are speaking with an AI. You may not configure the AI agent to misrepresent itself as a human.</p>
+    </section>
+
+    <section id="t-tcpa">
+      <h2>TCPA Compliance</h2>
+      <p>AI-generated voice calls are classified as calls using an "artificial voice" under the Telephone Consumer Protection Act (TCPA). You are responsible for obtaining prior express consent from all contacts before initiating outbound calls through DMEDesk.</p>
+      <p>DMEDesk provides tools to track consent status and honor opt-out requests immediately. Consent revocation is processed in compliance with the FCC's April 2025 consent revocation rules.</p>
+      <p>You agree to maintain accurate consent records for all contacts in your outbound campaigns and to provide those records to DMEDesk upon request in the event of a regulatory inquiry.</p>
+    </section>
+
+    <section id="t-account-terms">
+      <h2>Account Terms</h2>
+      <p>Account access, enabled features, and service configuration are governed by your written agreement with DMEDesk and these Terms.</p>
+      <p>For account questions, contact <a href="mailto:support@dmedesk.ai">support@dmedesk.ai</a>.</p>
+    </section>
+
+    <section id="t-sla">
+      <h2>Service Level</h2>
+      <p>DMEDesk targets 99.9% uptime for the voice platform and dashboard. Scheduled maintenance windows are communicated at least 48 hours in advance and are excluded from uptime calculations.</p>
+      <p>In the event of unscheduled downtime exceeding 4 consecutive hours, affected clients may request a pro-rated credit for the impacted period. Credits must be requested within 30 days of the incident.</p>
+    </section>
+
+    <section id="t-ip">
+      <h2>Intellectual Property</h2>
+      <p>The DMEDesk platform, including its software, AI models, interface design, documentation, and branding, is the property of DMEDesk LLC. Your subscription grants you a non-exclusive, non-transferable license to use the Service during your subscription term.</p>
+      <p>You retain ownership of all data you upload to or generate through DMEDesk, including call recordings, transcripts, and configuration settings. DMEDesk does not claim ownership of your data.</p>
+    </section>
+
+    <section id="t-limitations">
+      <h2>Limitations of Liability</h2>
+      <p>DMEDesk is provided "as is" and "as available." We do not warrant that the Service will be uninterrupted, error-free, or suitable for any specific regulatory purpose beyond what is described in these Terms.</p>
+      <p>To the maximum extent permitted by law, DMEDesk's total liability for any claim arising out of or relating to these Terms or the Service shall not exceed the terms paid by you in the 12 months preceding the claim.</p>
+      <p>DMEDesk shall not be liable for indirect, incidental, consequential, or punitive damages, including but not limited to lost revenue, lost data, or business interruption.</p>
+    </section>
+
+    <section id="t-termination">
+      <h2>Termination</h2>
+      <p>Either party may terminate the subscription with 30 days' written notice. Upon termination, DMEDesk will provide you with an export of your data (call recordings, transcripts, and configuration) within 15 business days of your request.</p>
+      <p>Data is retained for 90 days following termination to allow for export requests, after which it is permanently deleted unless regulatory retention requirements apply.</p>
+      <p>DMEDesk may terminate your account immediately if you materially breach these Terms, fail to pay invoices for more than 60 days, or use the Service in a manner that violates applicable law.</p>
+    </section>
+
+    <section id="t-disputes">
+      <h2>Disputes</h2>
+      <p>These Terms are governed by the laws of the State of Delaware, without regard to conflict of law principles. Any disputes arising from these Terms or the Service shall be resolved through binding arbitration administered by JAMS in accordance with its Streamlined Arbitration Rules.</p>
+      <p>Before initiating arbitration, both parties agree to attempt resolution through good-faith negotiation for a minimum of 30 days.</p>
+    </section>
+
+    <section id="t-changes">
+      <h2>Changes to Terms</h2>
+      <p>DMEDesk may update these Terms from time to time. Material changes will be communicated via email and posted on this page at least 30 days before taking effect. Continued use of the Service after changes take effect constitutes your acceptance of the updated Terms.</p>
+    </section>
+
+    <section id="t-contact">
+      <h2>Contact</h2>
+      <p>For questions about these Terms or the DMEDesk platform:</p>
+      <ul>
+        <li><strong>Email:</strong> <a href="mailto:legal@dmedesk.ai">legal@dmedesk.ai</a></li>
+        <li><strong>Support:</strong> <a href="mailto:support@dmedesk.ai">support@dmedesk.ai</a></li>
+        <li><strong>HIPAA / Compliance:</strong> <a href="mailto:compliance@dmedesk.ai">compliance@dmedesk.ai</a></li>
+      </ul>
+    </section>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a class="footer-logo" href="index">DME<span>Desk</span></a>
+  <nav class="footer-links">
+    <a href="features">Features</a>
+    <a href="how-it-works">How It Works</a>
+    <a href="integrations">Integrations</a>
+    <a href="resources">Resources</a>
+    <a href="contact">Contact</a>
+  </nav>
+  <span class="footer-copy">&copy; 2026 DMEDesk. HIPAA Compliant.</span>
+</footer>
+
+<!-- CHAT WIDGET -->
+<script type="application/json" id="dme-widget-config" data-embed-src="https://app.dmedesk.ai/embed.js" data-assistant-id="0284e1e9-49d2-47fb-a07f-2ad8588a17dc"></script>
+
+<script>
+/* Tab switching */
+function switchTab(tabId){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  document.querySelector('[data-tab="'+tabId+'"]').classList.add('active');
+  document.getElementById('tab-'+tabId).classList.add('active');
+  window.scrollTo({top:document.querySelector('.tab-bar').offsetTop - 80,behavior:'smooth'});
+}
+
+/* Sidebar scroll tracking */
+function setupScrollTracking(contentWrap,sidebarId){
+  const sections=contentWrap.querySelectorAll('section');
+  const links=document.querySelectorAll('#'+sidebarId+' a');
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const active=document.querySelector('#'+sidebarId+' a[href="#'+e.target.id+'"]');
+        if(active)active.classList.add('active');
+      }
+    });
+  },{threshold:0.25,rootMargin:'-80px 0px -60% 0px'});
+  sections.forEach(s=>obs.observe(s));
+}
+setupScrollTracking(document.querySelector('#tab-docs .content'),'docs-sidebar');
+setupScrollTracking(document.querySelector('#tab-terms .content'),'terms-sidebar');
+
+/* Nav scroll shadow */
+window.addEventListener('scroll',()=>{
+  document.querySelector('header').style.boxShadow=window.scrollY>10?'0 2px 20px rgba(15,28,46,.08)':'none';
+});
+
+/* Mobile nav toggle */
+const style=document.createElement('style');
+style.textContent='.nav-links.show{display:flex!important;position:fixed;top:66px;left:0;right:0;background:var(--white);flex-direction:column;padding:20px 6vw;border-bottom:1.5px solid var(--line);box-shadow:var(--shadow-2);z-index:299}';
+document.head.appendChild(style);
+</script>
+<script src="assets/dmedesk-experience.js?v=20260428-mobile8" defer></script>
+<div id="dme-robot-launcher" title="Chat with AI">
+  <div class="dme-robot-bubble">Need help?</div>
+  <svg role="img" aria-label="AI Assistant" xmlns="http://www.w3.org/2000/svg" viewBox="0 -170 160 380" id="dme-robot-svg" preserveAspectRatio="xMidYMax meet">
+  <defs>
+    <radialGradient id="rg-head" cx="38%" cy="32%" r="65%">
+      <stop offset="0%" stop-color="#5eead4"/>
+      <stop offset="100%" stop-color="#0f766e"/>
+    </radialGradient>
+    <radialGradient id="rg-body" cx="32%" cy="28%" r="70%">
+      <stop offset="0%" stop-color="#2dd4bf"/>
+      <stop offset="100%" stop-color="#0d6660"/>
+    </radialGradient>
+    <radialGradient id="rg-limb" cx="30%" cy="28%" r="70%">
+      <stop offset="0%" stop-color="#14b8a6"/>
+      <stop offset="100%" stop-color="#0f766e"/>
+    </radialGradient>
+    <radialGradient id="rg-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#a5b4fc"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </radialGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#0f766e" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <g id="dme-robot-drift">
+    <g id="dme-robot-body">
+      <g id="dme-head-unit">
+        <!-- Antenna -->
+        <g id="dme-antenna">
+          <rect x="77" y="6" width="6" height="18" rx="3" fill="#2dd4bf"/>
+          <circle id="dme-antenna-light" cx="80" cy="5" r="7" fill="url(#rg-glow)" filter="url(#shadow)"/>
+        </g>
+
+        <!-- Head -->
+        <ellipse cx="80" cy="46" rx="38" ry="34" fill="url(#rg-head)" filter="url(#shadow)"/>
+
+        <!-- Face plate -->
+        <ellipse cx="80" cy="48" rx="28" ry="24" fill="#f0fdfa" opacity="0.97"/>
+
+        <!-- Eyes -->
+        <g id="dme-eyes">
+          <path class="dme-brow dme-left-brow" d="M 60 33 Q 68 29 76 33" stroke="#0f766e" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.55"/>
+          <path class="dme-brow dme-right-brow" d="M 84 33 Q 92 29 100 33" stroke="#0f766e" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.55"/>
+          <circle cx="68" cy="43" r="9" fill="#0f766e"/>
+          <circle cx="92" cy="43" r="9" fill="#0f766e"/>
+          <!-- Eye glow (indigo) -->
+          <circle class="dme-eye-glow" cx="68" cy="43" r="5.5" fill="url(#rg-glow)" opacity="0.9"/>
+          <circle class="dme-eye-glow" cx="92" cy="43" r="5.5" fill="url(#rg-glow)" opacity="0.9"/>
+          <!-- Eye shine -->
+          <circle cx="65" cy="40" r="3" fill="#fff" opacity="0.6"/>
+          <circle cx="89" cy="40" r="3" fill="#fff" opacity="0.6"/>
+        </g>
+
+        <!-- Smile -->
+        <g id="dme-mouth">
+          <path id="dme-smile" d="M 68 59 Q 80 68 92 59" stroke="#0f766e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <ellipse id="dme-gasp-mouth" cx="80" cy="60" rx="8" ry="10" fill="#0f766e" opacity="0"/>
+          <ellipse id="dme-gasp-shine" cx="77" cy="56" rx="2.4" ry="3" fill="#f0fdfa" opacity="0"/>
+        </g>
+
+        <!-- Head sheen -->
+        <ellipse cx="62" cy="32" rx="14" ry="9" fill="#fff" opacity="0.16" transform="rotate(-20 62 32)"/>
+      </g>
+
+      <!-- Neck -->
+      <rect x="70" y="78" width="20" height="10" rx="5" fill="#0f766e" opacity="0.6"/>
+
+      <g id="dme-torso">
+        <!-- Body -->
+        <rect x="42" y="86" width="76" height="76" rx="20" fill="url(#rg-body)" filter="url(#shadow)"/>
+
+        <!-- Chest glow circle -->
+        <g id="dme-chest-core">
+          <circle cx="80" cy="110" r="16" fill="#0f766e" opacity="0.4"/>
+          <circle cx="80" cy="110" r="11" fill="url(#rg-glow)"/>
+          <circle cx="80" cy="110" r="6" fill="#f0fdfa"/>
+        </g>
+
+        <!-- Belly detail bars -->
+        <rect x="57" y="132" width="15" height="7" rx="3.5" fill="#0f766e" opacity="0.4"/>
+        <rect x="77" y="132" width="15" height="7" rx="3.5" fill="#0f766e" opacity="0.4"/>
+        <rect x="97" y="132" width="11" height="7" rx="3.5" fill="#0f766e" opacity="0.4"/>
+      </g>
+
+      <!-- Left arm -->
+      <g id="dme-left-arm">
+        <rect x="14" y="90" width="24" height="50" rx="12" fill="url(#rg-limb)" filter="url(#shadow)"/>
+        <ellipse cx="26" cy="145" rx="13" ry="10" fill="url(#rg-limb)"/>
+      </g>
+
+      <!-- Right arm -->
+      <g id="dme-arm-wave">
+        <rect x="122" y="90" width="24" height="50" rx="12" fill="url(#rg-limb)" filter="url(#shadow)"/>
+        <ellipse cx="134" cy="145" rx="13" ry="10" fill="url(#rg-limb)"/>
+      </g>
+
+      <g id="dme-left-leg">
+        <rect x="52" y="158" width="24" height="38" rx="12" fill="url(#rg-limb)" filter="url(#shadow)"/>
+        <ellipse cx="64" cy="198" rx="18" ry="9" fill="#0d6660"/>
+      </g>
+
+      <g id="dme-right-leg">
+        <rect x="84" y="158" width="24" height="38" rx="12" fill="url(#rg-limb)" filter="url(#shadow)"/>
+        <ellipse cx="96" cy="198" rx="18" ry="9" fill="#0d6660"/>
+      </g>
+    </g>
+  </g>
+
+  <g id="dme-fall-lines" aria-hidden="true">
+    <g id="dme-left-fall-lines">
+      <path d="M 22 38 L 8 54" />
+      <path d="M 33 78 L 14 98" />
+      <path d="M 25 126 L 7 146" />
+      <path d="M 38 168 L 23 186" />
+    </g>
+    <g id="dme-right-fall-lines">
+      <path d="M 138 38 L 152 54" />
+      <path d="M 127 78 L 146 98" />
+      <path d="M 135 126 L 153 146" />
+      <path d="M 122 168 L 137 186" />
+    </g>
+  </g>
+
+  <style>
+    #dme-robot-svg {
+      overflow: visible;
+    }
+
+    #dme-robot-svg * {
+      transform-box: fill-box;
+    }
+
+    #dme-robot-drift {
+      transform-origin: 80px 110px;
+      animation: dme-drift 3.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    }
+
+    #dme-robot-body {
+      transform-origin: 80px 132px;
+      animation: dme-bob 1.8s ease-in-out infinite;
+    }
+
+    #dme-head-unit {
+      transform-origin: 80px 80px;
+      animation: dme-head-tilt 1.8s ease-in-out infinite;
+    }
+
+    #dme-antenna {
+      transform-origin: 80px 24px;
+      animation: dme-antenna-wiggle 1.8s ease-in-out infinite;
+    }
+
+    #dme-antenna-light,
+    .dme-eye-glow,
+    #dme-chest-core {
+      transform-origin: center;
+      animation: dme-pulse 1.8s ease-in-out infinite;
+    }
+
+    #dme-left-arm {
+      transform-origin: 38px 96px;
+      animation: dme-left-arm-swing 1.8s ease-in-out infinite;
+    }
+
+    #dme-arm-wave {
+      transform-origin: 122px 96px;
+      animation: dme-right-arm-swing 1.8s ease-in-out infinite;
+    }
+
+    #dme-left-leg {
+      transform-origin: 64px 160px;
+      animation: dme-left-step 1.8s ease-in-out infinite;
+    }
+
+    #dme-right-leg {
+      transform-origin: 96px 160px;
+      animation: dme-right-step 1.8s ease-in-out infinite;
+    }
+
+    #dme-fall-lines {
+      display: none;
+      fill: none;
+      opacity: 0;
+      pointer-events: none;
+      stroke: #111827;
+      stroke-linecap: round;
+      stroke-width: 3.8;
+      transform-origin: 80px 105px;
+      transition: opacity 100ms ease;
+    }
+
+    #dme-left-fall-lines,
+    #dme-right-fall-lines {
+      transform-origin: center;
+    }
+
+    #dme-eyes,
+    .dme-brow,
+    #dme-mouth,
+    #dme-smile,
+    #dme-gasp-mouth,
+    #dme-gasp-shine {
+      transform-origin: center;
+      transition: opacity 120ms ease, transform 160ms ease;
+    }
+
+    #dme-gasp-mouth,
+    #dme-gasp-shine {
+      transform: scale(0.6);
+    }
+
+    #dme-robot-svg.is-levitating #dme-robot-drift {
+      animation: dme-scroll-levitate var(--dme-scroll-duration, 4.2s) cubic-bezier(0.18, 0.88, 0.22, 1) infinite;
+    }
+
+    #dme-robot-svg.is-levitating #dme-robot-body {
+      animation: dme-float-body var(--dme-scroll-duration, 4.2s) ease-in-out infinite;
+    }
+
+    #dme-robot-svg.is-levitating #dme-head-unit {
+      animation: dme-float-head var(--dme-scroll-duration, 4.2s) ease-in-out infinite;
+    }
+
+    #dme-robot-svg.is-levitating #dme-antenna {
+      animation: dme-antenna-wiggle 1.2s ease-in-out infinite;
+    }
+
+    #dme-robot-svg.is-levitating #dme-left-arm {
+      animation: dme-float-left-arm var(--dme-float-limb-duration, 3.6s) ease-in-out infinite;
+    }
+
+    #dme-robot-svg.is-levitating #dme-arm-wave {
+      animation: dme-float-right-arm var(--dme-float-limb-duration, 3.6s) ease-in-out infinite;
+    }
+
+    #dme-robot-svg.is-levitating #dme-left-leg {
+      animation: dme-float-left-leg var(--dme-float-limb-duration, 3.6s) ease-in-out infinite;
+    }
+
+    #dme-robot-svg.is-levitating #dme-right-leg {
+      animation: dme-float-right-leg var(--dme-float-limb-duration, 3.6s) ease-in-out infinite;
+    }
+
+    #dme-robot-svg.is-levitating #dme-fall-lines {
+      opacity: 0;
+      animation: none;
+    }
+
+    #dme-robot-svg.is-levitating #dme-left-fall-lines {
+      animation: none;
+    }
+
+    #dme-robot-svg.is-levitating #dme-right-fall-lines {
+      animation: none;
+    }
+
+    #dme-robot-svg.is-levitating #dme-eyes {
+      transform: translateY(-3px) scale(1.08, 1.18);
+    }
+
+    #dme-robot-svg.is-levitating .dme-left-brow {
+      transform: translate(-3px, -6px) rotate(-16deg);
+      opacity: 0.92;
+    }
+
+    #dme-robot-svg.is-levitating .dme-right-brow {
+      transform: translate(3px, -6px) rotate(16deg);
+      opacity: 0.92;
+    }
+
+    #dme-robot-svg.is-levitating #dme-smile {
+      opacity: 0;
+      transform: translateY(4px) scale(0.75);
+    }
+
+    #dme-robot-svg.is-levitating #dme-gasp-mouth,
+    #dme-robot-svg.is-levitating #dme-gasp-shine {
+      opacity: 1;
+      transform: translateY(-1px) scale(0.82);
+    }
+
+    #dme-robot-svg.is-pulled #dme-eyes {
+      transform: translateY(3px) scale(0.96, 1.05);
+    }
+
+    #dme-robot-svg.is-pulled .dme-left-brow {
+      transform: translate(-2px, 1px) rotate(15deg);
+      opacity: 0.9;
+    }
+
+    #dme-robot-svg.is-pulled .dme-right-brow {
+      transform: translate(2px, 1px) rotate(-15deg);
+      opacity: 0.9;
+    }
+
+    #dme-robot-svg.is-pulled #dme-smile {
+      opacity: 0;
+      transform: translateY(4px) scale(0.72);
+    }
+
+    #dme-robot-svg.is-pulled #dme-gasp-mouth,
+    #dme-robot-svg.is-pulled #dme-gasp-shine {
+      opacity: 1;
+      transform: translateY(3px) scale(0.72, 0.9);
+    }
+
+    @keyframes dme-drift {
+      0%, 100% { transform: translateX(-9px) rotate(-1.6deg); }
+      25%      { transform: translateX(0) rotate(0.4deg); }
+      50%      { transform: translateX(9px) rotate(1.6deg); }
+      75%      { transform: translateX(0) rotate(-0.4deg); }
+    }
+
+    @keyframes dme-bob {
+      0%, 100% { transform: translateY(0) scaleY(1); }
+      25%      { transform: translateY(-3px) scaleY(1.01); }
+      50%      { transform: translateY(1px) scaleY(0.99); }
+      75%      { transform: translateY(-2px) scaleY(1.005); }
+    }
+
+    @keyframes dme-head-tilt {
+      0%, 100% { transform: translateY(0) rotate(2deg); }
+      50%      { transform: translateY(-2px) rotate(-2deg); }
+    }
+
+    @keyframes dme-antenna-wiggle {
+      0%, 100% { transform: rotate(-5deg); }
+      50%      { transform: rotate(6deg); }
+    }
+
+    @keyframes dme-left-arm-swing {
+      0%, 100% { transform: rotate(10deg) translateY(1px); }
+      50%      { transform: rotate(-13deg) translateY(-2px); }
+    }
+
+    @keyframes dme-right-arm-swing {
+      0%, 100% { transform: rotate(-11deg) translateY(-1px); }
+      50%      { transform: rotate(14deg) translateY(2px); }
+    }
+
+    @keyframes dme-left-step {
+      0%, 100% { transform: translate(0, 0) rotate(-2deg); }
+      50%      { transform: translate(4px, -3px) rotate(3deg); }
+    }
+
+    @keyframes dme-right-step {
+      0%, 100% { transform: translate(0, -2px) rotate(2deg); }
+      50%      { transform: translate(-4px, 1px) rotate(-3deg); }
+    }
+
+    @keyframes dme-pulse {
+      0%, 100% { opacity: 0.88; transform: scale(0.96); }
+      50%      { opacity: 1; transform: scale(1.08); }
+    }
+
+    @keyframes dme-scroll-levitate {
+      0%, 100% {
+        transform: translate(0, calc(var(--dme-scroll-lift, -22px) * 0.75)) rotate(var(--dme-scroll-tilt, -3deg));
+      }
+      50% {
+        transform: translate(0, calc(var(--dme-scroll-lift, -22px) * 1.08)) rotate(calc(var(--dme-scroll-tilt, -3deg) * -0.55));
+      }
+    }
+
+    @keyframes dme-float-body {
+      0%, 100% { transform: translateY(-3px) scaleY(1.01); }
+      50%      { transform: translateY(3px) scaleY(0.995); }
+    }
+
+    @keyframes dme-float-head {
+      0%, 100% { transform: translateY(-2px) rotate(-1.5deg); }
+      50%      { transform: translateY(2px) rotate(1.5deg); }
+    }
+
+    @keyframes dme-float-left-arm {
+      0%, 100% { transform: rotate(-18deg) translateY(-3px); }
+      50%      { transform: rotate(-8deg) translateY(2px); }
+    }
+
+    @keyframes dme-float-right-arm {
+      0%, 100% { transform: rotate(18deg) translateY(-3px); }
+      50%      { transform: rotate(8deg) translateY(2px); }
+    }
+
+    @keyframes dme-float-left-leg {
+      0%, 100% { transform: translate(1px, 3px) rotate(-5deg); }
+      50%      { transform: translate(-1px, 7px) rotate(2deg); }
+    }
+
+    @keyframes dme-float-right-leg {
+      0%, 100% { transform: translate(-1px, 3px) rotate(5deg); }
+      50%      { transform: translate(1px, 7px) rotate(-2deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #dme-robot-drift,
+      #dme-robot-body,
+      #dme-head-unit,
+      #dme-antenna,
+      #dme-antenna-light,
+      .dme-eye-glow,
+      #dme-chest-core,
+      #dme-left-arm,
+      #dme-arm-wave,
+      #dme-left-leg,
+      #dme-right-leg,
+      #dme-fall-lines,
+      #dme-left-fall-lines,
+      #dme-right-fall-lines,
+      #dme-robot-svg.is-levitating #dme-robot-drift,
+      #dme-robot-svg.is-levitating #dme-robot-body,
+      #dme-robot-svg.is-levitating #dme-head-unit,
+      #dme-robot-svg.is-levitating #dme-antenna,
+      #dme-robot-svg.is-levitating #dme-left-arm,
+      #dme-robot-svg.is-levitating #dme-arm-wave,
+      #dme-robot-svg.is-levitating #dme-left-leg,
+      #dme-robot-svg.is-levitating #dme-right-leg {
+        animation: none;
+      }
+    }
+  </style>
+</svg>
+
+
+
+
+
+
+
+</div>
+<script src="assets/robot-launcher.js?v=20260504-widgetflash3" defer></script>
+</body>
+</html>

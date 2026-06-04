@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="assets/favicon.png?v=transparent1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Integrations &mdash; DMEDesk</title>
+<meta name="description" content="DMEDesk connects to 250+ tools your team already uses &mdash; CRMs, calendars, communication platforms, forms, workflow tools, notifications and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#009E8E;--td:#007A6D;--tl:#E6F7F5;--tm:#CCF0EC;
+  --pu:#5B3FD9;--pl:#EEE9FF;
+  --ink:#0F1C2E;--i2:#2D3F56;--mu:#6B7E96;
+  --li:#E4EAF2;--wh:#FFFFFF;--of:#F7F9FC;
+  --s1:0 1px 3px rgba(15,28,46,.06),0 4px 12px rgba(15,28,46,.05);
+  --s2:0 4px 20px rgba(15,28,46,.09);
+  --s3:0 12px 40px rgba(15,28,46,.12),0 3px 8px rgba(15,28,46,.06);
+  --r:12px;--rl:20px
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--wh);color:var(--ink);font-family:'Inter',sans-serif;font-size:16px;line-height:1.65;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;z-index:300;height:66px;background:rgba(255,255,255,.97);backdrop-filter:saturate(160%) blur(8px);border-bottom:1.5px solid var(--li);display:flex;align-items:center;padding:0 6vw;gap:2rem}
+.logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.45rem;font-weight:800;letter-spacing:-.04em;color:var(--ink);display:flex;align-items:center}
+.logo .d{display:inline-block;width:9px;height:9px;background:var(--teal);border-radius:50%;margin-left:3px;margin-bottom:8px}
+.nav-links{display:flex;gap:.25rem;list-style:none;margin-left:auto}
+.nav-links a{font-family:'Plus Jakarta Sans',sans-serif;font-size:.875rem;font-weight:600;color:var(--mu);padding:.45rem .85rem;border-radius:8px;transition:color .18s,background .18s}
+.nav-links a:hover{color:var(--ink);background:var(--of)}
+.nav-links a.active{color:var(--teal)}
+.cta-nav{font-family:'Plus Jakarta Sans',sans-serif;font-size:.875rem;font-weight:700;color:var(--wh);background:var(--teal);padding:.55rem 1.1rem;border-radius:10px;transition:transform .15s,box-shadow .15s}
+.cta-nav:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,158,142,.35)}
+.menu-btn{display:none;background:none;border:none;color:var(--ink);font-size:1.5rem;cursor:pointer;margin-left:auto}
+
+/* HERO */
+.hero{padding:8rem 6vw 3rem;text-align:center;background:linear-gradient(180deg,var(--of) 0%,var(--wh) 100%);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-30%;left:50%;transform:translateX(-50%);width:120%;height:80%;background:radial-gradient(ellipse at center,rgba(0,158,142,.08) 0%,transparent 60%);pointer-events:none}
+.tag{display:inline-flex;align-items:center;gap:.4rem;font-family:'Plus Jakarta Sans',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.4rem .85rem;border-radius:50px;margin-bottom:1.5rem;position:relative}
+.tag-teal{background:var(--tl);color:var(--td)}
+.hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(2.4rem,5vw,3.6rem);font-weight:800;letter-spacing:-.035em;line-height:1.08;color:var(--ink);max-width:900px;margin:0 auto 1.4rem;position:relative}
+.hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--teal) 0%,var(--pu) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p.lead{font-size:1.15rem;color:var(--i2);max-width:640px;margin:0 auto 2rem;line-height:1.6;position:relative}
+.hero-stats{display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;margin-top:1rem;position:relative}
+.hs{text-align:center}
+.hs-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:2rem;font-weight:800;color:var(--teal);line-height:1;letter-spacing:-.02em}
+.hs-lbl{font-size:.78rem;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-top:.35rem}
+
+/* TOOLBAR */
+.toolbar{position:sticky;top:66px;z-index:200;background:var(--wh);border-bottom:1.5px solid var(--li);padding:1.2rem 6vw;box-shadow:0 1px 0 rgba(15,28,46,.02)}
+.tb-inner{max-width:1240px;margin:0 auto}
+.search-wrap{position:relative;margin-bottom:.85rem}
+.search-wrap svg{position:absolute;left:1rem;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--mu);pointer-events:none}
+#search{width:100%;padding:.85rem 2.6rem .85rem 2.8rem;border:1.5px solid var(--li);border-radius:var(--r);font-family:'Inter',sans-serif;font-size:.95rem;color:var(--ink);background:var(--of);transition:border-color .15s,background .15s,box-shadow .15s}
+#search:focus{outline:none;border-color:var(--teal);background:var(--wh);box-shadow:0 0 0 3px rgba(0,158,142,.12)}
+#search::placeholder{color:var(--mu)}
+.clear-btn{position:absolute;right:.7rem;top:50%;transform:translateY(-50%);background:var(--li);border:none;color:var(--i2);width:24px;height:24px;border-radius:50%;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:.85rem;line-height:1}
+.clear-btn.show{display:flex}
+.clear-btn:hover{background:var(--mu);color:var(--wh)}
+
+.chips{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.chip{font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:600;color:var(--i2);background:var(--of);border:1.5px solid var(--li);padding:.45rem .9rem;border-radius:50px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.chip:hover{border-color:var(--teal);color:var(--td)}
+.chip.active{background:var(--ink);color:var(--wh);border-color:var(--ink)}
+.chip .ct{display:inline-block;margin-left:.4rem;opacity:.6;font-weight:500}
+.chip.active .ct{opacity:.9}
+
+/* GRID */
+.grid-section{padding:2.5rem 6vw 5rem;max-width:1320px;margin:0 auto}
+.results-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;color:var(--mu);font-size:.88rem}
+.results-meta strong{color:var(--ink);font-weight:700}
+.empty{text-align:center;padding:4rem 1rem;color:var(--mu)}
+.empty h3{font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);font-size:1.4rem;margin-bottom:.5rem;font-weight:700}
+
+.cat-block{margin-bottom:3rem}
+.cat-head{display:flex;align-items:baseline;gap:1rem;margin-bottom:1.2rem;padding-bottom:.85rem;border-bottom:1px solid var(--li)}
+.cat-head h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.45rem;font-weight:800;color:var(--ink);letter-spacing:-.02em}
+.cat-head .ct{font-size:.85rem;color:var(--mu);font-weight:500}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
+.card{background:var(--wh);border:1.5px solid var(--li);border-radius:var(--r);padding:1.25rem;display:flex;flex-direction:column;gap:.7rem;transition:all .18s ease;cursor:default;min-height:130px}
+.card:hover{border-color:var(--tm);box-shadow:var(--s2);transform:translateY(-2px)}
+.card-logo{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:var(--of);overflow:hidden;flex-shrink:0;border:1px solid var(--li)}
+.card-logo img{width:100%;height:100%;object-fit:contain;padding:6px}
+.card-logo.fallback{background:linear-gradient(135deg,var(--teal),var(--pu));color:var(--wh);font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.25rem;letter-spacing:-.02em}
+.card-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700;color:var(--ink);line-height:1.3}
+.card-cat{font-size:.74rem;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.grid-section,
+.grid-section #results,
+.grid-section #results .cat-block,
+.grid-section #results .card{opacity:1!important;transform:none!important;visibility:visible!important}
+
+/* CTA */
+.cta-band{background:linear-gradient(135deg,var(--ink) 0%,var(--pu) 100%);color:var(--wh);padding:4rem 6vw;text-align:center;margin-top:0;position:relative;overflow:hidden}
+.cta-band::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top right,rgba(0,158,142,.25) 0%,transparent 60%);pointer-events:none}
+.cta-band h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.8rem,3vw,2.4rem);font-weight:800;letter-spacing:-.025em;line-height:1.15;margin-bottom:1rem;position:relative}
+.cta-band h2 em{font-style:normal;color:var(--teal)}
+.cta-band p{color:rgba(255,255,255,.78);font-size:1.05rem;max-width:560px;margin:0 auto 1.8rem;position:relative}
+.btn-white{display:inline-flex;align-items:center;gap:.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;font-weight:700;background:var(--wh);color:var(--ink);padding:.85rem 1.7rem;border-radius:10px;transition:transform .15s,box-shadow .15s;position:relative}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.25)}
+
+/* FOOTER */
+footer{background:var(--ink);color:rgba(255,255,255,.6);padding:3rem 6vw 1.5rem;font-size:.88rem}
+.foot-grid{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:2rem}
+.foot-brand .logo{color:var(--wh)}
+.foot-brand p{margin-top:.85rem;line-height:1.6;max-width:280px;font-size:.85rem}
+.foot-col h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--wh);font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.95rem}
+.foot-col a{display:block;color:rgba(255,255,255,.6);padding:.32rem 0;transition:color .15s}
+.foot-col a:hover{color:var(--teal)}
+.foot-bottom{max-width:1240px;margin:0 auto;border-top:1px solid rgba(255,255,255,.1);padding-top:1.5rem;text-align:center;font-size:.8rem}
+
+/* RESPONSIVE */
+@media (max-width:840px){
+  .menu-btn{display:block}
+  .nav-links{display:none}
+  .nav-links.open{display:flex;position:absolute;top:66px;left:0;right:0;background:var(--wh);flex-direction:column;padding:1rem;border-bottom:1.5px solid var(--li);gap:0}
+  .nav-links.open a{padding:.85rem 1rem;border-radius:8px}
+  .cta-nav{display:none}
+  .nav-links.open .cta-nav{display:block;text-align:center;margin-top:.5rem}
+  .hero{padding-top:6rem}
+  .hero-stats{gap:1.5rem}
+  .hs-num{font-size:1.5rem}
+  .toolbar{position:static}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.75rem}
+  .card{padding:1rem;min-height:115px}
+  .card-logo{width:40px;height:40px}
+  .card-name{font-size:.92rem}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:1.5rem}
+}
+@media (max-width:480px){
+  .hero h1{font-size:2rem}
+  .hero p.lead{font-size:1rem}
+  .grid{grid-template-columns:1fr 1fr}
+  .foot-grid{grid-template-columns:1fr}
+}
+</style>
+<link rel="stylesheet" href="assets/dmedesk-experience.css?v=20260504-widgetflash3">
+</head>
+<body>
+
+<header>
+  <a class="logo" href="index"><img src="assets/dmedesk-logo.png" style="height:36px;width:auto;display:block" alt="DMEDesk"></a>
+  <button class="site-menu-button" type="button" aria-label="Menu" aria-expanded="false"><span></span></button>
+  <ul class="nav-links">
+    <li><a href="index">Home</a></li>
+    <li><a href="features">Features</a></li>
+    <li><a href="how-it-works">How It Works</a></li>
+    <li><a href="integrations" class="active" aria-current="page">Integrations</a></li>
+    <li><a href="resources">Resources</a></li>
+    <li><a href="contact">Contact</a></li>
+    <li><a href="https://app.dmedesk.ai/login">Login</a></li>
+    <li class="mobile-demo-link"><a href="contact">Book a Demo</a></li>
+  </ul>
+  <a class="nav-demo" href="contact">Book a Demo</a>
+</header>
+
+<section class="hero">
+  <span class="tag tag-teal">Integrations</span>
+  <h1>Connects to everything<br>your team <em>already uses</em></h1>
+  <p class="lead">DMEDesk plugs into the tools running your DME shop &mdash; CRMs, calendars, scheduling, comms, forms, workflow tools and more. No custom dev required.</p>
+  <div class="hero-stats">
+    <div class="hs"><div class="hs-num" id="totalCount">250+</div><div class="hs-lbl">Native Integrations</div></div>
+    <div class="hs"><div class="hs-num">15+</div><div class="hs-lbl">Categories</div></div>
+    <div class="hs"><div class="hs-num">8</div><div class="hs-lbl">Custom via API</div></div>
+  </div>
+</section>
+
+<div class="toolbar">
+  <div class="tb-inner">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" id="search" placeholder="Search 250+ integrations... (try 'salesforce', 'calendar', 'sms')" autocomplete="off">
+      <button class="clear-btn" id="clearBtn" aria-label="Clear">&times;</button>
+    </div>
+    <div class="chips" id="chips"></div>
+  </div>
+</div>
+
+<section class="grid-section">
+  <div class="results-meta">
+    <div>Showing <strong id="shownCount">0</strong> of <strong id="total2">0</strong> integrations</div>
+    <div id="filterLabel"></div>
+  </div>
+  <div id="results"></div>
+</section>
+
+<div class="cta-band">
+  <h2>Don't see what you need?<br>We'll <em>build it</em>.</h2>
+  <p>Custom integrations available via REST API, webhooks, secure exports, and configurable workflow handoffs once your stack is finalized.</p>
+  <a href="contact" class="btn-white">Talk to integrations team &rarr;</a>
+</div>
+
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <a class="logo" href="index"><img src="assets/dmedesk-logo.png" style="height:36px;width:auto;display:block" alt="DMEDesk"></a>
+      <p>The AI voice receptionist purpose-built for DMEPOS suppliers.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Product</h4>
+      <a href="features">Features</a>
+      <a href="how-it-works">How It Works</a>
+      <a href="integrations">Integrations</a>
+    </div>
+    <div class="foot-col">
+      <h4>Company</h4>
+      <a href="contact">Contact</a>
+      <a href="contact">Book Demo</a>
+    </div>
+    <div class="foot-col">
+      <h4>Resources</h4>
+      <a href="resources">Documentation &amp; Terms</a>
+    </div>
+  </div>
+  <div class="foot-bottom">&copy; 2026 DMEDesk. HIPAA-ready &bull; TCPA-compliant.</div>
+</footer>
+
+<script>
+// =========== INTEGRATIONS DATA ===========
+// AI infrastructure providers (OpenAI, Anthropic, ElevenLabs, AssemblyAI, etc.)
+// intentionally excluded from public list as they are internal infrastructure,
+// integration directory data.
+
+const INTEGRATIONS = [
+  // === ACCOUNTING ===
+  {n:"Actual Budget", c:"Accounting", d:"actualbudget.com", logo:"assets/logos/actual-budget.png"},
+  {n:"Invoice Ninja", c:"Accounting", d:"invoiceninja.com", logo:"assets/logos/invoice-ninja.png"},
+  {n:"Xero", c:"Accounting", d:"xero.com", logo:"assets/logos/xero.png"},
+  {n:"Zoho Books", c:"Accounting", d:"zoho.com", logo:"assets/logos/zoho-books.png"},
+  {n:"Zoho Invoice", c:"Accounting", d:"zoho.com", logo:"assets/logos/zoho-invoice.png"},
+
+  // === ANALYTICS & DATA ===
+  {n:"Instagram for Business", c:"Analytics & Data", d:"instagram.com", logo:"assets/logos/instagram-for-business.png"},
+  {n:"Matomo", c:"Analytics & Data", d:"matomo.org", logo:"assets/logos/matomo.png"},
+  {n:"Mixpanel", c:"Analytics & Data", d:"mixpanel.com", logo:"assets/logos/mixpanel.png"},
+  {n:"PostHog", c:"Analytics & Data", d:"posthog.com", logo:"assets/logos/posthog.png"},
+  {n:"Resend", c:"Analytics & Data", d:"resend.com", logo:"assets/logos/resend.png"},
+  {n:"Segment", c:"Analytics & Data", d:"segment.com", logo:"assets/logos/segment.png"},
+  {n:"Sessions.us", c:"Analytics & Data", d:"sessions.us", logo:"assets/logos/sessions-us.png"},
+
+  // === AUTOMATION & API ===
+  {n:"AnyHook GraphQL", c:"Automation & API", d:"anyhook.io", logo:""},
+  {n:"AnyHook Websocket", c:"Automation & API", d:"anyhook.io", logo:""},
+  {n:"Apify", c:"Automation & API", d:"apify.com", logo:"assets/logos/apify.png"},
+  {n:"Bubble", c:"Automation & API", d:"bubble.io", logo:"assets/logos/bubble.png"},
+  {n:"GitHub", c:"Automation & API", d:"github.com", logo:"assets/logos/github.png"},
+  {n:"IMAP", c:"Automation & API", d:"imap.org", logo:""},
+  {n:"JSON", c:"Automation & API", d:"json.org", logo:"assets/logos/json.png"},
+  {n:"Make", c:"Automation & API", d:"make.com", logo:"assets/logos/make.png"},
+  {n:"SFTP", c:"Automation & API", d:"sftp.net", logo:"assets/logos/sftp.png"},
+  {n:"SMTP", c:"Automation & API", d:"smtp.com", logo:"assets/logos/smtp.png"},
+  {n:"Webhook", c:"Automation & API", d:"webhook.site", logo:"assets/logos/webhook.png"},
+  {n:"Zapier", c:"Automation & API", d:"zapier.com", logo:"assets/logos/zapier.png"},
+
+  // === CALENDAR & SCHEDULING ===
+  {n:"Cal.com", c:"Calendar & Scheduling", d:"cal.com", logo:"assets/logos/cal-com.png"},
+  {n:"Calendly", c:"Calendar & Scheduling", d:"calendly.com", logo:"assets/logos/calendly.png"},
+  {n:"Clockodo", c:"Calendar & Scheduling", d:"clockodo.com", logo:"assets/logos/clockodo.png"},
+  {n:"Google Calendar", c:"Calendar & Scheduling", d:"google.com", logo:"assets/logos/google-calendar.png"},
+  {n:"Kimai", c:"Calendar & Scheduling", d:"kimai.org", logo:"assets/logos/kimai.png"},
+  {n:"Microsoft Outlook Calendar", c:"Calendar & Scheduling", d:"microsoft.com", logo:"assets/logos/microsoft-outlook-calendar.png"},
+  {n:"Motion", c:"Calendar & Scheduling", d:"usemotion.com", logo:"assets/logos/motion.png"},
+  {n:"TidyCal", c:"Calendar & Scheduling", d:"tidycal.com", logo:"assets/logos/tidycal.png"},
+
+  // === COMMERCE ===
+  {n:"Cartloom", c:"Commerce", d:"cartloom.com", logo:"assets/logos/cartloom.png"},
+  {n:"ChargeKeep", c:"Commerce", d:"chargekeep.com", logo:"assets/logos/chargekeep.png"},
+  {n:"Shopify", c:"Commerce", d:"shopify.com", logo:"assets/logos/shopify.png"},
+  {n:"Sperse", c:"Commerce", d:"sperse.com", logo:"assets/logos/sperse.png"},
+  {n:"Square", c:"Commerce", d:"squareup.com", logo:"assets/logos/square.png"},
+  {n:"Stripe", c:"Commerce", d:"stripe.com", logo:""},
+  {n:"WooCommerce", c:"Commerce", d:"woocommerce.com", logo:"assets/logos/woocommerce.png"},
+
+  // === COMMUNICATION ===
+  {n:"Azure Communication Services", c:"Communication", d:"microsoft.com", logo:"assets/logos/azure-communication-services.png"},
+  {n:"Discord", c:"Communication", d:"discord.com", logo:"assets/logos/discord.png"},
+  {n:"Discourse", c:"Communication", d:"discourse.org", logo:"assets/logos/discourse.png"},
+  {n:"Fliqr AI", c:"Communication", d:"fliqr.ai", logo:""},
+  {n:"KrispCall", c:"Communication", d:"krispcall.com", logo:"assets/logos/krispcall.png"},
+  {n:"Line Bot", c:"Communication", d:"line.me", logo:"assets/logos/line-bot.png"},
+  {n:"Mailjet", c:"Communication", d:"mailjet.com", logo:"assets/logos/mailjet.png"},
+  {n:"Mastodon", c:"Communication", d:"joinmastodon.org", logo:"assets/logos/mastodon.png"},
+  {n:"Matrix", c:"Communication", d:"matrix.org", logo:"assets/logos/matrix.png"},
+  {n:"Mattermost", c:"Communication", d:"mattermost.com", logo:""},
+  {n:"MessageBird", c:"Communication", d:"messagebird.com", logo:"assets/logos/messagebird.png"},
+  {n:"Microsoft Teams", c:"Communication", d:"microsoft.com", logo:"assets/logos/microsoft-teams.png"},
+  {n:"Mindee", c:"Communication", d:"mindee.com", logo:"assets/logos/mindee.png"},
+  {n:"ntfy", c:"Communication", d:"ntfy.sh", logo:"assets/logos/ntfy.png"},
+  {n:"Pushover", c:"Communication", d:"pushover.net", logo:"assets/logos/pushover.png"},
+  {n:"SendGrid", c:"Communication", d:"sendgrid.com", logo:"assets/logos/sendgrid.png"},
+  {n:"Slack", c:"Communication", d:"slack.com", logo:"assets/logos/slack.png"},
+  {n:"Telegram Bot", c:"Communication", d:"telegram.org", logo:"assets/logos/telegram-bot.png"},
+  {n:"Twilio", c:"Communication", d:"twilio.com", logo:"assets/logos/twilio.png"},
+  {n:"Twitter", c:"Communication", d:"twitter.com", logo:"assets/logos/twitter.png"},
+  {n:"Wachat", c:"Communication", d:"wachat.com", logo:""},
+  {n:"Whatsable", c:"Communication", d:"whatsable.com", logo:"assets/logos/whatsable.png"},
+  {n:"WhatsApp Business", c:"Communication", d:"whatsapp.com", logo:"assets/logos/whatsapp-business.png"},
+  {n:"Zoom", c:"Communication", d:"zoom.us", logo:"assets/logos/zoom.png"},
+
+  // === CUSTOMER SUPPORT ===
+  {n:"Bonjoro", c:"Customer Support", d:"bonjoro.com", logo:"assets/logos/bonjoro.png"},
+  {n:"Crisp", c:"Customer Support", d:"crisp.chat", logo:"assets/logos/crisp.png"},
+  {n:"Freshdesk", c:"Customer Support", d:"freshworks.com", logo:"assets/logos/freshdesk.png"},
+  {n:"Intercom", c:"Customer Support", d:"intercom.com", logo:"assets/logos/intercom.png"},
+  {n:"Zendesk", c:"Customer Support", d:"zendesk.com", logo:"assets/logos/zendesk.png"},
+
+  // === DATABASES & CLOUD ===
+  {n:"Amazon S3", c:"Databases & Cloud", d:"aws.amazon.com", logo:"assets/logos/amazon-s3.png"},
+  {n:"Amazon SQS", c:"Databases & Cloud", d:"aws.amazon.com", logo:"assets/logos/amazon-sqs.png"},
+  {n:"GCloud Pub/Sub", c:"Databases & Cloud", d:"cloud.google.com", logo:"assets/logos/gcloud-pub-sub.png"},
+  {n:"NocoDB", c:"Databases & Cloud", d:"nocodb.com", logo:"assets/logos/nocodb.png"},
+  {n:"Postgres", c:"Databases & Cloud", d:"postgresql.org", logo:"assets/logos/postgres.png"},
+  {n:"Qdrant", c:"Databases & Cloud", d:"qdrant.tech", logo:"assets/logos/qdrant.png"},
+  {n:"RabbitMQ", c:"Databases & Cloud", d:"rabbitmq.com", logo:"assets/logos/rabbitmq.png"},
+  {n:"Snowflake", c:"Databases & Cloud", d:"snowflake.com", logo:"assets/logos/snowflake.png"},
+  {n:"Supabase", c:"Databases & Cloud", d:"supabase.com", logo:"assets/logos/supabase.png"},
+
+  // === FILES & STORAGE ===
+  {n:"Box", c:"Files & Storage", d:"box.com", logo:"assets/logos/box.png"},
+  {n:"Dropbox", c:"Files & Storage", d:"dropbox.com", logo:"assets/logos/dropbox.png"},
+  {n:"Microsoft OneDrive", c:"Files & Storage", d:"microsoft.com", logo:"assets/logos/microsoft-onedrive.png"},
+  {n:"Microsoft SharePoint", c:"Files & Storage", d:"microsoft.com", logo:"assets/logos/microsoft-sharepoint.png"},
+  {n:"SimplePDF", c:"Files & Storage", d:"simplepdf.com", logo:"assets/logos/simplepdf.png"},
+  {n:"YouTube", c:"Files & Storage", d:"youtube.com", logo:"assets/logos/youtube.png"},
+
+  // === FORMS & SURVEYS ===
+  {n:"Formbricks", c:"Forms & Surveys", d:"formbricks.com", logo:"assets/logos/formbricks.png"},
+  {n:"Jotform", c:"Forms & Surveys", d:"jotform.com", logo:"assets/logos/jotform.png"},
+  {n:"Kizeo Forms", c:"Forms & Surveys", d:"kizeo.com", logo:"assets/logos/kizeo-forms.png"},
+  {n:"SurveyMonkey", c:"Forms & Surveys", d:"surveymonkey.com", logo:"assets/logos/surveymonkey.png"},
+  {n:"Tally", c:"Forms & Surveys", d:"tally.so", logo:"assets/logos/tally.png"},
+  {n:"Typeform", c:"Forms & Surveys", d:"typeform.com", logo:"assets/logos/typeform.png"},
+
+  // === GOOGLE WORKSPACE ===
+  {n:"Gmail", c:"Google Workspace", d:"google.com", logo:"assets/logos/gmail.png"},
+  {n:"Google Contacts", c:"Google Workspace", d:"google.com", logo:"assets/logos/google-contacts.png"},
+  {n:"Google Docs", c:"Google Workspace", d:"google.com", logo:"assets/logos/google-docs.png"},
+  {n:"Google Drive", c:"Google Workspace", d:"google.com", logo:"assets/logos/google-drive.png"},
+  {n:"Google Forms", c:"Google Workspace", d:"google.com", logo:"assets/logos/google-forms.png"},
+  {n:"Google Sheets", c:"Google Workspace", d:"google.com", logo:"assets/logos/google-sheets.png"},
+  {n:"Google Tasks", c:"Google Workspace", d:"google.com", logo:"assets/logos/google-tasks.png"},
+
+  // === HR & RECRUITING ===
+  {n:"Lever", c:"HR & Recruiting", d:"lever.co", logo:"assets/logos/lever.png"},
+
+  // === MARKETING & EMAIL ===
+  {n:"ActiveCampaign", c:"Marketing & Email", d:"activecampaign.com", logo:""},
+  {n:"Bannerbear", c:"Marketing & Email", d:"bannerbear.com", logo:"assets/logos/bannerbear.png"},
+  {n:"Bettermode", c:"Marketing & Email", d:"bettermode.com", logo:"assets/logos/bettermode.png"},
+  {n:"Brevo", c:"Marketing & Email", d:"brevo.com", logo:"assets/logos/brevo.png"},
+  {n:"Campaign Monitor", c:"Marketing & Email", d:"campaignmonitor.com", logo:"assets/logos/campaign-monitor.png"},
+  {n:"Constant Contact", c:"Marketing & Email", d:"constantcontact.com", logo:"assets/logos/constant-contact.png"},
+  {n:"Contentful", c:"Marketing & Email", d:"contentful.com", logo:"assets/logos/contentful.png"},
+  {n:"ConvertKit", c:"Marketing & Email", d:"convertkit.com", logo:"assets/logos/convertkit.png"},
+  {n:"Drip", c:"Marketing & Email", d:"drip.com", logo:"assets/logos/drip.png"},
+  {n:"Facebook Leads", c:"Marketing & Email", d:"facebook.com", logo:"assets/logos/facebook-leads.png"},
+  {n:"Facebook Pages", c:"Marketing & Email", d:"facebook.com", logo:"assets/logos/facebook-pages.png"},
+  {n:"Frame", c:"Marketing & Email", d:"frame.io", logo:"assets/logos/frame.png"},
+  {n:"GetResponse", c:"Marketing & Email", d:"getresponse.com", logo:"assets/logos/getresponse.png"},
+  {n:"Instasent", c:"Marketing & Email", d:"instasent.com", logo:"assets/logos/instasent.png"},
+  {n:"LinkedIn", c:"Marketing & Email", d:"linkedin.com", logo:"assets/logos/linkedin.png"},
+  {n:"Mailchimp", c:"Marketing & Email", d:"mailchimp.com", logo:"assets/logos/mailchimp.png"},
+  {n:"MailerLite", c:"Marketing & Email", d:"mailerlite.com", logo:"assets/logos/mailerlite.png"},
+  {n:"Maileroo", c:"Marketing & Email", d:"maileroo.com", logo:"assets/logos/maileroo.png"},
+  {n:"Mautic", c:"Marketing & Email", d:"mautic.org", logo:"assets/logos/mautic.png"},
+  {n:"Poper", c:"Marketing & Email", d:"poper.ai", logo:"assets/logos/poper.png"},
+  {n:"Reachinbox", c:"Marketing & Email", d:"reachinbox.com", logo:"assets/logos/reachinbox.png"},
+  {n:"Reoon Email Verifier", c:"Marketing & Email", d:"reoon.com", logo:"assets/logos/reoon-email-verifier.png"},
+  {n:"Robolly", c:"Marketing & Email", d:"robolly.com", logo:"assets/logos/robolly.png"},
+  {n:"SendFox", c:"Marketing & Email", d:"sendfox.com", logo:"assets/logos/sendfox.png"},
+  {n:"Sendy", c:"Marketing & Email", d:"sendy.co", logo:"assets/logos/sendy.png"},
+  {n:"Smaily", c:"Marketing & Email", d:"smaily.com", logo:"assets/logos/smaily.png"},
+  {n:"Talkable", c:"Marketing & Email", d:"talkable.com", logo:"assets/logos/talkable.png"},
+  {n:"VBOUT", c:"Marketing & Email", d:"vbout.com", logo:"assets/logos/vbout.png"},
+  {n:"Webflow", c:"Marketing & Email", d:"webflow.com", logo:"assets/logos/webflow.png"},
+  {n:"WordPress", c:"Marketing & Email", d:"wordpress.com", logo:"assets/logos/wordpress.png"},
+  {n:"Zagomail", c:"Marketing & Email", d:"zagomail.com", logo:""},
+  {n:"ZeroBounce", c:"Marketing & Email", d:"zerobounce.net", logo:"assets/logos/zerobounce.png"},
+
+  // === OTHER ===
+  {n:"Apollo", c:"Other", d:"apollo.io", logo:"assets/logos/apollo.png"},
+  {n:"Bloomerang", c:"Other", d:"bloomerang.co", logo:"assets/logos/bloomerang.png"},
+  {n:"Brilliant Directories", c:"Other", d:"brilliantdirectories.com", logo:"assets/logos/brilliant-directories.png"},
+  {n:"Captain-data", c:"Other", d:"captaindata.co", logo:"assets/logos/captain-data.png"},
+  {n:"Certopus", c:"Other", d:"certopus.com", logo:"assets/logos/certopus.png"},
+  {n:"DeepL", c:"Other", d:"deepl.com", logo:"assets/logos/deepl.png"},
+  {n:"Dust", c:"Other", d:"dust.tt", logo:"assets/logos/dust.png"},
+  {n:"Figma", c:"Other", d:"figma.com", logo:"assets/logos/figma.png"},
+  {n:"Gameball", c:"Other", d:"gameball.co", logo:"assets/logos/gameball.png"},
+  {n:"Linka", c:"Other", d:"linka.com", logo:"assets/logos/linka.png"},
+  {n:"Nifty", c:"Other", d:"niftypm.com", logo:"assets/logos/nifty.png"},
+  {n:"Odoo", c:"Other", d:"odoo.com", logo:"assets/logos/odoo.png"},
+  {n:"Onfleet", c:"Other", d:"onfleet.com", logo:"assets/logos/onfleet.png"},
+  {n:"Pastebin", c:"Other", d:"pastebin.com", logo:"assets/logos/pastebin.png"},
+  {n:"Pastefy", c:"Other", d:"pastefy.app", logo:"assets/logos/pastefy.png"},
+  {n:"PDF.co", c:"Other", d:"pdf.co", logo:"assets/logos/pdf-co.png"},
+  {n:"Photoroom", c:"Other", d:"photoroom.com", logo:"assets/logos/photoroom.png"},
+  {n:"Quickzu", c:"Other", d:"quickzu.com", logo:"assets/logos/quickzu.png"},
+  {n:"Spotify", c:"Other", d:"spotify.com", logo:"assets/logos/spotify.png"},
+  {n:"Upgrade.chat", c:"Other", d:"upgrade.chat", logo:"assets/logos/upgrade-chat.png"},
+  {n:"Webling", c:"Other", d:"webling.eu", logo:"assets/logos/webling.png"},
+  {n:"Wedof", c:"Other", d:"wedof.fr", logo:"assets/logos/wedof.png"},
+  {n:"Wootric", c:"Other", d:"wootric.com", logo:"assets/logos/wootric.png"},
+
+  // === PAYMENTS ===
+  {n:"Razorpay", c:"Payments", d:"razorpay.com", logo:"assets/logos/razorpay.png"},
+  {n:"TrueLayer", c:"Payments", d:"truelayer.com", logo:"assets/logos/truelayer.png"},
+
+  // === PRODUCTIVITY ===
+  {n:"Airparser", c:"Productivity", d:"airparser.com", logo:"assets/logos/airparser.png"},
+  {n:"Airtable", c:"Productivity", d:"airtable.com", logo:"assets/logos/airtable.png"},
+  {n:"AITable", c:"Productivity", d:"aitable.ai", logo:"assets/logos/aitable.png"},
+  {n:"Asana", c:"Productivity", d:"asana.com", logo:"assets/logos/asana.png"},
+  {n:"Baserow", c:"Productivity", d:"baserow.io", logo:"assets/logos/baserow.png"},
+  {n:"Beamer", c:"Productivity", d:"getbeamer.com", logo:"assets/logos/beamer.png"},
+  {n:"ClickUp", c:"Productivity", d:"clickup.com", logo:"assets/logos/clickup.png"},
+  {n:"Coda", c:"Productivity", d:"coda.io", logo:"assets/logos/coda.png"},
+  {n:"Cognito Forms", c:"Productivity", d:"cognitoforms.com", logo:"assets/logos/cognito-forms.png"},
+  {n:"Fireflies.ai", c:"Productivity", d:"fireflies.ai", logo:"assets/logos/fireflies-ai.png"},
+  {n:"Jira Cloud", c:"Productivity", d:"atlassian.com", logo:"assets/logos/jira-cloud.png"},
+  {n:"Linear", c:"Productivity", d:"linear.app", logo:"assets/logos/linear.png"},
+  {n:"Mem", c:"Productivity", d:"mem.ai", logo:"assets/logos/mem.png"},
+  {n:"Monday.com", c:"Productivity", d:"monday.com", logo:"assets/logos/monday-com.png"},
+  {n:"Notion", c:"Productivity", d:"notion.so", logo:"assets/logos/notion.png"},
+  {n:"Retable", c:"Productivity", d:"retable.io", logo:"assets/logos/retable.png"},
+  {n:"Taskade", c:"Productivity", d:"taskade.com", logo:"assets/logos/taskade.png"},
+  {n:"TickTick", c:"Productivity", d:"ticktick.com", logo:""},
+  {n:"Todoist", c:"Productivity", d:"todoist.com", logo:"assets/logos/todoist.png"},
+  {n:"Trello", c:"Productivity", d:"trello.com", logo:"assets/logos/trello.png"},
+
+  // === SALES & CRM ===
+  {n:"Clearout", c:"Sales & CRM", d:"clearout.io", logo:"assets/logos/clearout.png"},
+  {n:"Copper CRM", c:"Sales & CRM", d:"copper.com", logo:"assets/logos/copper-crm.png"},
+  {n:"Flowlu", c:"Sales & CRM", d:"flowlu.com", logo:"assets/logos/flowlu.png"},
+  {n:"Freshsales", c:"Sales & CRM", d:"freshworks.com", logo:"assets/logos/freshsales.png"},
+  {n:"GoHighLevel", c:"Sales & CRM", d:"gohighlevel.com", logo:"assets/logos/gohighlevel.png"},
+  {n:"HubSpot", c:"Sales & CRM", d:"hubspot.com", logo:"assets/logos/hubspot.png"},
+  {n:"Kommo", c:"Sales & CRM", d:"kommo.com", logo:"assets/logos/kommo.png"},
+  {n:"Microsoft Dynamics 365", c:"Sales & CRM", d:"microsoft.com", logo:"assets/logos/microsoft-dynamics-365.png"},
+  {n:"Microsoft Dynamics CRM", c:"Sales & CRM", d:"microsoft.com", logo:"assets/logos/microsoft-dynamics-crm.png"},
+  {n:"Moxie", c:"Sales & CRM", d:"withmoxie.com", logo:"assets/logos/moxie.png"},
+  {n:"NetSuite", c:"Sales & CRM", d:"netsuite.com", logo:"assets/logos/netsuite.png"},
+  {n:"Pipedrive", c:"Sales & CRM", d:"pipedrive.com", logo:"assets/logos/pipedrive.png"},
+  {n:"Salesforce", c:"Sales & CRM", d:"salesforce.com", logo:"assets/logos/salesforce.png"},
+  {n:"Vtiger", c:"Sales & CRM", d:"vtiger.com", logo:"assets/logos/vtiger.png"},
+  {n:"Zendesk Sell", c:"Sales & CRM", d:"zendesk.com", logo:"assets/logos/zendesk-sell.png"},
+  {n:"Zoho CRM", c:"Sales & CRM", d:"zoho.com", logo:"assets/logos/zoho-crm.png"},
+  {n:"Zuora", c:"Sales & CRM", d:"zuora.com", logo:"assets/logos/zuora.png"},
+];
+
+// =========== STATE ===========
+const CATS = [...new Set(INTEGRATIONS.map(i => i.c))];
+let activeCat = "All";
+let searchQuery = "";
+
+// =========== LETTER FALLBACK ===========
+function letterFallback(name) {
+  return name.charAt(0).toUpperCase();
+}
+
+// =========== RENDER ===========
+const $results = document.getElementById('results');
+const $shown = document.getElementById('shownCount');
+const $total = document.getElementById('total2');
+const $totalHero = document.getElementById('totalCount');
+const $filterLabel = document.getElementById('filterLabel');
+const $chips = document.getElementById('chips');
+const $search = document.getElementById('search');
+const $clear = document.getElementById('clearBtn');
+
+$totalHero.textContent = INTEGRATIONS.length + '+';
+$total.textContent = INTEGRATIONS.length;
+
+// Build chips
+const catCounts = {};
+INTEGRATIONS.forEach(i => { catCounts[i.c] = (catCounts[i.c]||0) + 1; });
+const sortedCats = ["All", ...Object.keys(catCounts).sort((a,b) => catCounts[b]-catCounts[a])];
+
+sortedCats.forEach(cat => {
+  const btn = document.createElement('button');
+  btn.className = 'chip' + (cat === 'All' ? ' active' : '');
+  btn.dataset.cat = cat;
+  const ct = cat === 'All' ? INTEGRATIONS.length : catCounts[cat];
+  btn.innerHTML = `${cat} <span class="ct">${ct}</span>`;
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    activeCat = cat;
+    render();
+  });
+  $chips.appendChild(btn);
+});
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function render() {
+  const q = searchQuery.toLowerCase().trim();
+  let filtered = INTEGRATIONS.filter(i => {
+    const matchCat = activeCat === 'All' || i.c === activeCat;
+    const matchQ = !q || i.n.toLowerCase().includes(q) || i.c.toLowerCase().includes(q);
+    return matchCat && matchQ;
+  });
+
+  $shown.textContent = filtered.length;
+  $filterLabel.textContent = activeCat === 'All' && !q ? '' :
+    [activeCat !== 'All' ? activeCat : '', q ? `"${q}"` : ''].filter(Boolean).join(' &mdash; ');
+
+  if (filtered.length === 0) {
+    $results.innerHTML = `<div class="empty"><h3>No integrations match "${escapeHtml(q || activeCat)}"</h3><p>Try a different search term, or contact us about a custom integration.</p></div>`;
+    return;
+  }
+
+  // Group by category
+  const groups = {};
+  filtered.forEach(i => {
+    if (!groups[i.c]) groups[i.c] = [];
+    groups[i.c].push(i);
+  });
+
+  // Render groups in order of size
+  const orderedGroups = Object.keys(groups).sort((a,b) => groups[b].length - groups[a].length);
+
+  let html = '';
+  orderedGroups.forEach(cat => {
+    const items = groups[cat].sort((a,b) => a.n.localeCompare(b.n));
+    html += `<div class="cat-block"><div class="cat-head"><h2>${escapeHtml(cat)}</h2><span class="ct">${items.length} integration${items.length===1?'':'s'}</span></div><div class="grid">`;
+    items.forEach(i => {
+      const safeName = escapeHtml(i.n);
+      const safeCat = escapeHtml(i.c);
+      const letter = letterFallback(i.n);
+      html += `
+        <div class="card">
+          <div class="card-logo${i.logo ? '' : ' fallback'}" data-letter="${letter}">
+            ${i.logo ? `<img src="${escapeHtml(i.logo)}" alt="${safeName} logo" loading="lazy" onerror="this.parentElement.classList.add('fallback');this.remove();this.parentElement.textContent=this.parentElement.dataset.letter;">` : letter}
+          </div>
+          <div class="card-name">${safeName}</div>
+          <div class="card-cat">${safeCat}</div>
+        </div>`;
+    });
+    html += `</div></div>`;
+  });
+
+  $results.innerHTML = html;
+}
+
+// Search handler
+$search.addEventListener('input', e => {
+  searchQuery = e.target.value;
+  $clear.classList.toggle('show', !!searchQuery);
+  render();
+});
+
+$clear.addEventListener('click', () => {
+  $search.value = '';
+  searchQuery = '';
+  $clear.classList.remove('show');
+  $search.focus();
+  render();
+});
+
+// Initial render
+render();
+requestAnimationFrame(render);
+window.addEventListener('load', render, { once: true });
+</script>
+
+<!-- DMEDesk widget -->
+<script type="application/json" id="dme-widget-config" data-embed-src="https://app.dmedesk.ai/embed.js" data-assistant-id="0284e1e9-49d2-47fb-a07f-2ad8588a17dc"></script>
+<script src="assets/dmedesk-experience.js?v=20260428-mobile8" defer></script>
+<div id="dme-robot-launcher" title="Chat with AI">
+  <div class="dme-robot-bubble">Need help?</div>
+  <svg role="img" aria-label="AI Assistant" xmlns="http://www.w3.org/2000/svg" viewBox="0 -170 160 380" id="dme-robot-svg" preserveAspectRatio="xMidYMax meet">
+  <defs>
+    <radialGradient id="rg-head" cx="38%" cy="32%" r="65%">
+      <stop offset="0%" stop-color="#5eead4"/>
+      <stop offset="100%" stop-color="#0f766e"/>
+    </radialGradient>
+    <radialGradient id="rg-body" cx="32%" cy="28%" r="70%">
+      <stop offset="0%" stop-color="#2dd4bf"/>
+      <stop offset="100%" stop-color="#0d6660"/>
+    </radialGradient>
+    <radialGradient id="rg-limb" cx="30%" cy="28%" r="70%">
+      <stop offset="0%" stop-color="#14b8a6"/>
+      <stop offset="100%" stop-color="#0f766e"/>
+    </radialGradient>
+    <radialGradient id="rg-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#a5b4fc"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </radialGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#0f766e" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <g id="dme-robot-drift">
+    <g id="dme-robot-body">
+      <g id="dme-head-unit">
+        <!-- Antenna -->
+        <g id="dme-antenna">
+          <rect x="77" y="6" width="6" height="18" rx="3" fill="#2dd4bf"/>
+          <circle id="dme-antenna-light" cx="80" cy="5" r="7" fill="url(#rg-glow)" filter="url(#shadow)"/>
+        </g>
+
+        <!-- Head -->
+        <ellipse cx="80" cy="46" rx="38" ry="34" fill="url(#rg-head)" filter="url(#shadow)"/>
+
+        <!-- Face plate -->
+        <ellipse cx="80" cy="48" rx="28" ry="24" fill="#f0fdfa" opacity="0.97"/>
+
+        <!-- Eyes -->
+        <g id="dme-eyes">
+          <path class="dme-brow dme-left-brow" d="M 60 33 Q 68 29 76 33" stroke="#0f766e" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.55"/>
+          <path class="dme-brow dme-right-brow" d="M 84 33 Q 92 29 100 33" stroke="#0f766e" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.55"/>
+          <circle cx="68" cy="43" r="9" fill="#0f766e"/>
+          <circle cx="92" cy="43" r="9" fill="#0f766e"/>
+          <!-- Eye glow (indigo) -->
+          <circle class="dme-eye-glow" cx="68" cy="43" r="5.5" fill="url(#rg-glow)" opacity="0.9"/>
+          <circle class="dme-eye-glow" cx="92" cy="43" r="5.5" fill="url(#rg-glow)" opacity="0.9"/>
+          <!-- Eye shine -->
+          <circle cx="65" cy="40" r="3" fill="#fff" opacity="0.6"/>
+          <circle cx="89" cy="40" r="3" fill="#fff" opacity="0.6"/>
+        </g>
+
+        <!-- Smile -->
+        <g id="dme-mouth">
+          <path id="dme-smile" d="M 68 59 Q 80 68 92 59" stroke="#0f766e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <ellipse id="dme-gasp-mouth" cx="80" cy="60" rx="8" ry="10" fill="#0f766e" opacity="0"/>
+          <ellipse id="dme-gasp-shine" cx="77" cy="56" rx="2.4" ry="3" fill="#f0fdfa" opacity="0"/>
+        </g>
+
+        <!-- Head sheen -->
+        <ellipse cx="62" cy="32" rx="14" ry="9" fill="#fff" opacity="0.16" transform="rotate(-20 62 32)"/>
+      </g>
+
+      <!-- Neck -->
+      <rect x="70" y="78" width="20" height="10" rx="5" fill="#0f766e" opacity="0.6"/>
+
+      <g id="dme-torso">
+        <!-- Body -->
+        <rect x="42" y="86" width="76" height="76" rx="20" fill="url(#rg-body)" filter="url(#shadow)"/>
+
+        <!-- Chest glow circle -->
+        <g id="dme-chest-core">
+          <circle cx="80" cy="110" r="16" fill="#0f766e" opacity="0.4"/>
+          <circle cx="80" cy="110" r="11" fill="url(#rg-glow)"/>
+          <circle cx="80" cy="110" r="6" fill="#f0fdfa"/>
+        </g>
+
+        <!-- Belly detail bars -->
+        <rect x="57" y="132" width="15" height="7" rx="3.5" fill="#0f766e" opacity="0.4"/>
+        <rect x="77" y="132" width="15" height="7" rx="3.5" fill="#0f766e" opacity="0.4"/>
+        <rect x="97" y="132" width="11" height="7" rx="3.5" fill="#0f766e" opacity="0.4"/>
+      </g>
+
+      <!-- Left arm -->
+      <g id="dme-left-arm">
+        <rect x="14" y="90" width="24" height="50" rx="12" fill="url(#rg-limb)" filter="url(#shadow)"/>
+        <ellipse cx="26" cy="145" rx="13" ry="10" fill="url(#rg-limb)"/>
+      </g>
+
+      <!-- Right arm -->
+      <g id="dme-arm-wave">
+        <rect x="122" y="90" width="24" height="50" rx="12" fill="url(#rg-limb)" filter="url(#shadow)"/>
+        <ellipse cx="134" cy="145" rx="13" ry="10" fill="url(#rg-limb)"/>
+      </g>
+
+      <g id="dme-left-leg">
+        <rect x="52" y="158" width="24" height="38" rx="12" fill="url(#rg-limb)" filter="url(#shadow)"/>
+        <ellipse cx="64" cy="198" rx="18" ry="9" fill="#0d6660"/>
+      </g>
+
+      <g id="dme-right-leg">
+        <rect x="84" y="158" width="24" height="38" rx="12" fill="url(#rg-limb)" filter="url(#shadow)"/>
+        <ellipse cx="96" cy="198" rx="18" ry="9" fill="#0d6660"/>
+      </g>
+    </g>
+  </g>
+
+  <g id="dme-fall-lines" aria-hidden="true">
+    <g id="dme-left-fall-lines">
+      <path d="M 22 38 L 8 54" />
+      <path d="M 33 78 L 14 98" />
+      <path d="M 25 126 L 7 146" />
+      <path d="M 38 168 L 23 186" />
+    </g>
+    <g id="dme-right-fall-lines">
+      <path d="M 138 38 L 152 54" />
+      <path d="M 127 78 L 146 98" />
+      <path d="M 135 126 L 153 146" />
+      <path d="M 122 168 L 137 186" />
+    </g>
+  </g>
+
+  <style>
+    #dme-robot-svg {
+      overflow: visible;
+    }
+
+    #dme-robot-svg * {
+      transform-box: fill-box;
+    }
+
+    #dme-robot-drift {
+      transform-origin: 80px 110px;
+      animation: dme-drift 3.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    }
+
+    #dme-robot-body {
+      transform-origin: 80px 132px;
+      animation: dme-bob 1.8s ease-in-out infinite;
+    }
+
+    #dme-head-unit {
+      transform-origin: 80px 80px;
+      animation: dme-head-tilt 1.8s ease-in-out infinite;
+    }
+
+    #dme-antenna {
+      transform-origin: 80px 24px;
+      animation: dme-antenna-wiggle 1.8s ease-in-out infinite;
+    }
+
+    #dme-antenna-light,
+    .dme-eye-glow,
+    #dme-chest-core {
+      transform-origin: center;
+      animation: dme-pulse 1.8s ease-in-out infinite;
+    }
+
+    #dme-left-arm {
+      transform-origin: 38px 96px;
+      animation: dme-left-arm-swing 1.8s ease-in-out infinite;
+    }
+
+    #dme-arm-wave {
+      transform-origin: 122px 96px;
+      animation: dme-right-arm-swing 1.8s ease-in-out infinite;
+    }
+
+    #dme-left-leg {
+      transform-origin: 64px 160px;
+      animation: dme-left-step 1.8s ease-in-out infinite;
+    }
+
+    #dme-right-leg {
+      transform-origin: 96px 160px;
+      animation: dme-right-step 1.8s ease-in-out infinite;
+    }
+
+    #dme-fall-lines {
+      display: none;
+      fill: none;
+      opacity: 0;
+      pointer-events: none;
+      stroke: #111827;
+      stroke-linecap: round;
+      stroke-width: 3.8;
+      transform-origin: 80px 105px;
+      transition: opacity 100ms ease;
+    }
+
+    #dme-left-fall-lines,
+    #dme-right-fall-lines {
+      transform-origin: center;
+    }
+
+    #dme-eyes,
+    .dme-brow,
+    #dme-mouth,
+    #dme-smile,
+    #dme-gasp-mouth,
+    #dme-gasp-shine {
+      transform-origin: center;
+      transition: opacity 120ms ease, transform 160ms ease;
+    }
+
+    #dme-gasp-mouth,
+    #dme-gasp-shine {
+      transform: scale(0.6);
+    }
+
+    #dme-robot-svg.is-levitating #dme-robot-drift {
+      animation: dme-scroll-levitate var(--dme-scroll-duration, 4.2s) cubic-bezier(0.18, 0.88, 0.22, 1) infinite;
+    }
+
+    #dme-robot-svg.is-levitating #dme-robot-body {
+      animation: dme-float-body var(--dme-scroll-duration, 4.2s) ease-in-out infinite;
+    }
+
+    #dme-robot-svg.is-levitating #dme-head-unit {
+      animation: dme-float-head var(--dme-scroll-duration, 4.2s) ease-in-out infinite;
+    }
+
+    #dme-robot-svg.is-levitating #dme-antenna {
+      animation: dme-antenna-wiggle 1.2s ease-in-out infinite;
+    }
+
+    #dme-robot-svg.is-levitating #dme-left-arm {
+      animation: dme-float-left-arm var(--dme-float-limb-duration, 3.6s) ease-in-out infinite;
+    }
+
+    #dme-robot-svg.is-levitating #dme-arm-wave {
+      animation: dme-float-right-arm var(--dme-float-limb-duration, 3.6s) ease-in-out infinite;
+    }
+
+    #dme-robot-svg.is-levitating #dme-left-leg {
+      animation: dme-float-left-leg var(--dme-float-limb-duration, 3.6s) ease-in-out infinite;
+    }
+
+    #dme-robot-svg.is-levitating #dme-right-leg {
+      animation: dme-float-right-leg var(--dme-float-limb-duration, 3.6s) ease-in-out infinite;
+    }
+
+    #dme-robot-svg.is-levitating #dme-fall-lines {
+      opacity: 0;
+      animation: none;
+    }
+
+    #dme-robot-svg.is-levitating #dme-left-fall-lines {
+      animation: none;
+    }
+
+    #dme-robot-svg.is-levitating #dme-right-fall-lines {
+      animation: none;
+    }
+
+    #dme-robot-svg.is-levitating #dme-eyes {
+      transform: translateY(-3px) scale(1.08, 1.18);
+    }
+
+    #dme-robot-svg.is-levitating .dme-left-brow {
+      transform: translate(-3px, -6px) rotate(-16deg);
+      opacity: 0.92;
+    }
+
+    #dme-robot-svg.is-levitating .dme-right-brow {
+      transform: translate(3px, -6px) rotate(16deg);
+      opacity: 0.92;
+    }
+
+    #dme-robot-svg.is-levitating #dme-smile {
+      opacity: 0;
+      transform: translateY(4px) scale(0.75);
+    }
+
+    #dme-robot-svg.is-levitating #dme-gasp-mouth,
+    #dme-robot-svg.is-levitating #dme-gasp-shine {
+      opacity: 1;
+      transform: translateY(-1px) scale(0.82);
+    }
+
+    #dme-robot-svg.is-pulled #dme-eyes {
+      transform: translateY(3px) scale(0.96, 1.05);
+    }
+
+    #dme-robot-svg.is-pulled .dme-left-brow {
+      transform: translate(-2px, 1px) rotate(15deg);
+      opacity: 0.9;
+    }
+
+    #dme-robot-svg.is-pulled .dme-right-brow {
+      transform: translate(2px, 1px) rotate(-15deg);
+      opacity: 0.9;
+    }
+
+    #dme-robot-svg.is-pulled #dme-smile {
+      opacity: 0;
+      transform: translateY(4px) scale(0.72);
+    }
+
+    #dme-robot-svg.is-pulled #dme-gasp-mouth,
+    #dme-robot-svg.is-pulled #dme-gasp-shine {
+      opacity: 1;
+      transform: translateY(3px) scale(0.72, 0.9);
+    }
+
+    @keyframes dme-drift {
+      0%, 100% { transform: translateX(-9px) rotate(-1.6deg); }
+      25%      { transform: translateX(0) rotate(0.4deg); }
+      50%      { transform: translateX(9px) rotate(1.6deg); }
+      75%      { transform: translateX(0) rotate(-0.4deg); }
+    }
+
+    @keyframes dme-bob {
+      0%, 100% { transform: translateY(0) scaleY(1); }
+      25%      { transform: translateY(-3px) scaleY(1.01); }
+      50%      { transform: translateY(1px) scaleY(0.99); }
+      75%      { transform: translateY(-2px) scaleY(1.005); }
+    }
+
+    @keyframes dme-head-tilt {
+      0%, 100% { transform: translateY(0) rotate(2deg); }
+      50%      { transform: translateY(-2px) rotate(-2deg); }
+    }
+
+    @keyframes dme-antenna-wiggle {
+      0%, 100% { transform: rotate(-5deg); }
+      50%      { transform: rotate(6deg); }
+    }
+
+    @keyframes dme-left-arm-swing {
+      0%, 100% { transform: rotate(10deg) translateY(1px); }
+      50%      { transform: rotate(-13deg) translateY(-2px); }
+    }
+
+    @keyframes dme-right-arm-swing {
+      0%, 100% { transform: rotate(-11deg) translateY(-1px); }
+      50%      { transform: rotate(14deg) translateY(2px); }
+    }
+
+    @keyframes dme-left-step {
+      0%, 100% { transform: translate(0, 0) rotate(-2deg); }
+      50%      { transform: translate(4px, -3px) rotate(3deg); }
+    }
+
+    @keyframes dme-right-step {
+      0%, 100% { transform: translate(0, -2px) rotate(2deg); }
+      50%      { transform: translate(-4px, 1px) rotate(-3deg); }
+    }
+
+    @keyframes dme-pulse {
+      0%, 100% { opacity: 0.88; transform: scale(0.96); }
+      50%      { opacity: 1; transform: scale(1.08); }
+    }
+
+    @keyframes dme-scroll-levitate {
+      0%, 100% {
+        transform: translate(0, calc(var(--dme-scroll-lift, -22px) * 0.75)) rotate(var(--dme-scroll-tilt, -3deg));
+      }
+      50% {
+        transform: translate(0, calc(var(--dme-scroll-lift, -22px) * 1.08)) rotate(calc(var(--dme-scroll-tilt, -3deg) * -0.55));
+      }
+    }
+
+    @keyframes dme-float-body {
+      0%, 100% { transform: translateY(-3px) scaleY(1.01); }
+      50%      { transform: translateY(3px) scaleY(0.995); }
+    }
+
+    @keyframes dme-float-head {
+      0%, 100% { transform: translateY(-2px) rotate(-1.5deg); }
+      50%      { transform: translateY(2px) rotate(1.5deg); }
+    }
+
+    @keyframes dme-float-left-arm {
+      0%, 100% { transform: rotate(-18deg) translateY(-3px); }
+      50%      { transform: rotate(-8deg) translateY(2px); }
+    }
+
+    @keyframes dme-float-right-arm {
+      0%, 100% { transform: rotate(18deg) translateY(-3px); }
+      50%      { transform: rotate(8deg) translateY(2px); }
+    }
+
+    @keyframes dme-float-left-leg {
+      0%, 100% { transform: translate(1px, 3px) rotate(-5deg); }
+      50%      { transform: translate(-1px, 7px) rotate(2deg); }
+    }
+
+    @keyframes dme-float-right-leg {
+      0%, 100% { transform: translate(-1px, 3px) rotate(5deg); }
+      50%      { transform: translate(1px, 7px) rotate(-2deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #dme-robot-drift,
+      #dme-robot-body,
+      #dme-head-unit,
+      #dme-antenna,
+      #dme-antenna-light,
+      .dme-eye-glow,
+      #dme-chest-core,
+      #dme-left-arm,
+      #dme-arm-wave,
+      #dme-left-leg,
+      #dme-right-leg,
+      #dme-fall-lines,
+      #dme-left-fall-lines,
+      #dme-right-fall-lines,
+      #dme-robot-svg.is-levitating #dme-robot-drift,
+      #dme-robot-svg.is-levitating #dme-robot-body,
+      #dme-robot-svg.is-levitating #dme-head-unit,
+      #dme-robot-svg.is-levitating #dme-antenna,
+      #dme-robot-svg.is-levitating #dme-left-arm,
+      #dme-robot-svg.is-levitating #dme-arm-wave,
+      #dme-robot-svg.is-levitating #dme-left-leg,
+      #dme-robot-svg.is-levitating #dme-right-leg {
+        animation: none;
+      }
+    }
+  </style>
+</svg>
+
+
+
+
+
+
+
+</div>
+<script src="assets/robot-launcher.js?v=20260504-widgetflash3" defer></script>
+</body>
+</html>

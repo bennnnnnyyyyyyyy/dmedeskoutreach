@@ -942,11 +942,11 @@
             try {
                 const dateClean = dateStr.replace(/^[A-Za-z]+,\s*/, ""); // strip weekday
                 const [hourStr, minStr] = time24.split(":");
-                // Treat the pasted time as local to ianaSource by building an ISO string
-                // We find what UTC moment corresponds to that local time in ianaSource
-                const tempDate = new Date(`${dateClean} ${hourStr}:${minStr}:00`);
 
-                if (isNaN(tempDate.getTime())) {
+                // Parse as UTC (neutral baseline) — appending "UTC" avoids browser-local interpretation
+                const naiveUTC = new Date(`${dateClean} ${hourStr}:${minStr}:00 UTC`);
+
+                if (isNaN(naiveUTC.getTime())) {
                     document.getElementById('var-meet-date').value = dateStr;
                     document.getElementById('var-meet-time').value = time24;
                     if (meetLink) document.getElementById('var-meet-link').value = meetLink;
@@ -955,7 +955,7 @@
                     return;
                 }
 
-                // Helper: get UTC offset in minutes for an IANA zone at a given Date
+                // Returns how many minutes ianaZone is ahead of UTC at the given instant
                 function getUTCOffsetMin(ianaZone, date) {
                     const fmt = new Intl.DateTimeFormat('en-CA', {
                         timeZone: ianaZone,
@@ -969,24 +969,27 @@
                     return (localMs - date.getTime()) / 60000;
                 }
 
-                const sourceOffset = getUTCOffsetMin(ianaSource, tempDate);
-                const easternOffset = getUTCOffsetMin('America/New_York', tempDate);
+                // Actual UTC = naive UTC − source offset
+                // e.g. Cairo is UTC+3 (offset=+180), so 20:30 UTC − 180min = 17:30 UTC ✓
+                const sourceOffset = getUTCOffsetMin(ianaSource, naiveUTC);
+                const actualUTC = new Date(naiveUTC.getTime() - sourceOffset * 60000);
 
-                // Shift: remove source offset, apply Eastern offset
-                const shiftedMs = tempDate.getTime() + (sourceOffset - easternOffset) * 60000;
-                const easternDate = new Date(shiftedMs);
-
+                // Render directly in Eastern via Intl — no manual hour math
                 const isDaylight = new Intl.DateTimeFormat('en-US', {
                     timeZone: 'America/New_York', timeZoneName: 'short'
-                }).format(easternDate).includes('EDT');
+                }).format(actualUTC).includes('EDT');
 
-                const formattedDate = easternDate.toLocaleDateString('en-US', {
+                const formattedDate = new Intl.DateTimeFormat('en-US', {
+                    timeZone: 'America/New_York',
                     weekday: 'long', year: 'numeric', month: 'short', day: 'numeric'
-                });
-                let h = easternDate.getHours(), m = easternDate.getMinutes();
-                const ampm = h >= 12 ? 'PM' : 'AM';
-                h = h % 12 || 12;
-                const formattedTime = `${h}:${m < 10 ? '0' + m : m} ${ampm} ${isDaylight ? 'EDT' : 'EST'}`;
+                }).format(actualUTC);
+
+                const timeRendered = new Intl.DateTimeFormat('en-US', {
+                    timeZone: 'America/New_York',
+                    hour: 'numeric', minute: '2-digit', hour12: true
+                }).format(actualUTC);
+
+                const formattedTime = `${timeRendered} ${isDaylight ? 'EDT' : 'EST'}`;
 
                 document.getElementById('var-meet-date').value = formattedDate;
                 document.getElementById('var-meet-time').value = formattedTime;
