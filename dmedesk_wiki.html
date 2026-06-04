@@ -857,6 +857,7 @@
                 <span class="sb-grp-title">Team Onboarding</span>
                 <div class="sb-item" data-page="doc-chaser-guide" onclick="showPage('doc-chaser-guide')">🎓 Your Background ➔ BDR</div>
                 <div class="sb-item" data-page="crm-ehr-pms" onclick="showPage('crm-ehr-pms')">💻 CRM vs EHR vs PMS</div>
+                <div class="sb-item" data-page="dme-positions" onclick="showPage('dme-positions')">👥 DME Practice Roles</div>
             </div>
         </aside>
 
@@ -1651,6 +1652,220 @@
 
                     <div class="nav-footer">
                         <div class="nf-btn" onclick="showPage('doc-chaser-guide')">&larr; Back to BDR Guide</div>
+                        <div class="nf-btn" onclick="showPage('dme-positions')">Next: DME Practice Roles &rarr;</div>
+                    </div>
+                </div>
+
+                <!-- DME PRACTICE ROLES & PERSONAS -->
+                <div class="doc-page" id="page-dme-positions">
+                    <div class="bc">Team Onboarding &rsaquo; DME Practice Roles</div>
+                    <div class="pg-header">
+                        <h1 class="pg-title">DME Practice Roles & Personas</h1>
+                        <p class="pg-sub">A field guide to every person you will encounter when calling a DME supplier — who they are, what keeps them up at night, and exactly how to hook them into a demo.</p>
+                    </div>
+
+                    <div class="callout info">
+                        <h4>🎯 Why This Matters</h4>
+                        <p style="margin-top:0.5rem;font-size:0.95rem;line-height:1.6;">When you call a DME practice, you will not always reach the owner. You need to know <strong>who picked up</strong>, <strong>what their day looks like</strong>, and <strong>which pain angle to use</strong> in the first 20 seconds. This guide gives you that map.</p>
+                    </div>
+
+                    <!-- ROLE 1: OWNER -->
+                    <h2>1. Practice Owner / CEO / President</h2>
+                    <div style="display:flex;flex-direction:column;gap:1rem;margin:1rem 0;">
+                        <div class="card">
+                            <h4 style="color:var(--t);">👤 Who They Are</h4>
+                            <p>The decision maker. Usually a licensed RT, PT, or an entrepreneur who started the DME company. They may answer the phone directly at small shops, or you may only reach them after clearing the front desk gatekeeper. They sign contracts and approve new software.</p>
+                        </div>
+                        <div class="card">
+                            <h4 style="color:var(--t);">💭 What They Care About</h4>
+                            <ul style="margin:0.5rem 0 0 1.25rem;">
+                                <li>Monthly revenue and cash flow.</li>
+                                <li>Keeping headcount lean — every hire is overhead they don't want.</li>
+                                <li>Not getting audited by CMS or their MAC (Medicare Administrative Contractor).</li>
+                                <li>Competitive edge over other local DME suppliers who are also taking patient referrals.</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4 style="color:var(--red);">🔥 Their Biggest Pain Points</h4>
+                            <ul style="margin:0.5rem 0 0 1.25rem;">
+                                <li><strong>Voicemail Bleed:</strong> Patients who call after hours hit voicemail, panic, and call the next supplier on Google. This is invisible lost revenue.</li>
+                                <li><strong>Staff overhead vs. volume:</strong> Hiring enough front desk staff to handle 100+ monthly referrals is expensive and risky (high attrition).</li>
+                                <li><strong>Compliance exposure:</strong> One missed HIPAA breach or TCPA violation from an unmonitored answering service can mean six-figure fines.</li>
+                            </ul>
+                        </div>
+                        <div class="card" style="border-left:3px solid var(--t);">
+                            <h4>🎙️ SDR Hook for an Owner</h4>
+                            <p style="font-style:italic;font-size:0.95rem;margin-top:0.5rem;">&ldquo;Hey [Name], I work with DME suppliers who are quietly losing 3–4 referrals every single week to after-hours voicemail. Is that something your front desk ever runs into?&rdquo;</p>
+                            <p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.5rem;">Why it works: Owners think in revenue numbers. Anchoring on <em>lost referrals per week</em> is tangible and ties directly to cash flow.</p>
+                        </div>
+                    </div>
+
+                    <!-- ROLE 2: OFFICE MANAGER -->
+                    <h2>2. Office Manager / Practice Manager / Director of Operations</h2>
+                    <div style="display:flex;flex-direction:column;gap:1rem;margin:1rem 0;">
+                        <div class="card">
+                            <h4 style="color:var(--t);">👤 Who They Are</h4>
+                            <p>The person who runs the day-to-day. They coordinate between billing, intake, and clinical staff. They are usually the first person the owner turns to when something breaks. They have the owner's ear but typically cannot sign a contract alone — they influence the deal.</p>
+                        </div>
+                        <div class="card">
+                            <h4 style="color:var(--t);">💭 What They Care About</h4>
+                            <ul style="margin:0.5rem 0 0 1.25rem;">
+                                <li>Keeping workflows running without constant firefighting.</li>
+                                <li>Staff morale — they deal with turnover directly.</li>
+                                <li>Not having to babysit phone coverage schedules.</li>
+                                <li>Tools that are easy to train new hires on.</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4 style="color:var(--red);">🔥 Their Biggest Pain Points</h4>
+                            <ul style="margin:0.5rem 0 0 1.25rem;">
+                                <li><strong>Staff Burnout:</strong> Front desk reps handle 80+ calls a day, many of them repetitive (address confirmation, hours, order status). Burnout leads to turnover, which means constant re-hiring and retraining.</li>
+                                <li><strong>Phone queue chaos:</strong> During peak morning hours (9–11 AM), multiple lines ring simultaneously. Calls drop, patients get frustrated, and staff get overwhelmed.</li>
+                                <li><strong>Software juggling:</strong> The office runs PMS (Brightree), a billing portal, a fax system, and sometimes a separate CRM. Nothing talks to each other without manual copy-paste.</li>
+                            </ul>
+                        </div>
+                        <div class="card" style="border-left:3px solid var(--t);">
+                            <h4>🎙️ SDR Hook for an Office Manager</h4>
+                            <p style="font-style:italic;font-size:0.95rem;margin-top:0.5rem;">&ldquo;What percentage of your team's calls are patients just asking for hours, address, or order status? Because those are exactly the calls we handle automatically, so your staff can focus on the intake work that actually requires a human.&rdquo;</p>
+                            <p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.5rem;">Why it works: You're validating the burnout they already feel, and positioning DMEDesk as <em>relief</em>, not replacement.</p>
+                        </div>
+                    </div>
+
+                    <!-- ROLE 3: INTAKE COORDINATOR -->
+                    <h2>3. Intake Specialist / Referral Coordinator</h2>
+                    <div style="display:flex;flex-direction:column;gap:1rem;margin:1rem 0;">
+                        <div class="card">
+                            <h4 style="color:var(--t);">👤 Who They Are</h4>
+                            <p>The person who processes every new patient referral from end-to-end. When a doctor's office faxes an order for a CPAP machine or oxygen concentrator, the Intake Specialist is the one who reads the fax, verifies the patient's insurance eligibility, checks documentation requirements (face-to-face notes, certificates of medical necessity), chases the physician for signatures, and creates the record in Brightree or NikoHealth.</p>
+                        </div>
+                        <div class="card">
+                            <h4 style="color:var(--t);">💭 What They Care About</h4>
+                            <ul style="margin:0.5rem 0 0 1.25rem;">
+                                <li>Getting complete documentation before equipment ships so claims don't get denied.</li>
+                                <li>Not spending 45 minutes on hold with a doctor's office just to get one signature.</li>
+                                <li>Keeping their referral queue manageable — a backup here delays patient care.</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4 style="color:var(--red);">🔥 Their Biggest Pain Points</h4>
+                            <ul style="margin:0.5rem 0 0 1.25rem;">
+                                <li><strong>Doctor Signature Chasing:</strong> Physicians are busy. Intake coordinators make 5–10 follow-up calls per order to chase down a signed Certificate of Medical Necessity (CMN) or prior authorization approval. This is purely wasted labor time.</li>
+                                <li><strong>Manual Voicemail Transcription:</strong> New patient referrals often call the general line and leave voicemails with their MBI number, insurance details, and equipment needs. Staff must replay, pause, and manually type this into Brightree — error-prone and slow.</li>
+                                <li><strong>LCD (Local Coverage Determination) Compliance:</strong> Each piece of DME has specific Medicare documentation requirements. If the referring doctor's notes don't match the LCD criteria exactly, the claim is denied. Intake coordinators must validate this before equipment ships.</li>
+                            </ul>
+                        </div>
+                        <div class="card" style="border-left:3px solid var(--t);">
+                            <h4>🎙️ SDR Hook for an Intake Specialist</h4>
+                            <p style="font-style:italic;font-size:0.95rem;margin-top:0.5rem;">&ldquo;How many hours a week does your intake team spend manually typing voicemail details into Brightree? Because our AI captures all that live on the call and writes it directly into your system — so your team reviews, not re-types.&rdquo;</p>
+                            <p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.5rem;">Why it works: You've described their exact workflow. Speaking their language (Brightree, CMN) immediately builds credibility.</p>
+                        </div>
+                    </div>
+
+                    <!-- ROLE 4: BILLING -->
+                    <h2>4. Billing Specialist / Billing Manager</h2>
+                    <div style="display:flex;flex-direction:column;gap:1rem;margin:1rem 0;">
+                        <div class="card">
+                            <h4 style="color:var(--t);">👤 Who They Are</h4>
+                            <p>The revenue guardian. They submit claims to Medicare, Medicaid, and commercial insurers using HCPCS codes. They manage the full revenue cycle: eligibility check → prior auth → claim submission → denial management → AR follow-up. A billing error doesn't just get rejected — it can trigger a CMS audit.</p>
+                        </div>
+                        <div class="card">
+                            <h4 style="color:var(--t);">💭 What They Care About</h4>
+                            <ul style="margin:0.5rem 0 0 1.25rem;">
+                                <li>A clean claims rate — ideally 95%+ first-pass acceptance.</li>
+                                <li>Fast turnaround from referral to payment (Days in AR).</li>
+                                <li>Keeping up with changing Medicare LCD rules and payer policy updates.</li>
+                                <li>Catching eligibility issues <em>before</em> equipment ships, not after.</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4 style="color:var(--red);">🔥 Their Biggest Pain Points</h4>
+                            <ul style="margin:0.5rem 0 0 1.25rem;">
+                                <li><strong>"Same or Similar" (S&S) Denials:</strong> Medicare will deny a claim if a patient already has the same or a similar piece of equipment within its 5-year Reasonable Useful Lifetime (RUL). To check this, billers must manually log into their MAC portal (like Noridian or myCGS), search by HCPCS code, and cross-reference the patient's history. This is time-consuming and jurisdiction-specific — a patient who got a CPAP in another state might not show up in the local portal at all.</li>
+                                <li><strong>Prior Authorization Documentation Gaps:</strong> PA requires perfect ICD-10 diagnosis codes, face-to-face physician notes, and proof of medical necessity. If the doctor's notes are vague, PA is rejected and the whole process restarts — sometimes delaying equipment delivery by 2–3 weeks.</li>
+                                <li><strong>Rental Management Complexity:</strong> Items like oxygen concentrators and CPAP machines are billed on a recurring monthly rental cycle. Missing or misaligning a billing cycle date with the rental period triggers an automatic denial.</li>
+                            </ul>
+                        </div>
+                        <div class="card" style="border-left:3px solid var(--t);">
+                            <h4>🎙️ SDR Hook for a Billing Specialist</h4>
+                            <p style="font-style:italic;font-size:0.95rem;margin-top:0.5rem;">&ldquo;Are you still doing Same or Similar checks manually in Noridian or myCGS? Because that alone can eat 30 minutes per referral. Our intake AI runs eligibility and S&S verification automatically when the patient first calls in, so your billing team sees a clean intake record by the time they open Brightree.&rdquo;</p>
+                            <p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.5rem;">Why it works: Naming the specific MAC portal tools (Noridian, myCGS) and the exact workflow (S&S check) signals you are an insider, not a generic software salesperson.</p>
+                        </div>
+                    </div>
+
+                    <!-- ROLE 5: CSR / GATEKEEPER -->
+                    <h2>5. CSR / Front Desk Rep / Receptionist (The Gatekeeper)</h2>
+                    <div style="display:flex;flex-direction:column;gap:1rem;margin:1rem 0;">
+                        <div class="card">
+                            <h4 style="color:var(--t);">👤 Who They Are</h4>
+                            <p>The first human voice a patient or referral partner hears. They answer the main phone line, handle walk-in patients, direct calls to the right person, and manage the reception area. They are often the gatekeeper between you and the decision maker — they have been trained to screen sales calls.</p>
+                        </div>
+                        <div class="card">
+                            <h4 style="color:var(--t);">💭 What They Care About</h4>
+                            <ul style="margin:0.5rem 0 0 1.25rem;">
+                                <li>Not being overwhelmed. Their job is genuinely chaotic — they answer the phone while checking in walk-ins simultaneously.</li>
+                                <li>Making their manager happy by keeping things moving smoothly.</li>
+                                <li>Not getting in trouble for putting through bad calls to the owner.</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4 style="color:var(--red);">🔥 Their Biggest Pain Points</h4>
+                            <ul style="margin:0.5rem 0 0 1.25rem;">
+                                <li><strong>Repetitive inbound calls:</strong> 40–60% of patient calls are simple questions: "What are your hours?", "Is my order ready?", "What's your address?" These are not complex — they just pile up and eat time.</li>
+                                <li><strong>After-hours coverage anxiety:</strong> When they leave at 5 PM, there is no one to answer the phone. They know patients are leaving voicemails they'll have to dig through tomorrow morning.</li>
+                                <li><strong>Getting screamed at:</strong> Patients waiting on equipment they need to breathe or move are not patient. CSRs absorb that stress daily.</li>
+                            </ul>
+                        </div>
+                        <div class="card" style="border-left:3px solid var(--t);">
+                            <h4>🎙️ How to Get Past the Gatekeeper</h4>
+                            <p style="font-size:0.95rem;margin-top:0.5rem;">Do <strong>not</strong> say: <em>"I'm calling about a business opportunity for your owner."</em> — instant hang-up.</p>
+                            <p style="font-size:0.95rem;margin-top:0.75rem;">Instead, try:</p>
+                            <p style="font-style:italic;font-size:0.95rem;margin-top:0.5rem;">&ldquo;Hi, I'm reaching out to [Owner Name] specifically about a way to reduce the overflow calls your front desk handles after 5 PM. Who would be the right person to speak with about that?&rdquo;</p>
+                            <p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.5rem;">Why it works: You are being specific (after 5 PM overflow), and you are implicitly offering to make <em>their</em> life easier too. Gatekeepers route calls to people who can help, and this sounds like help.</p>
+                        </div>
+                    </div>
+
+                    <!-- INTERNAL ROLES CHEAT SHEET -->
+                    <h2>Internal Team: Your Own Roles Explained</h2>
+                    <p>So you know who you're calling — but do you know what your own team's titles mean? Here's a plain-English breakdown of <em>your</em> team structure.</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Also Called</th>
+                                <th>What They Do</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>SDR</strong></td>
+                                <td>Sales Development Rep, BDR, Opener</td>
+                                <td>Makes the first contact. Books discovery calls or 15-min demos. Does NOT sell the product or discuss pricing. That's you.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>AE</strong></td>
+                                <td>Account Executive, Closer, Demo Rep</td>
+                                <td>Runs the 15-min live demo you booked. Handles pricing, contract, and closing the deal. Your warm hand-off is their cold start.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>AM</strong></td>
+                                <td>Account Manager, CSM, Success Manager</td>
+                                <td>Manages the client relationship after the deal is closed. Handles onboarding, White-Glove setup, and ongoing support. Not a sales role.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SDR Manager</strong></td>
+                                <td>Team Lead, Sales Manager</td>
+                                <td>Your direct boss. Reviews your call recordings, tracks your booked meetings, and gives you coaching feedback. Report activity here daily.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="callout warning">
+                        <h4>⚡ The Golden Hand-Off Rule</h4>
+                        <p style="margin-top:0.5rem;font-size:0.95rem;line-height:1.5;">When you book a demo, always pass the AE (Closer) the following three pieces of info: <strong>(1)</strong> Which pain camp the prospect is in (Voicemail Bleed / Staff Burnout), <strong>(2)</strong> Which PMS they use (Brightree / NikoHealth / Other), and <strong>(3)</strong> Their approximate monthly referral volume. Without this, the demo is cold. With it, the Closer can open with a tailored pitch in the first 60 seconds.</p>
+                    </div>
+
+                    <div class="nav-footer">
+                        <div class="nf-btn" onclick="showPage('crm-ehr-pms')">&larr; Back to CRM vs EHR vs PMS</div>
                         <div class="nf-btn" onclick="showPage('dialer-battlecard')">Back to Playbook Start &rarr;</div>
                     </div>
                 </div>
