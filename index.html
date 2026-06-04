@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BDR Hub — DMEDesk Outreach</title>
+  <link rel="icon" type="image/png" href="https://dmedesk.ai/assets/favicon.png?v=transparent1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0B0F19;
+      --card: #131926;
+      --border: #1E293B;
+      --teal: #009E8E;
+      --teal-dark: #007A6D;
+      --teal-glow: rgba(0,158,142,0.15);
+      --text: #F1F5F9;
+      --muted: #64748B;
+      --r: 14px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 62px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(11,15,25,0.9);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo img { height: 30px; width: auto; }
+    .logo-text {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--text);
+      letter-spacing: -0.03em;
+    }
+    .logo-badge {
+      background: var(--teal-glow);
+      color: var(--teal);
+      border: 1px solid rgba(0,158,142,0.3);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.55rem;
+      border-radius: 100px;
+    }
+
+    .header-right {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 5rem 2rem 3rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 300px;
+      background: radial-gradient(ellipse at top, rgba(0,158,142,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--teal-glow);
+      border: 1px solid rgba(0,158,142,0.25);
+      color: var(--teal);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.9rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--teal), #00C4B0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 3.5rem;
+    }
+
+    /* ── TOOL CARDS ── */
+    .cards {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 860px;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tool-card {
+      flex: 1;
+      min-width: 300px;
+      max-width: 400px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 2rem;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+
+    .tool-card:hover {
+      border-color: var(--teal);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,158,142,0.12), 0 2px 8px rgba(0,0,0,0.3);
+      text-decoration: none;
+    }
+
+    .card-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      background: var(--teal-glow);
+      border: 1px solid rgba(0,158,142,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .card-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 0.25rem;
+    }
+
+    .card-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .card-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .card-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .chip {
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+    }
+
+    .card-cta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--teal);
+      margin-top: 0.25rem;
+    }
+
+    .card-cta svg {
+      transition: transform 0.2s;
+    }
+
+    .tool-card:hover .card-cta svg {
+      transform: translateX(4px);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 640px) {
+      header { padding: 0 1.25rem; }
+      .hero { padding: 3.5rem 1.25rem 2rem; }
+      .hero h1 { font-size: 2rem; }
+      .tool-card { min-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <a class="logo" href="#">
+      <img src="https://dmedesk.ai/assets/dmedesk-logo.png" alt="DMEDesk"
+           onerror="this.style.display='none'">
+      <span class="logo-text">DMEDesk</span>
+      <span class="logo-badge">BDR Hub</span>
+    </a>
+    <span class="header-right">Gulf Global Outsourcing — Cairo BDR Team</span>
+  </header>
+
+  <!-- HERO -->
+  <main class="hero">
+    <span class="hero-tag">⚡ Internal Tools</span>
+    <h1>Your <span>BDR Toolkit</span><br>All in One Place</h1>
+    <p class="hero-sub">
+      Everything you need to run the DMEDesk outreach campaign —
+      sales playbook, call scripts, and email generation, ready to go.
+    </p>
+
+    <!-- TOOL CARDS -->
+    <div class="cards">
+
+      <!-- Sales Wiki -->
+      <a class="tool-card" href="dmedesk_wiki.html">
+        <div class="card-icon">📖</div>
+        <div>
+          <div class="card-label">Reference</div>
+          <div class="card-title">Sales Playbook</div>
+        </div>
+        <p class="card-desc">
+          Full BDR playbook for DMEDesk outreach — objection handling, rebuttals,
+          ROI calculator, call scripts, compliance notes, and battlecards.
+        </p>
+        <div class="card-chips">
+          <span class="chip">Objection Handling</span>
+          <span class="chip">ROI Calc</span>
+          <span class="chip">Battlecards</span>
+          <span class="chip">Scripts</span>
+        </div>
+        <div class="card-cta">
+          Open Playbook
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Email Generator -->
+      <a class="tool-card" href="dmedesk_email_generator.html">
+        <div class="card-icon">✉️</div>
+        <div>
+          <div class="card-label">Tool</div>
+          <div class="card-title">Email Generator</div>
+        </div>
+        <p class="card-desc">
+          Generate polished outreach and follow-up emails in seconds.
+          Parse calendar invites, pull NPI data, and copy HTML-ready emails.
+        </p>
+        <div class="card-chips">
+          <span class="chip">Cold Outreach</span>
+          <span class="chip">Demo Confirm</span>
+          <span class="chip">Follow-Up</span>
+          <span class="chip">NPI Lookup</span>
+        </div>
+        <div class="card-cta">
+          Open Email Tool
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
+      </a>
+
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2026 DMEDesk — Internal BDR Hub &nbsp;·&nbsp; Gulf Global Outsourcing
+  </footer>
+
+</body>
+</html>
