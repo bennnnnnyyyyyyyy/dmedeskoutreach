@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DMEDesk — SDR Email Tool & Parser</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-main: #0F172A;
+            --bg-card: #1E293B;
+            --bg-input: #0F172A;
+            --border-color: #334155;
+            --text-main: #F1F5F9;
+            --text-muted: #94A3B8;
+            --teal: #009E8E;
+            --teal-hover: #008275;
+            --green: #10B981;
+            --yellow: #F59E0B;
+            --red: #EF4444;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            --transition: all 0.2s ease;
+        }
+
+        .light-mode {
+            --bg-main: #F8FAFC;
+            --bg-card: #FFFFFF;
+            --bg-input: #F1F5F9;
+            --border-color: #E2E8F0;
+            --text-main: #0F172A;
+            --text-muted: #64748B;
+            --shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: var(--transition);
+        }
+
+        /* HEADER */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 10;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-img {
+            height: 32px;
+            width: auto;
+        }
+
+        .logo-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 1.25rem;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-tag {
+            background-color: rgba(0, 158, 142, 0.15);
+            color: var(--teal);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.6rem;
+            border-radius: 100px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .theme-toggle-btn:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: var(--teal);
+        }
+
+        .light-mode .theme-toggle-btn:hover {
+            background-color: rgba(0, 0, 0, 0.03);
+        }
+
+        /* MAIN CONTAINER */
+        .app-container {
+            display: flex;
+            flex: 1;
+            width: 100vw;
+            height: calc(100vh - 65px);
+            overflow: hidden;
+        }
+
+        /* LEFT SIDEBAR - CONTROLS */
+        .sidebar {
+            width: 45%;
+            min-width: 450px;
+            max-width: 600px;
+            height: 100%;
+            overflow-y: auto;
+            background-color: var(--bg-card);
+            border-right: 1px solid var(--border-color);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .card {
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: var(--transition);
+        }
+
+        .card-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        input[type="text"], input[type="email"], select, textarea {
+            width: 100%;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.65rem 0.75rem;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
+            border-color: var(--teal);
+            box-shadow: 0 0 0 2px rgba(0, 158, 142, 0.15);
+        }
+
+        .input-row {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .input-row > .form-group {
+            flex: 1;
+        }
+
+        .parser-textarea {
+            height: 80px;
+            resize: none;
+            font-family: monospace;
+            font-size: 0.8rem;
+        }
+
+        /* BUTTONS */
+        .btn {
+            background-color: var(--teal);
+            color: #ffffff;
+            border: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            padding: 0.65rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background-color: var(--teal-hover);
+        }
+
+        .btn-outline {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: var(--text-main);
+        }
+
+        .light-mode .btn-outline:hover {
+            background-color: rgba(0, 0, 0, 0.03);
+        }
+
+        .btn-danger {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--red);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .btn-danger:hover {
+            background-color: var(--red);
+            color: #ffffff;
+        }
+
+        .action-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .action-row .btn {
+            flex: 1;
+            min-width: 130px;
+        }
+
+        /* RIGHT PREVIEW WORKSPACE */
+        .preview-area {
+            flex: 1;
+            height: 100%;
+            background-color: var(--bg-main);
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            gap: 1.25rem;
+            overflow-y: auto;
+            transition: var(--transition);
+        }
+
+        .preview-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.75rem 1.25rem;
+            transition: var(--transition);
+        }
+
+        .viewport-selectors {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .vp-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 0.4rem 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: var(--transition);
+        }
+
+        .vp-btn.active {
+            background-color: var(--teal);
+            color: #ffffff;
+            border-color: var(--teal);
+        }
+
+        .vp-btn:hover:not(.active) {
+            color: var(--text-main);
+            border-color: var(--text-main);
+        }
+
+        .frame-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+            min-height: 450px;
+        }
+
+        /* IFRAME FRAME VIEWER */
+        .preview-frame {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            height: 100%;
+            min-height: 500px;
+            transition: width 0.3s ease, background 0.3s ease;
+        }
+
+        .preview-frame.mobile {
+            width: 375px;
+            border-radius: 20px;
+            border: 8px solid var(--border-color);
+        }
+
+        .preview-frame.desktop {
+            width: 100%;
+            max-width: 650px;
+        }
+
+        .code-viewer {
+            width: 100%;
+            height: 100%;
+            min-height: 500px;
+            background-color: #0F172A;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: #E2E8F0;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 1rem;
+            font-size: 0.85rem;
+            resize: none;
+            display: none;
+        }
+
+        /* ANALYTICS & WIDGET CARD */
+        .analytics-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            transition: var(--transition);
+        }
+
+        .subject-preview-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.6rem 0.8rem;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+
+        .subject-label {
+            font-weight: 700;
+            color: var(--teal);
+            margin-right: 0.5rem;
+        }
+
+        .subject-val {
+            flex: 1;
+            font-weight: 500;
+            color: var(--text-main);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .subject-copy-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.2rem;
+            display: flex;
+            align-items: center;
+            font-size: 0.75rem;
+            transition: var(--transition);
+        }
+
+        .subject-copy-btn:hover {
+            color: var(--teal);
+        }
+
+        .spam-meter {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .spam-score-badge {
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.25rem 0.6rem;
+            border-radius: 100px;
+            text-transform: uppercase;
+        }
+
+        .spam-score-badge.good {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: var(--green);
+        }
+
+        .spam-score-badge.warning {
+            background-color: rgba(245, 158, 11, 0.15);
+            color: var(--yellow);
+        }
+
+        .spam-score-badge.danger {
+            background-color: rgba(239, 68, 68, 0.15);
+            color: var(--red);
+        }
+
+        .spam-feedback {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* TOAST NOTIFICATION */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background-color: var(--bg-card);
+            border-left: 4px solid var(--teal);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            color: var(--text-main);
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 999;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Helper icon fonts simulation */
+        .icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            text-align: center;
+            line-height: 16px;
+            font-style: normal;
+        }
+
+        @media (max-width: 900px) {
+            .app-container {
+                flex-direction: column;
+                height: auto;
+                overflow: visible;
+            }
+            .sidebar {
+                width: 100%;
+                max-width: none;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .preview-area {
+                height: auto;
+                overflow: visible;
+            }
+        }
+    </style>
+</head>
+<body class="dark-mode"> <!-- Defaults to Dark Mode for the Linear aesthetic -->
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="toast">
+        <span class="icon">✓</span> <span id="toast-text">HTML copied to clipboard!</span>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo-section">
+            <img src="https://dmedesk.ai/assets/dmedesk-logo.png" alt="DMEDesk" class="logo-img" onerror="this.style.display='none';">
+            <span class="logo-title">DMEDesk</span>
+            <span class="logo-tag">EMAIL TOOLBOX</span>
+        </div>
+        <div class="header-actions">
+            <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Light/Dark Theme">
+                <span id="theme-icon" class="icon">☀️</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN APP CONTAINER -->
+    <div class="app-container">
+        
+        <!-- LEFT CONTROL COLUMN -->
+        <aside class="sidebar">
+
+            <!-- WIDGET: GOOGLE CALENDAR INVITE PARSER -->
+            <div class="card">
+                <div class="card-title">📅 Calendar Invite Parser</div>
+                <div class="form-group">
+                    <label for="parser-input">Paste Google Calendar invite description/notification:</label>
+                    <textarea id="parser-input" class="parser-textarea" placeholder="e.g. When: Friday, Jun 5, 2026, 2:30pm - 3:00pm (EDT)&#10;Joining info: https://meet.google.com/abc-def-ghi"></textarea>
+                </div>
+                <div class="action-row">
+                    <button class="btn" onclick="parseCalendarInvite()">✨ Parse & Auto-fill</button>
+                    <button class="btn btn-outline" onclick="clearParser()">Clear</button>
+                </div>
+            </div>
+
+            <!-- OUTREACH TEMPLATE SELECTOR -->
+            <div class="card">
+                <div class="card-title">✉️ Choose Template</div>
+                <div class="form-group">
+                    <select id="template-select" onchange="loadActiveTemplate()">
+                        <option value="cold">1. Cold Outreach (Base Template Style)</option>
+                        <option value="confirm">2. Demo Confirmation (Standard Invite)</option>
+                        <option value="followup">3. Post-Demo Follow-Up</option>
+                        <option value="noshow">4. No-Show Reschedule Request</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- VARIABLES CONFIGURATION FORM -->
+            <div class="card">
+                <div class="card-title">📝 Template Variables</div>
+                
+                <h4 style="font-size: 0.8rem; text-transform: uppercase; color: var(--teal); margin-bottom: 0.2rem;">Prospect Details</h4>
+                <div class="form-group">
+                    <label for="var-first-name">First Name</label>
+                    <input type="text" id="var-first-name" value="Doctor" oninput="updateTemplateOutputs()">
+                </div>
+                <div class="input-row">
+                    <div class="form-group">
+                        <label for="var-company">Company / Practice</label>
+                        <input type="text" id="var-company" value="Apex Medical Supplies" oninput="updateTemplateOutputs()">
+                    </div>
+                    <div class="form-group">
+                        <label for="var-title">Prospect Title (e.g. Owner, Biller)</label>
+                        <input type="text" id="var-title" value="Practice Manager" oninput="updateTemplateOutputs()">
+                    </div>
+                </div>
+
+                <h4 style="font-size: 0.8rem; text-transform: uppercase; color: var(--teal); margin-top: 0.5rem; margin-bottom: 0.2rem;">Meeting Info</h4>
+                <div class="input-row">
+                    <div class="form-group">
+                        <label for="var-meet-date">Date</label>
+                        <input type="text" id="var-meet-date" value="Friday, Jun 5, 2026" oninput="updateTemplateOutputs()">
+                    </div>
+                    <div class="form-group">
+                        <label for="var-meet-time">Time (Normalized to Eastern)</label>
+                        <input type="text" id="var-meet-time" value="2:30 PM EDT" oninput="updateTemplateOutputs()">
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="form-group">
+                        <label for="var-meet-duration">Duration</label>
+                        <select id="var-meet-duration" onchange="updateTemplateOutputs()">
+                            <option value="15">15 Minutes</option>
+                            <option value="20" selected>20 Minutes</option>
+                            <option value="30">30 Minutes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="var-meet-link">Google Meet Link</label>
+                        <input type="text" id="var-meet-link" value="https://meet.google.com/abc-defg-hij" oninput="updateTemplateOutputs()">
+                    </div>
+                </div>
+
+                <h4 style="font-size: 0.8rem; text-transform: uppercase; color: var(--teal); margin-top: 0.5rem; margin-bottom: 0.2rem;">Sender Signature</h4>
+                <div class="input-row">
+                    <div class="form-group">
+                        <label for="var-sender-name">Your Name</label>
+                        <input type="text" id="var-sender-name" value="Ben Arthur" oninput="saveSignatureToStorage(); updateTemplateOutputs()">
+                    </div>
+                    <div class="form-group">
+                        <label for="var-sender-email">Your Email</label>
+                        <input type="email" id="var-sender-email" value="ben@dmedesk.ai" oninput="saveSignatureToStorage(); updateTemplateOutputs()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="var-cta-link">Custom CTA Scheduler Link (e.g. Calendly)</label>
+                    <input type="text" id="var-cta-link" value="https://dmedesk.ai/contact" oninput="saveSignatureToStorage(); updateTemplateOutputs()">
+                </div>
+            </div>
+
+            <!-- EXPORTS & UTILITIES -->
+            <div class="card">
+                <div class="card-title">💾 Copy & Export</div>
+                <div class="action-row">
+                    <button class="btn" onclick="copyHTMLEmail()" style="flex: 2;">📋 Copy HTML Email</button>
+                    <button class="btn btn-outline" onclick="copyPlainText()" style="flex: 1;">Copy Plain Text</button>
+                </div>
+                <div class="action-row">
+                    <button class="btn btn-outline" onclick="downloadEMLFile()">📥 Download .EML</button>
+                    <button class="btn btn-outline" onclick="downloadHTMLFile()">Download .HTML</button>
+                    <button class="btn btn-outline" onclick="downloadTXTFile()">Download .TXT</button>
+                </div>
+                <button class="btn btn-outline" onclick="generateGoogleCalendarLink()" style="margin-top: 0.5rem;">
+                    📅 Open Google Calendar Setup Link
+                </button>
+            </div>
+
+        </aside>
+
+        <!-- RIGHT PREVIEW WORKSPACE -->
+        <main class="preview-area">
+            
+            <!-- VIEWPORT & VISUAL CONTROLS -->
+            <div class="preview-controls">
+                <div class="viewport-selectors">
+                    <button id="vp-desktop" class="vp-btn active" onclick="setViewport('desktop')">
+                        <span class="icon">💻</span> Desktop View
+                    </button>
+                    <button id="vp-mobile" class="vp-btn" onclick="setViewport('mobile')">
+                        <span class="icon">📱</span> Mobile View
+                    </button>
+                    <button id="vp-code" class="vp-btn" onclick="toggleSourceView()">
+                        <span class="icon">⚙️</span> Source Code View
+                    </button>
+                </div>
+                
+                <div class="viewport-selectors">
+                    <button id="vp-client-light" class="vp-btn active" onclick="setClientMode('light')">
+                        ☀️ Email Client Light Mode
+                    </button>
+                    <button id="vp-client-dark" class="vp-btn" onclick="setClientMode('dark')">
+                        🌙 Email Client Dark Mode
+                    </button>
+                </div>
+            </div>
+
+            <!-- SUBJECT & SPAM ANALYTICS CARD -->
+            <div class="analytics-card">
+                <div class="subject-preview-box">
+                    <div>
+                        <span class="subject-label">Subject:</span>
+                        <span class="subject-val" id="rendered-subject">Loading subject...</span>
+                    </div>
+                    <button class="subject-copy-btn" onclick="copySubjectLine()" title="Copy Subject Line">
+                        📋 Copy Subject
+                    </button>
+                </div>
+
+                <div class="spam-meter">
+                    <span id="spam-badge" class="spam-score-badge good">Good (0)</span>
+                    <span id="spam-feedback" class="spam-feedback">Your email body looks clear of common spam triggers.</span>
+                </div>
+            </div>
+
+            <!-- LIVE IFRAME RENDERING PORT -->
+            <div class="frame-wrapper">
+                <iframe id="preview-iframe" class="preview-frame desktop"></iframe>
+                <textarea id="code-text" class="code-viewer" readonly></textarea>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- CODE GENERATOR LOGIC -->
+    <script>
+        let isLightMode = false;
+        let isSourceView = false;
+        let activeClientMode = 'light'; // 'light' or 'dark' override inside iframe
+        let compiledHTML = "";
+        let compiledSubject = "";
+        let compiledText = "";
+
+        // 💾 LocalStorage Logic
+        function loadSignatureFromStorage() {
+            if (localStorage.getItem('dmedesk_sender_name')) {
+                document.getElementById('var-sender-name').value = localStorage.getItem('dmedesk_sender_name');
+            }
+            if (localStorage.getItem('dmedesk_sender_email')) {
+                document.getElementById('var-sender-email').value = localStorage.getItem('dmedesk_sender_email');
+            }
+            if (localStorage.getItem('dmedesk_cta_link')) {
+                document.getElementById('var-cta-link').value = localStorage.getItem('dmedesk_cta_link');
+            }
+        }
+
+        function saveSignatureToStorage() {
+            localStorage.setItem('dmedesk_sender_name', document.getElementById('var-sender-name').value);
+            localStorage.setItem('dmedesk_sender_email', document.getElementById('var-sender-email').value);
+            localStorage.setItem('dmedesk_cta_link', document.getElementById('var-cta-link').value);
+        }
+
+        // ☀️ Global Theme Toggle (SDR Panel)
+        function toggleTheme() {
+            isLightMode = !isLightMode;
+            document.body.classList.toggle('light-mode', isLightMode);
+            document.getElementById('theme-icon').textContent = isLightMode ? '🌙' : '☀️';
+        }
+
+        // 💻 Viewport Width Config
+        function setViewport(mode) {
+            const frame = document.getElementById('preview-iframe');
+            const codeText = document.getElementById('code-text');
+            
+            document.getElementById('vp-desktop').classList.remove('active');
+            document.getElementById('vp-mobile').classList.remove('active');
+            document.getElementById('vp-code').classList.remove('active');
+            
+            if (mode === 'desktop') {
+                frame.style.display = 'block';
+                codeText.style.display = 'none';
+                frame.className = "preview-frame desktop";
+                document.getElementById('vp-desktop').classList.add('active');
+                isSourceView = false;
+            } else if (mode === 'mobile') {
+                frame.style.display = 'block';
+                codeText.style.display = 'none';
+                frame.className = "preview-frame mobile";
+                document.getElementById('vp-mobile').classList.add('active');
+                isSourceView = false;
+            }
+        }
+
+        function toggleSourceView() {
+            const frame = document.getElementById('preview-iframe');
+            const codeText = document.getElementById('code-text');
+            
+            isSourceView = !isSourceView;
+            if (isSourceView) {
+                frame.style.display = 'none';
+                codeText.style.display = 'block';
+                document.getElementById('vp-desktop').classList.remove('active');
+                document.getElementById('vp-mobile').classList.remove('active');
+                document.getElementById('vp-code').classList.add('active');
+            } else {
+                setViewport('desktop');
+            }
+        }
+
+        // ☀️ Overriding the prefers-color-scheme logic inside the iframe
+        function setClientMode(mode) {
+            activeClientMode = mode;
+            document.getElementById('vp-client-light').classList.toggle('active', mode === 'light');
+            document.getElementById('vp-client-dark').classList.toggle('active', mode === 'dark');
+            updateTemplateOutputs();
+        }
+
+        // 📅 Calendar invite parser
+        function parseCalendarInvite() {
+            const raw = document.getElementById('parser-input').value;
+            if (!raw.trim()) {
+                showToast("Please paste invite details first.");
+                return;
+            }
+
+            let foundDate = "";
+            let foundTime = "";
+            let foundMeet = "";
+            let foundTimezone = "EDT"; // Default fallback
+
+            // 1. Parse Google Meet URLs
+            const meetRegex = /(https:\/\/meet\.google\.com\/[a-z0-9-]+)/i;
+            const meetMatch = raw.match(meetRegex);
+            if (meetMatch) {
+                foundMeet = meetMatch[1];
+            } else {
+                // Secondary check for other meeting platforms
+                const generalUrlRegex = /(https:\/\/[a-z0-9.-]+\.(zoom\.us|teams\.microsoft\.com|webex\.com)\/[^\s)>]+)/i;
+                const generalUrlMatch = raw.match(generalUrlRegex);
+                if (generalUrlMatch) {
+                    foundMeet = generalUrlMatch[1];
+                }
+            }
+
+            // 2. Parse When: string details
+            // Style A: "When: Friday, Jun 5, 2026, 2:30pm - 3:00pm (EDT)"
+            // Style B: "When: Monday Jun 8, 2026 10:00 AM - 10:30 AM Eastern Time"
+            const whenRegex = /When:\s*([^\r\n]+)/i;
+            const whenMatch = raw.match(whenRegex);
+            if (whenMatch) {
+                const whenContent = whenMatch[1].trim();
+                
+                // Extract timezone abbreviation
+                const tzMatch = whenContent.match(/\(([A-Z]{3,4})\)/) || whenContent.match(/\b([A-Z]{3,4})\b/);
+                if (tzMatch) {
+                    foundTimezone = tzMatch[1];
+                } else if (whenContent.toLowerCase().includes("eastern")) {
+                    foundTimezone = "EST";
+                } else if (whenContent.toLowerCase().includes("pacific")) {
+                    foundTimezone = "PST";
+                } else if (whenContent.toLowerCase().includes("mountain")) {
+                    foundTimezone = "MST";
+                } else if (whenContent.toLowerCase().includes("central")) {
+                    foundTimezone = "CST";
+                } else if (whenContent.toLowerCase().includes("utc") || whenContent.toLowerCase().includes("gmt")) {
+                    foundTimezone = "UTC";
+                }
+
+                // Attempt to parse out date and time parts
+                // Remove timezone string first to make date parsing cleaner
+                let cleanWhen = whenContent.replace(/\([A-Z]+\)/i, "").replace(/eastern|central|mountain|pacific|time/gi, "").trim();
+                
+                // Match dates like "Friday, Jun 5, 2026" or "Jun 5, 2026"
+                const datePartRegex = /([a-z]+,\s*)?[a-z]{3}\s+\d{1,2}(,\s*\d{4})?/i;
+                const dateMatch = cleanWhen.match(datePartRegex);
+                
+                // Match times like "2:30pm" or "10:00 AM"
+                const timePartRegex = /(\d{1,2}:\d{2}\s*(am|pm)?)/gi;
+                const timeMatches = cleanWhen.match(timePartRegex);
+
+                if (dateMatch) {
+                    // Normalize the year if missing
+                    let yearString = "";
+                    if (!/\d{4}/.test(dateMatch[0])) {
+                        yearString = `, ${new Date().getFullYear()}`;
+                    }
+                    foundDate = dateMatch[0] + yearString;
+                }
+
+                if (timeMatches && timeMatches.length > 0) {
+                    foundTime = timeMatches[0].trim();
+                }
+            } else {
+                // Try fallback regex searches directly on text
+                const gMeetAltRegex = /meet\.google\.com\/([a-z0-9-]+)/i;
+                const gMeetAltMatch = raw.match(gMeetAltRegex);
+                if (gMeetAltMatch && !foundMeet) {
+                    foundMeet = "https://" + gMeetAltMatch[0];
+                }
+            }
+
+            // Normalization of timezone to America/New_York (Eastern)
+            if (foundDate && foundTime) {
+                normalizeTimeToEastern(foundDate, foundTime, foundTimezone, foundMeet);
+            } else {
+                showToast("Date/Time not parsed. Please configure manually.");
+                if (foundMeet) {
+                    document.getElementById('var-meet-link').value = foundMeet;
+                }
+            }
+        }
+
+        function normalizeTimeToEastern(dateStr, timeStr, tz, meetLink) {
+            try {
+                // Build a parseable date string
+                // Clean up time string (e.g. "2:30pm" -> "2:30 pm", "2:30PM" -> "2:30 PM")
+                let cleanTime = timeStr.toLowerCase().replace(/([0-9])(am|pm)/g, '$1 $2').toUpperCase();
+                let fullStr = `${dateStr} ${cleanTime}`;
+                
+                // Parse date
+                let dateObj = new Date(fullStr);
+                
+                if (isNaN(dateObj.getTime())) {
+                    // Fallback manually setting inputs if default Date constructor fails
+                    document.getElementById('var-meet-date').value = dateStr;
+                    document.getElementById('var-meet-time').value = timeStr + " " + tz;
+                    if (meetLink) document.getElementById('var-meet-link').value = meetLink;
+                    showToast("Invite parsed with raw values (manual check required).");
+                    updateTemplateOutputs();
+                    return;
+                }
+
+                // Adjust by timezone relative to Eastern (Standard: -5 UTC, Daylight: -4 UTC)
+                // Assuming current Eastern daylight (EDT) as target: -4
+                let isDaylight = (() => { try { return new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', timeZoneName: 'short' }).format(new Date()).includes('EDT'); } catch(e) { return true; } })();
+                let targetOffset = isDaylight ? -240 : -300; // minutes offset
+
+                // Get original offset in minutes
+                let originalOffset = 0;
+                let normalizedTz = tz.toUpperCase();
+
+                if (normalizedTz === "PDT" || normalizedTz === "PACIFIC") originalOffset = -420;
+                else if (normalizedTz === "PST") originalOffset = -480;
+                else if (normalizedTz === "MDT") originalOffset = -360;
+                else if (normalizedTz === "MST") originalOffset = -420;
+                else if (normalizedTz === "CDT") originalOffset = -300;
+                else if (normalizedTz === "CST") originalOffset = -360;
+                else if (normalizedTz === "EDT" || normalizedTz === "EASTERN") originalOffset = -240;
+                else if (normalizedTz === "EST") originalOffset = -300;
+                else if (normalizedTz === "UTC" || normalizedTz === "GMT") originalOffset = 0;
+                else originalOffset = -240; // Default to EDT
+
+                // Time difference in minutes
+                let diffMin = targetOffset - originalOffset; // target offset is Eastern, so subtract original offset
+                
+                // Shift time to Eastern Time
+                dateObj.setMinutes(dateObj.getMinutes() - diffMin);
+
+                // Format outputs nicely
+                const optionsDate = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+                const formattedDate = dateObj.toLocaleDateString('en-US', optionsDate);
+                
+                let hours = dateObj.getHours();
+                const minutes = dateObj.getMinutes();
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12; // the hour '0' should be '12'
+                const minutesStr = minutes < 10 ? '0' + minutes : minutes;
+                const formattedTime = `${hours}:${minutesStr} ${ampm} ${isDaylight ? 'EDT' : 'EST'}`;
+
+                // Set inputs
+                document.getElementById('var-meet-date').value = formattedDate;
+                document.getElementById('var-meet-time').value = formattedTime;
+                if (meetLink) {
+                    document.getElementById('var-meet-link').value = meetLink;
+                }
+
+                showToast("Invite successfully normalized to Eastern Time!");
+                updateTemplateOutputs();
+
+            } catch (err) {
+                console.error("Timezone normalizer failure:", err);
+                document.getElementById('var-meet-date').value = dateStr;
+                document.getElementById('var-meet-time').value = timeStr + " " + tz;
+                if (meetLink) document.getElementById('var-meet-link').value = meetLink;
+                showToast("Failed to normalize timezone. Populated raw inputs instead.");
+                updateTemplateOutputs();
+            }
+        }
+
+        function clearParser() {
+            document.getElementById('parser-input').value = "";
+            showToast("Parser text cleared.");
+        }
+
+        // ✉️ Active Template Switcher
+        function loadActiveTemplate() {
+            updateTemplateOutputs();
+        }
+
+        // 🎙️ Spam checker heuristic
+        function runSpamChecker(subject, bodyText) {
+            const spamTriggers = [
+                /\bfree\b/i, /\burgent\b/i, /\b100% guarantee\b/i, /\bclick here\b/i, 
+                /\brisk free\b/i, /\bopportunity\b/i, /\bmake money\b/i, /\bact now\b/i, 
+                /\blimited time\b/i, /\bspecial offer\b/i, /\bopt in\b/i, /!!!/,
+                /\bno cost\b/i, /\bguaranteed\b/i, /\bwinner\b/i, /\bclaims approval\b/i
+            ];
+
+            let count = 0;
+            let combined = subject + " " + bodyText;
+            
+            spamTriggers.forEach(pattern => {
+                if (pattern.test(combined)) {
+                    count++;
+                }
+            });
+
+            const badge = document.getElementById('spam-badge');
+            const feedback = document.getElementById('spam-feedback');
+
+            badge.className = "spam-score-badge";
+
+            if (count === 0) {
+                badge.textContent = "Safe (0)";
+                badge.classList.add('good');
+                feedback.textContent = "Your email body looks clear of common spam triggers.";
+            } else if (count <= 2) {
+                badge.textContent = `Warning (${count})`;
+                badge.classList.add('warning');
+                feedback.textContent = "Contains minor commercial wording. Safe to send, but review spacing.";
+            } else {
+                badge.textContent = `High Risk (${count})`;
+                badge.classList.add('danger');
+                feedback.textContent = "Spam flags detected (e.g. 'urgent', 'free', '!!!'). Risk of promotion filters.";
+            }
+        }
+
+        // 📋 Auto-Generate Subject Line
+        function getGeneratedSubject(templateName, firstName, companyName, senderName) {
+            if (templateName === 'cold') {
+                return `DME Voicemail Bleed — ${companyName}`;
+            } else if (templateName === 'confirm') {
+                return `Confirmed: DMEDesk Demo — ${firstName} x ${senderName}`;
+            } else if (templateName === 'followup') {
+                return `DMEDesk Demo Follow-up — ${companyName}`;
+            } else if (templateName === 'noshow') {
+                return `Missed connection: DMEDesk Demo`;
+            }
+            return "Outreach Update";
+        }
+
+        // 📋 Auto-Generate Plain Text Body
+        function getPlainTextTemplate(templateName, firstName, companyName, title, date, time, meetLink, senderName, senderEmail, ctaLink) {
+            if (templateName === 'cold') {
+                return `Hi ${firstName},
+
+I noticed your practice is currently hiring for front-desk support. Congrats on the growth.
+
+As a ${title || 'veteran'} in the DME space, you know first-hand how difficult it is to capture every inbound referral and patient question without your staff burning out on the phones.
+
+It's a lose-lose: You either hire fast to hit your targets but let service quality slip, or hire slow to maintain your bar but lose patients to voicemail and competitors who answer faster.
+
+We've helped over 100 DMEPOS suppliers stop the "voicemail bleed" with an AI receptionist that handles HCPCS intake, LCD verification, and prior auth inquiries — 24/7, with zero hold time.
+
+"DMEDesk handles our after-hours calls so perfectly, our patients think they're talking to a dedicated staff member in our office."
+
+I'd love to show you how we can automate your front-desk intake. Up for a chat? You can book a free 20-min demo here: ${ctaLink}
+
+Talk soon,
+${senderName}
+DMEDesk | ${senderEmail} | dmedesk.ai
+
+P.S. — Go live in 2-3 weeks with full white-glove onboarding included. The only risk is another week of missed calls.`;
+            } 
+            
+            else if (templateName === 'confirm') {
+                return `Hi ${firstName},
+
+Looking forward to our demo on ${date} at ${time} (Eastern Time).
+
+We will use this Google Meet link: ${meetLink}
+
+I'll show you how DMEDesk integrates with your billing and Practice Management Systems to automate intakes, verify LCD eligibility, and stop voicemail leaks.
+
+If you need to reschedule or shift times, feel free to use my calendar link: ${ctaLink}
+
+See you then!
+
+Best,
+${senderName}
+DMEDesk | ${senderEmail} | dmedesk.ai`;
+            } 
+            
+            else if (templateName === 'followup') {
+                return `Hi ${firstName},
+
+Thanks for your time today during our demo.
+
+As promised, here are the links we referenced so you can review them with your team:
+
+- Try the voice AI live: ${ctaLink}
+- Review our HIPAA & Security standard: dmedesk.ai/security
+
+I'll reach out mid-week to check if you have any questions about the Brightree integration setup.
+
+Talk soon,
+${senderName}
+DMEDesk | ${senderEmail} | dmedesk.ai`;
+            } 
+            
+            else if (templateName === 'noshow') {
+                return `Hi ${firstName},
+
+Sorry we missed each other today at ${time}. I know how busy DME offices get when claims and referrals stack up.
+
+Would you be open to rescheduling for tomorrow or next week? You can pick a new slot that works best for you here: ${ctaLink}
+
+Hope to connect soon!
+
+Best,
+${senderName}
+DMEDesk | ${senderEmail} | dmedesk.ai`;
+            }
+            return "";
+        }
+
+        // 🔗 HTML compiler logic with theme adjustments
+        function getHTMLTemplate(templateName, firstName, companyName, title, date, time, meetLink, senderName, senderEmail, ctaLink) {
+            
+            // Build body specific content
+            let bodyHTMLContent = "";
+            let interactiveWidgetBlock = "";
+
+            if (templateName === 'cold') {
+                bodyHTMLContent = `
+              <!-- Salutation -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 20px 0;line-height:1.7;">
+                Hi <strong>${firstName}</strong>,
+              </p>
+
+              <!-- HOOK -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 20px 0;line-height:1.7;">
+                I noticed your practice is currently hiring for front-desk support. Congrats on the growth.
+              </p>
+
+              <!-- THE CHALLENGE -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 20px 0;line-height:1.7;">
+                As a ${title || 'veteran'} in the DME space, you know first-hand how difficult it is to capture every inbound referral and patient question without your staff burning out on the phones.
+              </p>
+
+              <!-- THE LOSE-LOSE -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 24px 0;line-height:1.7;">
+                It’s a lose-lose: You either <strong>hire fast</strong> to hit your targets but let service quality slip, or <strong>hire slow</strong> to maintain your bar but lose patients to voicemail and competitors who answer faster.
+              </p>
+
+              <!-- THE SOLUTION -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 24px 0;line-height:1.7;">
+                We’ve helped over 100 DMEPOS suppliers stop the "voicemail bleed" with an AI receptionist that handles HCPCS intake, LCD verification, and prior auth inquiries — 24/7, with zero hold time.
+              </p>
+
+              <!-- DIFFERENTIATOR -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin:32px 0;">
+                <tr>
+                  <td class="quote-cell" style="border-left:4px solid #009E8E;padding:12px 0 12px 24px;">
+                    <p style="font-family:'Inter',Arial,sans-serif;font-size:15px;color:#475569;margin:0;line-height:1.6;font-style:italic;">
+                      "DMEDesk handles our after-hours calls so perfectly, our patients think they're talking to a dedicated staff member in our office."
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- CTA LINE -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 32px 0;line-height:1.7;">
+                I’d love to show you how we can automate your front-desk intake. Up for a chat?
+              </p>
+
+              <!-- CTA BUTTON -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <td style="border-radius:12px;background:#009E8E;">
+                    <a href="${ctaLink}" class="cta-btn" style="display:inline-block;font-family:'Plus Jakarta Sans',Arial,sans-serif;font-size:16px;font-weight:700;color:#ffffff;padding:16px 36px;text-decoration:none;border-radius:12px;box-shadow: 0 4px 14px rgba(0, 158, 142, 0.2);">
+                      Book a Free 20-Min Demo →
+                    </a>
+                  </td>
+                </tr>
+              </table>
+                `;
+
+                interactiveWidgetBlock = `
+          <!-- INTERACTIVE WIDGET PREVIEW -->
+          <tr>
+            <td style="padding: 0 48px 48px 48px; background: #ffffff;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: #F8FAFC; border-radius: 16px; padding: 24px;">
+                <tr>
+                  <td style="vertical-align: middle; width: 64px;">
+                    <img src="https://app.dmedesk.ai/media/public/2387144/01KQ0KZ0FEXHQ5WZ36Q7SVN0EJ.png" alt="AI Avatar" width="56" height="56" style="display: block; border-radius: 50%; border: 2px solid #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+                  </td>
+                  <td style="padding-left: 16px; vertical-align: middle;">
+                    <p style="font-family:'Plus Jakarta Sans',Arial,sans-serif;font-size:14px;font-weight:700;color:#1E293B;margin:0 0 4px 0;">
+                      Experience the Voice AI
+                    </p>
+                    <p style="font-family:'Inter',Arial,sans-serif;font-size:13px;color:#64748B;margin:0;">
+                      Click to start a live voice chat with our assistant.
+                    </p>
+                  </td>
+                  <td align="center" style="vertical-align: middle; padding-left: 12px;">
+                    <a href="https://app.dmedesk.ai/web-widget/widget.html?assistant_id=0284e1e9-49d2-47fb-a07f-2ad8588a17dc&mode=voice_chat" style="display:inline-block; background:#009E8E; color:#ffffff; font-family:'Plus Jakarta Sans',Arial,sans-serif; font-size:13px; font-weight:700; text-decoration:none; padding:10px 20px; border-radius:100px; white-space: nowrap;">
+                      Try it Live
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+                `;
+            } 
+            
+            else if (templateName === 'confirm') {
+                bodyHTMLContent = `
+              <!-- Salutation -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 20px 0;line-height:1.7;">
+                Hi <strong>${firstName}</strong>,
+              </p>
+
+              <!-- HOOK -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 20px 0;line-height:1.7;">
+                I'm looking forward to our demo on <strong>${date} at ${time} (Eastern Time)</strong>.
+              </p>
+
+              <!-- PLAN -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 24px 0;line-height:1.7;">
+                We will use this Google Meet room for our screen share:
+              </p>
+
+              <!-- MEET LINK BOX -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin:24px 0;">
+                <tr>
+                  <td style="background:#F8FAFC; border-radius:8px; border:1px solid #E4EAF2; padding:16px; text-align:center;">
+                    <a href="${meetLink}" style="font-family:'Plus Jakarta Sans',Arial,sans-serif; font-size:15px; font-weight:700; color:#009E8E; text-decoration:none; word-break:break-all;">
+                      🔗 Join Google Meet Video Call
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 32px 0;line-height:1.7;">
+                I’ll show you how DMEDesk connects to your systems (like Brightree/NikoHealth) to automate patient intakes, run real-time insurance eligibility checks, and stop voicemail leaks.
+              </p>
+
+              <!-- CTA BUTTON -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <td style="border-radius:12px;background:#009E8E;">
+                    <a href="${ctaLink}" class="cta-btn" style="display:inline-block;font-family:'Plus Jakarta Sans',Arial,sans-serif;font-size:16px;font-weight:700;color:#ffffff;padding:16px 36px;text-decoration:none;border-radius:12px;box-shadow: 0 4px 14px rgba(0, 158, 142, 0.2);">
+                      Manage/Reschedule Meeting →
+                    </a>
+                  </td>
+                </tr>
+              </table>
+                `;
+            } 
+            
+            else if (templateName === 'followup') {
+                bodyHTMLContent = `
+              <!-- Salutation -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 20px 0;line-height:1.7;">
+                Hi <strong>${firstName}</strong>,
+              </p>
+
+              <!-- HOOK -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 20px 0;line-height:1.7;">
+                Thank you for taking the time to review DMEDesk today. It was great discussing your workflow bottlenecks.
+              </p>
+
+              <!-- SUMMARY -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 24px 0;line-height:1.7;">
+                As promised, here are the direct links we referenced so you can share them with your team:
+              </p>
+
+              <!-- LINKS BULLET LIST -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin:24px 0;">
+                <tr>
+                  <td class="quote-cell" style="border-left:4px solid #009E8E;padding:4px 0 4px 20px;">
+                    <p style="font-family:'Inter',Arial,sans-serif;font-size:15px;color:#1E293B;margin:0 0 10px 0;line-height:1.6;">
+                      • <strong>Try the voice AI live assistant:</strong> <a href="${ctaLink}" style="color:#009E8E; text-decoration:none;">Voice Widget Link</a>
+                    </p>
+                    <p style="font-family:'Inter',Arial,sans-serif;font-size:15px;color:#1E293B;margin:0;line-height:1.6;">
+                      • <strong>Review compliance protocols:</strong> <a href="https://dmedesk.ai/security" style="color:#009E8E; text-decoration:none;">dmedesk.ai/security</a>
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 32px 0;line-height:1.7;">
+                I'll reach out mid-week to check if you have any questions about our database integration.
+              </p>
+                `;
+            } 
+            
+            else if (templateName === 'noshow') {
+                bodyHTMLContent = `
+              <!-- Salutation -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 20px 0;line-height:1.7;">
+                Hi <strong>${firstName}</strong>,
+              </p>
+
+              <!-- HOOK -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 20px 0;line-height:1.7;">
+                Sorry we missed each other today at ${time}. I know how busy DME offices get when claims stack up.
+              </p>
+
+              <!-- VALUE -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 24px 0;line-height:1.7;">
+                When you have a few minutes, let's grab a slot to get your team set up and stop those missed calls.
+              </p>
+
+              <!-- CTA BUTTON -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <td style="border-radius:12px;background:#009E8E;">
+                    <a href="${ctaLink}" class="cta-btn" style="display:inline-block;font-family:'Plus Jakarta Sans',Arial,sans-serif;font-size:16px;font-weight:700;color:#ffffff;padding:16px 36px;text-decoration:none;border-radius:12px;box-shadow: 0 4px 14px rgba(0, 158, 142, 0.2);">
+                      Select a New Time Slot →
+                    </a>
+                  </td>
+                </tr>
+              </table>
+                `;
+            }
+
+            // Dark Mode / Light Mode inside Iframe client
+            let isClientDark = (activeClientMode === 'dark');
+            let bodyBg = isClientDark ? '#1E293B' : '#ffffff';
+            let outerBg = isClientDark ? '#0F172A' : '#F0F4F8';
+            let textColor = isClientDark ? '#F1F5F9' : '#1E293B';
+            let mutedTextColor = isClientDark ? '#94A3B8' : '#64748B';
+            let dividerColor = isClientDark ? '#334155' : '#E4EAF2';
+            let textBoldColor = isClientDark ? '#ffffff' : '#1E293B';
+            let badgeBg = isClientDark ? 'rgba(5, 150, 105, 0.2)' : '#F0FDF9';
+            let badgeBorder = isClientDark ? '#059669' : '#BBF7D0';
+            let innerCardBg = isClientDark ? '#111827' : '#F8FAFC';
+
+            let psBlock = '';
+            if (templateName === 'cold') {
+                psBlock = `
+              <p class="body-text-muted" style="font-family:'Inter',Arial,sans-serif;font-size:14px;color:${mutedTextColor};margin:24px 0 0 0;line-height:1.65;">
+                <strong style="color:${textColor};">P.S.</strong> — Go live in 2–3 weeks with full white-glove onboarding included. The only risk is another week of missed calls.
+              </p>`;
+            }
+
+            return `<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
+  xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
+  <title>DMEDesk Outreach Preview</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0 !important;
+      padding: 0 !important;
+      background-color: ${outerBg} !important;
+      font-family: 'Inter', Arial, sans-serif;
+      color: ${textColor} !important;
+    }
+    .body-text { color: ${textColor} !important; }
+    .body-text-muted { color: ${mutedTextColor} !important; }
+    .divider { background: ${dividerColor} !important; }
+    .email-container { background: ${bodyBg} !important; }
+    .body-cell { background: ${bodyBg} !important; }
+    .quote-cell { border-left: 4px solid #009E8E !important; }
+    
+    @media screen and (max-width: 620px) {
+      .email-wrapper { width: 100% !important; padding: 12px 10px !important; }
+      .email-container { width: 100% !important; border-radius: 12px !important; }
+      .header-cell { padding: 20px !important; }
+      .body-cell { padding: 32px 20px !important; }
+      .cta-btn { width: 100% !important; text-align: center !important; }
+    }
+  </style>
+</head>
+<body style="margin:0;padding:0;background-color:${outerBg};">
+  <table class="email-wrapper" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:${outerBg};padding:24px 16px;">
+    <tr>
+      <td align="center">
+        <table class="email-container" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="background:${bodyBg};border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(15,28,46,0.08);">
+          <tr>
+            <td class="header-cell" style="padding:18px 36px;border-bottom:1px solid ${dividerColor};">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <td style="vertical-align:middle;">
+                    <a href="https://dmedesk.ai" style="text-decoration:none;">
+                      <img src="https://dmedesk.ai/assets/dmedesk-logo.png" alt="DMEDesk" width="140" style="display:block;width:140px;height:auto;border:0;${isClientDark ? 'filter: brightness(1.2) mix-blend-mode: screen;' : ''}" />
+                    </a>
+                  </td>
+                  <td align="right" style="vertical-align:middle;">
+                    <span style="font-family:'Inter',Arial,sans-serif;font-size:11px;font-weight:600;color:#059669;background:${badgeBg};border:1px solid ${badgeBorder};border-radius:100px;padding:4px 10px;">✓ HIPAA</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td class="body-cell" style="padding:48px 48px 40px 48px;background:${bodyBg};">
+              
+              ${bodyHTMLContent}
+
+              <!-- SIGNATURE -->
+              <div style="margin-top:48px; border-top:1px solid ${dividerColor}; padding-top:24px;">
+                <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:${textColor};margin:0 0 4px 0;line-height:1.6;">
+                  Talk soon,
+                </p>
+                <p style="font-family:'Plus Jakarta Sans',Arial,sans-serif;font-size:16px;font-weight:700;color:${textColor};margin:0 0 2px 0;">
+                  ${senderName}
+                </p>
+                <p class="body-text-muted" style="font-family:'Inter',Arial,sans-serif;font-size:14px;color:${mutedTextColor};margin:0;">
+                  DMEDesk · <a href="${ctaLink}" style="color:#009E8E;text-decoration:none;font-weight:600;">${senderEmail}</a>
+                </p>
+              </div>
+
+              ${psBlock}
+            </td>
+          </tr>
+          
+          ${interactiveWidgetBlock}
+
+          <!-- FOOTER -->
+          <tr>
+            <td class="footer-cell" style="background:#0F172A;padding:40px;border-radius:0 0 20px 20px;text-align:center;">
+              <p style="font-family:'Inter',Arial,sans-serif;font-size:12px;color:#94A3B8;margin:0 0 12px 0;line-height:1.6;">
+                The first AI-powered front desk for DMEPOS suppliers.<br>
+                HIPAA Compliant · Automated Intake · 24/7 Coverage
+              </p>
+              <p style="font-family:'Inter',Arial,sans-serif;font-size:12px;margin:0;">
+                <a href="https://dmedesk.ai" style="color:#CBD5E1;text-decoration:none;">Website</a>
+                <span style="color:#334155;margin:0 8px;">|</span>
+                <a href="mailto:hello@dmedesk.ai" style="color:#CBD5E1;text-decoration:none;">Contact Support</a>
+                <span style="color:#334155;margin:0 8px;">|</span>
+                <a href="#" style="color:#CBD5E1;text-decoration:none;">Unsubscribe</a>
+              </p>
+              <p style="font-family:'Inter',Arial,sans-serif;font-size:11px;color:#475569;margin-top:20px;">
+                &copy; 2026 DMEDesk. All rights reserved.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+        }
+
+        // 🔄 Real-time Update engine
+        function updateTemplateOutputs() {
+            const template = document.getElementById('template-select').value;
+            const firstName = document.getElementById('var-first-name').value || "[First Name]";
+            const companyName = document.getElementById('var-company').value || "[Company]";
+            const title = document.getElementById('var-title').value || "";
+            const date = document.getElementById('var-meet-date').value || "[Date]";
+            const time = document.getElementById('var-meet-time').value || "[Time]";
+            const meetLink = document.getElementById('var-meet-link').value || "[Meet Link]";
+            const senderName = document.getElementById('var-sender-name').value || "[Your Name]";
+            const senderEmail = document.getElementById('var-sender-email').value || "[Email]";
+            const ctaLink = document.getElementById('var-cta-link').value || "https://dmedesk.ai/contact";
+
+            // Subject Line compile
+            compiledSubject = getGeneratedSubject(template, firstName, companyName, senderName);
+            document.getElementById('rendered-subject').textContent = compiledSubject;
+
+            // Plain Text compile
+            compiledText = getPlainTextTemplate(template, firstName, companyName, title, date, time, meetLink, senderName, senderEmail, ctaLink);
+
+            // HTML Email compile
+            compiledHTML = getHTMLTemplate(template, firstName, companyName, title, date, time, meetLink, senderName, senderEmail, ctaLink);
+
+            // Populate iframe
+            const iframe = document.getElementById('preview-iframe');
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            iframeDoc.open();
+            iframeDoc.write(compiledHTML);
+            iframeDoc.close();
+
+            // Populate code textbox
+            document.getElementById('code-text').value = compiledHTML;
+
+            // Run Spam Score analysis
+            runSpamChecker(compiledSubject, compiledText);
+        }
+
+        // 📋 Copy triggers
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-text').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function copySubjectLine() {
+            navigator.clipboard.writeText(compiledSubject)
+                .then(() => showToast("Subject line copied to clipboard!"))
+                .catch(() => showToast("Failed to copy subject."));
+        }
+
+        function copyPlainText() {
+            navigator.clipboard.writeText(compiledText)
+                .then(() => showToast("Plain text email copied to clipboard!"))
+                .catch(() => showToast("Failed to copy plain text."));
+        }
+
+        function copyHTMLEmail() {
+            try {
+                // Copy both HTML and text to clipboard for native client copy pasting
+                const htmlBlob = new Blob([compiledHTML], { type: 'text/html' });
+                const textBlob = new Blob([compiledText], { type: 'text/plain' });
+                
+                navigator.clipboard.write([
+                    new ClipboardItem({
+                        'text/html': htmlBlob,
+                        'text/plain': textBlob
+                    })
+                ]).then(() => {
+                    showToast("HTML email copied! Ready to paste into Outlook/Gmail.");
+                }).catch(err => {
+                    console.error("ClipboardItem failed, running fallback copy:", err);
+                    // Fallback to text/plain copying of the HTML code
+                    navigator.clipboard.writeText(compiledHTML).then(() => {
+                        showToast("HTML source code copied (rich-copy fallback).");
+                    });
+                });
+            } catch (err) {
+                navigator.clipboard.writeText(compiledHTML).then(() => {
+                    showToast("HTML source code copied to clipboard.");
+                });
+            }
+        }
+
+        // 📥 File download creators
+        function downloadHTMLFile() {
+            const blob = new Blob([compiledHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `dmedesk_email_${document.getElementById('template-select').value}.html`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast("Downloaded HTML file successfully.");
+        }
+
+        function downloadTXTFile() {
+            const blob = new Blob([compiledText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `dmedesk_email_${document.getElementById('template-select').value}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast("Downloaded Plain Text file successfully.");
+        }
+
+        function downloadEMLFile() {
+            const senderName = document.getElementById('var-sender-name').value;
+            const senderEmail = document.getElementById('var-sender-email').value;
+            
+            // Build EML string with simple headers
+            const emlLines = [
+                `From: "${senderName}" <${senderEmail}>`,
+                `Subject: ${compiledSubject}`,
+                `MIME-Version: 1.0`,
+                `Content-Type: text/html; charset=utf-8`,
+                ``, // Empty line separating headers and body
+                compiledHTML
+            ];
+            
+            const emlContent = emlLines.join('\r\n');
+            const blob = new Blob([emlContent], { type: 'message/rfc822' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `dmedesk_email_${document.getElementById('template-select').value}.eml`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast("Downloaded .EML file. Double-click to open in Outlook!");
+        }
+
+        function generateGoogleCalendarLink() {
+            const title = "DMEDesk Demo Screen Share";
+            const details = `Hi, looking forward to showing you the voice AI receptionist. Meet room link: ${document.getElementById('var-meet-link').value}`;
+            
+            // Google Calendar template URL generator
+            const baseUrl = "https://calendar.google.com/calendar/render?action=TEMPLATE";
+            const textParam = encodeURIComponent(title);
+            const detailsParam = encodeURIComponent(details);
+            
+            const fullUrl = `${baseUrl}&text=${textParam}&details=${detailsParam}`;
+            window.open(fullUrl, '_blank');
+        }
+
+        // Initialize state
+        window.addEventListener('DOMContentLoaded', () => {
+            loadSignatureFromStorage();
+            updateTemplateOutputs();
+        });
+    </script>
+</body>
+</html>

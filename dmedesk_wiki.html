@@ -852,6 +852,12 @@
                 <span class="sb-grp-title">Compliance</span>
                 <div class="sb-item" data-page="compliance-rules" onclick="showPage('compliance-rules')">🔒 HIPAA & TCPA Simple</div>
             </div>
+
+            <div class="sb-grp">
+                <span class="sb-grp-title">Team Onboarding</span>
+                <div class="sb-item" data-page="doc-chaser-guide" onclick="showPage('doc-chaser-guide')">🎓 Your Background ➔ BDR</div>
+                <div class="sb-item" data-page="crm-ehr-pms" onclick="showPage('crm-ehr-pms')">💻 CRM vs EHR vs PMS</div>
+            </div>
         </aside>
 
         <!-- MAIN WORKSPACE -->
@@ -1236,23 +1242,83 @@
                     <div style="display: flex; flex-direction: column; gap: 1rem;">
                         <div class="card">
                             <h4>HCPCS Codes</h4>
-                            <p><strong>Pronounced:</strong> *"Hick-Picks"*<br>Standard medical billing codes used for equipment. For example, **E1390** is the code for an Oxygen Concentrator. If you know these codes, owners will immediately respect you.</p>
+                            <p>Standard medical billing codes used for equipment (e.g. <strong>E1390</strong> for an Oxygen Concentrator). Knowing these helps reps speak professionally with suppliers.</p>
                         </div>
                         <div class="card">
                             <h4>LCD (Local Coverage Determination)</h4>
-                            <p><strong>What it is:</strong> The rulebook.<br>The exact medical criteria Medicare uses to decide if they will pay for a piece of medical equipment. If a patient doesn't meet the LCD, Medicare will reject the claim.</p>
+                            <p>The exact medical criteria Medicare uses to decide if they will pay for a piece of equipment. If criteria aren't met, Medicare rejects the claim.</p>
                         </div>
                         <div class="card">
                             <h4>Prior Auth (Prior Authorization)</h4>
-                            <p><strong>What it is:</strong> Payer approval.<br>Approval required from an insurance company *before* equipment can be delivered. Chasing these approvals occupies massive staff hours.</p>
+                            <p>Approval required from an insurance company before equipment can be delivered. Chasing auths takes massive staff hours.</p>
                         </div>
                         <div class="card">
                             <h4>PMS (Practice Management System)</h4>
-                            <p><strong>What it is:</strong> The DME Office Software.<br>The database software DME suppliers use to track patients, orders, and billing. The major ones are **Brightree** and **NikoHealth**. DMEDesk syncs with these automatically.</p>
+                            <p>Database software DME suppliers use to track patients, orders, and billing (e.g. Brightree, NikoHealth). DMEDesk syncs with these automatically.</p>
                         </div>
                         <div class="card">
                             <h4>MBI (Medicare Beneficiary Identifier)</h4>
-                            <p><strong>What it is:</strong> Patient's Medicare Card ID.<br>The unique card number for patients on Medicare. Our voice AI can read and verify this ID over the phone live.</p>
+                            <p>The patient's unique Medicare card number. Our voice AI can read and verify this ID live over the phone.</p>
+                        </div>
+                        <div class="card">
+                            <h4>PHI (Protected Health Information)</h4>
+                            <p>Any private patient details (names, dates of birth, medical histories) that are legally protected under HIPAA.</p>
+                        </div>
+                        <div class="card">
+                            <h4>BAA (Business Associate Agreement)</h4>
+                            <p>A HIPAA-required contract between DMEDesk and the practice that guarantees patient data is handled securely and legally.</p>
+                        </div>
+                        <div class="card">
+                            <h4>TPO (Treatment, Payment, and Operations)</h4>
+                            <p>The HIPAA rule allowing providers to collect patient data for treatment or billing without requiring written patient consent.</p>
+                        </div>
+                        <div class="card">
+                            <h4>NPI (National Provider Identifier)</h4>
+                            <p>A unique 10-digit number assigned to US healthcare providers. The AI looks this up to verify doctors live on calls.</p>
+                        </div>
+                        <div class="card">
+                            <h4>ICD-10 Codes</h4>
+                            <p>Standardized diagnosis codes used by doctors to document a patient's medical condition on prescriptions.</p>
+                        </div>
+                        <div class="card">
+                            <h4>System Prompt</h4>
+                            <p>The set of instructions that tells the AI receptionist how to behave, what questions to ask, and when to transfer calls.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Knowledge Base</h4>
+                            <p>Supporting documents (PDFs, instruction sheets) that the AI references mid-call to answer patient questions instantly.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Warm Transfer</h4>
+                            <p>Handing a caller over to a human agent after the AI speaks to the staff member first and introduces the patient.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Cold Transfer</h4>
+                            <p>Handing a caller over directly to a human staff member's queue without any introduction.</p>
+                        </div>
+                        <div class="card">
+                            <h4>STT (Speech-to-Text) & TTS (Text-to-Speech)</h4>
+                            <p>The technologies the AI uses to transcribe spoken words to text, and to generate natural voice answers back.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Conversational Latency</h4>
+                            <p>The delay before the AI replies. DMEDesk operates at sub-second latency (under 1 second) so calls feel like natural talk.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Webhook</h4>
+                            <p>A secure digital bridge that automatically sends call outcomes, data, and transcripts to other software after a call ends.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Filler Audio</h4>
+                            <p>Natural spoken sounds (like "uh-huh" or "one moment") played by the AI to make brief processing pauses feel human.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Outbound Campaign</h4>
+                            <p>An automated batch of outbound phone calls placed by the AI to a specific list of contacts (payers or patients).</p>
+                        </div>
+                        <div class="card">
+                            <h4>CMS (Centers for Medicare & Medicaid Services)</h4>
+                            <p>The federal agency that regulates medical equipment billing, documentation requirements, and accreditation standards.</p>
                         </div>
                     </div>
 
@@ -1397,7 +1463,195 @@
 
                     <div class="nav-footer">
                         <div class="nf-btn" onclick="showPage('how-it-works')">&larr; Back to How it Works</div>
-                        <div class="nf-btn" onclick="showPage('dialer-battlecard')">Back to Start &rarr;</div>
+                        <div class="nf-btn" onclick="showPage('doc-chaser-guide')">Next: Onboarding Guide &rarr;</div>
+                    </div>
+                </div>
+
+                <!-- YOUR BACKGROUND -> BDR -->
+                <div class="doc-page" id="page-doc-chaser-guide">
+                    <div class="bc">Team Onboarding &rsaquo; Your Background ➔ BDR</div>
+                    <div class="pg-header">
+                        <h1 class="pg-title">Your Background ➔ BDR</h1>
+                        <p class="pg-sub">How to translate Doctor Chasing and Prior Auth coordination into elite BDR opener skills.</p>
+                    </div>
+
+                    <div class="callout info">
+                        <h4>🎯 The Golden Opener Mindset</h4>
+                        <p style="margin-top: 0.5rem; font-size: 0.95rem; line-height: 1.6;">
+                            As an <strong>Opener BDR</strong>, you do NOT need to sell the entire software suite, explain pricing, or coordinate technical integrations. Your primary goal is to <strong>identify a bottleneck (voicemail bleed or staff burnout) and book a 15-minute demo</strong> with our closer team. Stay focused on simple, high-impact conversations!
+                        </p>
+                    </div>
+
+                    <h2>Translating Your Specialist Skills</h2>
+                    <p>Your previous experience in clinical administration is a massive competitive advantage. Here is how your skills map directly to sales outreach:</p>
+
+                    <div style="display: flex; flex-direction: column; gap: 1rem; margin: 1.5rem 0;">
+                        <div class="card">
+                            <h4 style="color: var(--teal); margin-bottom: 0.5rem;">📞 Provider Coordination ➔ Gatekeeper Mastery</h4>
+                            <p style="font-size: 0.95rem; line-height: 1.6;">
+                                <strong>Old Duty:</strong> Engaging doctor offices to secure documentation.<br>
+                                <strong>New Skill:</strong> You already know the clinical language and how medical front offices operate. When you speak to a gatekeeper, you sound like a peer, not a generic telemarketer. Use that confidence to explain we help ease administrative burdens.
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <h4 style="color: var(--teal); margin-bottom: 0.5rem;">⏱️ Claims & Auth Management ➔ Persistence & Follow-up</h4>
+                            <p style="font-size: 0.95rem; line-height: 1.6;">
+                                <strong>Old Duty:</strong> Following up on outstanding requests and approvals.<br>
+                                <strong>New Skill:</strong> You understand that claims don't get approved without follow-ups. In outreach, 80% of meetings are booked on the 3rd to 5th touchpoint. Your persistence is your superpower here.
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <h4 style="color: var(--teal); margin-bottom: 0.5rem;">⚙️ Process Optimization ➔ ROI & Value Discovery</h4>
+                            <p style="font-size: 0.95rem; line-height: 1.6;">
+                                <strong>Old Duty:</strong> Identifying administrative delays to enhance workflow.<br>
+                                <strong>New Skill:</strong> You know exactly where office bottlenecks happen (e.g. staff spending hours calling doctors or patients sitting on hold). You can easily explain how DMEDesk solves these specific pains to recover lost referrals.
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <h4 style="color: var(--teal); margin-bottom: 0.5rem;">🔒 Regulatory Compliance ➔ Security Reassurance</h4>
+                            <p style="font-size: 0.95rem; line-height: 1.6;">
+                                <strong>Old Duty:</strong> Ensuring medical records meet strict compliance guidelines.<br>
+                                <strong>New Skill:</strong> You don't have to fear security questions. You can confidently explain that DMEDesk signs BAAs (Business Associate Agreements) and encrypts all patient data using military-grade standards.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h2>Technical Jargon Made Easy</h2>
+                    <p>Prospects or closers will sometimes use technical terms. Here is how to speak about them in plain English:</p>
+
+                    <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+                        <div class="card">
+                            <h4>🔌 APIs (Application Programming Interfaces)</h4>
+                            <p><strong>What it is:</strong> A secure, automatic digital pipeline between two pieces of software.<br>
+                            <strong>Why it matters:</strong> Instead of office staff copying patient names and phone numbers manually from the voicemail to their database, the API allows DMEDesk to send that patient data instantly and automatically.<br>
+                            <strong>Soundbite for calls:</strong> <em>"We connect directly via secure APIs to your software, meaning your staff won't have to copy-paste or enter anything manually."</em></p>
+                        </div>
+
+                        <div class="card">
+                            <h4>🧩 MCP (Model Context Protocol)</h4>
+                            <p><strong>What it is:</strong> A universal plug for AI tools.<br>
+                            <strong>Why it matters:</strong> Traditionally, connecting an AI helper to different clinic systems required building a completely custom, expensive integration from scratch. MCP allows our AI to securely "plug in" to verify calendars, billing codes, and intake sheets in seconds.<br>
+                            <strong>Soundbite for calls:</strong> <em>"We use the new Model Context Protocol standard, which lets our voice AI securely look up schedules and verify codes without requiring custom software development."</em></p>
+                        </div>
+
+                        <div class="card">
+                            <h4>🔒 HIPAA, PHI & BAA (Medical Security Protocol)</h4>
+                            <p><strong>What they are:</strong> <strong>HIPAA</strong> is the federal medical privacy law. <strong>PHI</strong> (Protected Health Information) is any private patient details. A <strong>BAA</strong> (Business Associate Agreement) is a legal contract where we assume legal liability for protecting that data.<br>
+                            <strong>Why it matters:</strong> DME practices cannot legally share patient details with vendors who don't sign a BAA. We sign a BAA with every single customer.<br>
+                            <strong>Soundbite for calls:</strong> <em>"We sign a standard BAA with every practice, and all calls and transcripts are fully HIPAA-compliant and AES-256 encrypted."</em></p>
+                        </div>
+
+                        <div class="card">
+                            <h4>🗣️ Medical STT & TTS (Speech-to-Text & Text-to-Speech)</h4>
+                            <p><strong>What it is:</strong> <strong>STT</strong> is the AI transcribing what a caller says. <strong>TTS</strong> is the AI talking back in a natural human voice.<br>
+                            <strong>Why it matters:</strong> General voice bots get confused by complex medical terminology, HCPCS equipment codes, and doctor names. DMEDesk uses clinical-grade models designed specifically for DME vocabulary.<br>
+                            <strong>Soundbite for calls:</strong> <em>"Our models are custom-trained on DME speech, meaning the AI understands specific medical equipment codes and practitioner names that generic bots miss."</em></p>
+                        </div>
+
+                        <div class="card">
+                            <h4>⚡ Conversational Latency (Response Time)</h4>
+                            <p><strong>What it is:</strong> The brief silence between when a caller stops speaking and when the voice receptionist responds.<br>
+                            <strong>Why it matters:</strong> If latency is 2 to 3 seconds (like standard chatbot engines), the patient gets frustrated or thinks the line dropped. DMEDesk operates at sub-second latency (under 1 second), making it sound like a natural flow.<br>
+                            <strong>Soundbite for calls:</strong> <em>"DMEDesk answers with sub-second response times, so the patient never feels like they are waiting on a slow robotic machine."</em></p>
+                        </div>
+
+                        <div class="card">
+                            <h4>🔄 Two-Way PMS Sync (Write-Back)</h4>
+                            <p><strong>What it is:</strong> The AI receptionist database action of searching records (Read) and typing new patient info (Write-Back) directly into their office software.<br>
+                            <strong>Why it matters:</strong> Many generic call programs only email a recording to staff. DMEDesk actually logs the intake ticket and schedules the referral directly in Brightree or NikoHealth automatically.<br>
+                            <strong>Soundbite for calls:</strong> <em>"We don't just email you transcripts. The system writes the intake data and insurance eligibility details directly back into Brightree."</em></p>
+                        </div>
+                    </div>
+
+                    <div class="nav-footer">
+                        <div class="nf-btn" onclick="showPage('compliance-rules')">&larr; Back to Compliance</div>
+                        <div class="nf-btn" onclick="showPage('crm-ehr-pms')">Next: CRM vs EHR vs PMS &rarr;</div>
+                    </div>
+                </div>
+
+                <!-- CRM VS EHR VS PMS -->
+                <div class="doc-page" id="page-crm-ehr-pms">
+                    <div class="bc">Team Onboarding &rsaquo; CRM vs EHR vs PMS</div>
+                    <div class="pg-header">
+                        <h1 class="pg-title">CRM vs EHR vs PMS</h1>
+                        <p class="pg-sub">Understanding the three main software systems in medical practices without the confusion.</p>
+                    </div>
+
+                    <h2>The Three Systems at a Glance</h2>
+                    <p>Medical practices use different databases for different departments. As a BDO, you must know what they do so you don't confuse them on calls.</p>
+
+                    <div style="display: flex; flex-direction: column; gap: 1rem; margin: 1.5rem 0;">
+                        <div class="card">
+                            <h4 style="color: var(--teal);">1. CRM (Customer Relationship Management)</h4>
+                            <p><strong>Purpose:</strong> Tracking prospects, leads, and sales conversations.<br>
+                            <strong>Who uses it:</strong> Sales teams (including you!). We use it to coordinate our calls, emails, and demos.<br>
+                            <strong>Examples:</strong> HubSpot, Salesforce, Apollo.io.<br>
+                            <strong>DME Sync:</strong> We do NOT sync patient records here. This is purely our internal sales notebook.</p>
+                        </div>
+
+                        <div class="card">
+                            <h4 style="color: var(--teal);">2. EHR / EMR (Electronic Health or Medical Record)</h4>
+                            <p><strong>Purpose:</strong> Tracking medical history and clinical records.<br>
+                            <strong>Who uses it:</strong> Doctors, nurses, and clinical practitioners.<br>
+                            <strong>Examples:</strong> Epic, Athenahealth, Cerner, eClinicalWorks.<br>
+                            <strong>DME Sync:</strong> Read-only lookup. We reference the EHR to verify prescriptions and doctor notes.</p>
+                        </div>
+
+                        <div class="card">
+                            <h4 style="color: var(--teal);">3. PMS (Practice Management System)</h4>
+                            <p><strong>Purpose:</strong> Office operations, patient intake, equipment scheduling, and billing.<br>
+                            <strong>Who uses it:</strong> Front desk coordinators, billers, and DME operators.<br>
+                            <strong>Examples:</strong> Brightree, NikoHealth.<br>
+                            <strong>DME Sync:</strong> <strong>Deep Integration.</strong> This is where DMEDesk writes patient intake details and eligibility ticks in real-time.</p>
+                        </div>
+                    </div>
+
+                    <h2>Comparison Matrix</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>System Type</th>
+                                <th>Primary Focus</th>
+                                <th>Main Users</th>
+                                <th>DMEDesk Integration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>CRM</strong></td>
+                                <td>Prospects, meetings & emails</td>
+                                <td>BDOs / Closers</td>
+                                <td>None (Used for sales track only)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>EHR</strong></td>
+                                <td>Diagnoses, charts & clinical notes</td>
+                                <td>Doctors / Clinicians</td>
+                                <td>Read-only (Prescription checking)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>PMS</strong></td>
+                                <td>Scheduling, inventory & billing</td>
+                                <td>Front Office Staff</td>
+                                <td style="color: var(--teal); font-weight: bold;">Deep Two-Way Sync (Brightree, Nikohealth)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="callout warning">
+                        <h4>🔑 The PMS Conversation Opener</h4>
+                        <p style="margin-top: 0.5rem; font-size: 0.95rem; line-height: 1.5;">
+                            When speaking to a DME practice manager, always ask: <strong>"Which Practice Management System are you running?"</strong><br>
+                            Once they say Brightree or NikoHealth, reassure them: <em>"Perfect, DMEDesk has a native integration with them, so we write intakes directly to your software without your team doing manual work."</em>
+                        </p>
+                    </div>
+
+                    <div class="nav-footer">
+                        <div class="nf-btn" onclick="showPage('doc-chaser-guide')">&larr; Back to BDR Guide</div>
+                        <div class="nf-btn" onclick="showPage('dialer-battlecard')">Back to Playbook Start &rarr;</div>
                     </div>
                 </div>
 
