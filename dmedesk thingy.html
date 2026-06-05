@@ -2216,29 +2216,83 @@
       return formatted.trim();
     }
 
+    function fallbackCopyText(text, successMessage, errorMessage) {
+      try {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.pointerEvents = 'none';
+        textarea.style.opacity = '0';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        const success = document.execCommand('copy');
+        document.body.removeChild(textarea);
+        if (success) {
+          showToast(successMessage);
+        } else {
+          showToast(errorMessage, true);
+        }
+      } catch (err) {
+        console.error("Text copy fallback failed:", err);
+        showToast(errorMessage, true);
+      }
+    }
+
+    function runSelectionCopyFallback(htmlContent) {
+      try {
+        const container = document.createElement('div');
+        container.style.position = 'fixed';
+        container.style.pointerEvents = 'none';
+        container.style.opacity = '0';
+        container.style.left = '-9999px';
+        
+        container.innerHTML = htmlContent;
+        document.body.appendChild(container);
+        
+        const range = document.createRange();
+        range.selectNodeContents(container);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        
+        const success = document.execCommand('copy');
+        selection.removeAllRanges();
+        document.body.removeChild(container);
+        
+        if (success) {
+          showToast("Rich formatted HTML copied to clipboard!");
+        } else {
+          fallbackCopyText(htmlContent, "Plain HTML source code copied to clipboard (rich-copy fallback).", "Failed to copy email.");
+        }
+      } catch (err) {
+        console.error("Selection copy fallback failed:", err);
+        fallbackCopyText(htmlContent, "Plain HTML source code copied to clipboard (rich-copy fallback).", "Failed to copy email.");
+      }
+    }
+
     /* Clipboard Copy Action (Rich Format HTML) */
     async function copyHTMLAction() {
       try {
-        const htmlBlob = new Blob([currentGeneratedHTML], { type: "text/html" });
-        const plainTextBlob = new Blob([stripHTML(currentGeneratedHTML)], { type: "text/plain" });
-        
-        const data = [
-          new ClipboardItem({
-            "text/html": htmlBlob,
-            "text/plain": plainTextBlob
-          })
-        ];
-        
-        await navigator.clipboard.write(data);
-        showToast("Rich formatted HTML copied to clipboard!");
-      } catch (err) {
-        console.error("ClipboardItem failed. Fallback to copyText", err);
-        try {
-          await navigator.clipboard.writeText(currentGeneratedHTML);
-          showToast("Plain HTML source code copied to clipboard.");
-        } catch(e) {
-          showToast("Failed to copy clipboard data.", true);
+        if (navigator.clipboard && window.ClipboardItem) {
+          const htmlBlob = new Blob([currentGeneratedHTML], { type: "text/html" });
+          const plainTextBlob = new Blob([stripHTML(currentGeneratedHTML)], { type: "text/plain" });
+          
+          const data = [
+            new ClipboardItem({
+              "text/html": htmlBlob,
+              "text/plain": plainTextBlob
+            })
+          ];
+          
+          await navigator.clipboard.write(data);
+          showToast("Rich formatted HTML copied to clipboard!");
+        } else {
+          runSelectionCopyFallback(currentGeneratedHTML);
         }
+      } catch (err) {
+        console.error("ClipboardItem failed. Fallback to selection copy", err);
+        runSelectionCopyFallback(currentGeneratedHTML);
       }
     }
 

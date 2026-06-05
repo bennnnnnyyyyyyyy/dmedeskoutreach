@@ -1703,42 +1703,104 @@ DMEDesk | ${senderEmail} | dmedesk.ai`;
             }, 3000);
         }
 
+        function fallbackCopyText(text, successMessage, errorMessage) {
+            try {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.pointerEvents = 'none';
+                textarea.style.opacity = '0';
+                textarea.style.left = '-9999px';
+                document.body.appendChild(textarea);
+                textarea.select();
+                const success = document.execCommand('copy');
+                document.body.removeChild(textarea);
+                if (success) {
+                    showToast(successMessage);
+                } else {
+                    showToast(errorMessage);
+                }
+            } catch (err) {
+                console.error("Text copy fallback failed:", err);
+                showToast(errorMessage);
+            }
+        }
+
         function copySubjectLine() {
-            navigator.clipboard.writeText(compiledSubject)
-                .then(() => showToast("Subject line copied to clipboard!"))
-                .catch(() => showToast("Failed to copy subject."));
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(compiledSubject)
+                    .then(() => showToast("Subject line copied to clipboard!"))
+                    .catch(() => fallbackCopyText(compiledSubject, "Subject line copied to clipboard!", "Failed to copy subject."));
+            } else {
+                fallbackCopyText(compiledSubject, "Subject line copied to clipboard!", "Failed to copy subject.");
+            }
         }
 
         function copyPlainText() {
-            navigator.clipboard.writeText(compiledText)
-                .then(() => showToast("Plain text email copied to clipboard!"))
-                .catch(() => showToast("Failed to copy plain text."));
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(compiledText)
+                    .then(() => showToast("Plain text email copied to clipboard!"))
+                    .catch(() => fallbackCopyText(compiledText, "Plain text email copied to clipboard!", "Failed to copy plain text."));
+            } else {
+                fallbackCopyText(compiledText, "Plain text email copied to clipboard!", "Failed to copy plain text.");
+            }
+        }
+
+        function runSelectionCopyFallback(htmlContent) {
+            try {
+                const container = document.createElement('div');
+                container.style.position = 'fixed';
+                container.style.pointerEvents = 'none';
+                container.style.opacity = '0';
+                container.style.left = '-9999px';
+                
+                container.innerHTML = htmlContent;
+                document.body.appendChild(container);
+                
+                const range = document.createRange();
+                range.selectNodeContents(container);
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
+                
+                const success = document.execCommand('copy');
+                selection.removeAllRanges();
+                document.body.removeChild(container);
+                
+                if (success) {
+                    showToast("HTML email copied! Ready to paste into Outlook/Gmail.");
+                } else {
+                    fallbackCopyText(htmlContent, "HTML source code copied (rich-copy fallback).", "Failed to copy email.");
+                }
+            } catch (err) {
+                console.error("Selection copy fallback failed:", err);
+                fallbackCopyText(htmlContent, "HTML source code copied (rich-copy fallback).", "Failed to copy email.");
+            }
         }
 
         function copyHTMLEmail() {
             try {
-                // Copy both HTML and text to clipboard for native client copy pasting
-                const htmlBlob = new Blob([compiledHTML], { type: 'text/html' });
-                const textBlob = new Blob([compiledText], { type: 'text/plain' });
+                if (navigator.clipboard && window.ClipboardItem) {
+                    const htmlBlob = new Blob([compiledHTML], { type: 'text/html' });
+                    const textBlob = new Blob([compiledText], { type: 'text/plain' });
 
-                navigator.clipboard.write([
-                    new ClipboardItem({
-                        'text/html': htmlBlob,
-                        'text/plain': textBlob
-                    })
-                ]).then(() => {
-                    showToast("HTML email copied! Ready to paste into Outlook/Gmail.");
-                }).catch(err => {
-                    console.error("ClipboardItem failed, running fallback copy:", err);
-                    // Fallback to text/plain copying of the HTML code
-                    navigator.clipboard.writeText(compiledHTML).then(() => {
-                        showToast("HTML source code copied (rich-copy fallback).");
+                    navigator.clipboard.write([
+                        new ClipboardItem({
+                            'text/html': htmlBlob,
+                            'text/plain': textBlob
+                        })
+                    ]).then(() => {
+                        showToast("HTML email copied! Ready to paste into Outlook/Gmail.");
+                    }).catch(err => {
+                        console.error("ClipboardItem failed, running fallback copy:", err);
+                        runSelectionCopyFallback(compiledHTML);
                     });
-                });
+                } else {
+                    runSelectionCopyFallback(compiledHTML);
+                }
             } catch (err) {
-                navigator.clipboard.writeText(compiledHTML).then(() => {
-                    showToast("HTML source code copied to clipboard.");
-                });
+                console.error("Clipboard copy error:", err);
+                runSelectionCopyFallback(compiledHTML);
             }
         }
 
