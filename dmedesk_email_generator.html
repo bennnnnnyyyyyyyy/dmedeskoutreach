@@ -135,9 +135,9 @@
 
         /* LEFT SIDEBAR - CONTROLS */
         .sidebar {
-            width: 45%;
-            min-width: 450px;
-            max-width: 600px;
+            width: 380px;
+            min-width: 360px;
+            max-width: 420px;
             height: 100%;
             overflow-y: auto;
             background-color: var(--bg-card);
@@ -147,6 +147,32 @@
             flex-direction: column;
             gap: 1.5rem;
             transition: var(--transition);
+        }
+
+        /* Custom Scrollbar for Sidebar */
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 99px;
+        }
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: var(--teal);
+        }
+
+        /* Card Section Header Class */
+        .section-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--teal);
+            margin-top: 0.75rem;
+            margin-bottom: 0.25rem;
+            font-weight: 700;
         }
 
         .card {
@@ -205,6 +231,17 @@
         textarea:focus {
             border-color: var(--teal);
             box-shadow: 0 0 0 2px rgba(0, 158, 142, 0.15);
+        }
+
+        select optgroup {
+            background-color: var(--bg-card);
+            color: var(--teal);
+            font-weight: 600;
+        }
+
+        select option {
+            background-color: var(--bg-input);
+            color: var(--text-main);
         }
 
         .input-row {
@@ -282,6 +319,13 @@
             min-width: 130px;
         }
 
+        /* Copy & Export Grid Layout */
+        .export-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+        }
+
         /* RIGHT PREVIEW WORKSPACE */
         .preview-area {
             flex: 1;
@@ -299,6 +343,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 10px;
@@ -308,6 +354,7 @@
 
         .viewport-selectors {
             display: flex;
+            flex-wrap: wrap;
             gap: 0.5rem;
         }
 
@@ -416,7 +463,7 @@
 
         .subject-val {
             flex: 1;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--text-main);
             overflow: hidden;
             text-overflow: ellipsis;
@@ -448,9 +495,10 @@
         .spam-score-badge {
             font-size: 0.8rem;
             font-weight: 700;
-            padding: 0.25rem 0.6rem;
+            padding: 0.35rem 0.75rem;
             border-radius: 100px;
             text-transform: uppercase;
+            letter-spacing: 0.03em;
         }
 
         .spam-score-badge.good {
@@ -582,7 +630,7 @@
                             onkeydown="if(event.key==='Enter') lookupNPI()">
                         <button class="btn" onclick="lookupNPI()" id="npi-lookup-btn" style="white-space:nowrap;flex-shrink:0;">🔍 Lookup</button>
                     </div>
-                    <div id="npi-result" style="font-size:0.78rem;color:var(--text-muted);margin-top:0.4rem;min-height:1rem;"></div>
+                    <div id="npi-result" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.4rem; min-height: 1.2rem; line-height: 1.2rem;"></div>
                 </div>
             </div>
 
@@ -613,8 +661,7 @@
             <div class="card">
                 <div class="card-title">📝 Template Variables</div>
 
-                <h4 style="font-size: 0.8rem; text-transform: uppercase; color: var(--teal); margin-bottom: 0.2rem;">
-                    Prospect Details</h4>
+                <div class="section-label">Prospect Details</div>
                 <div class="form-group">
                     <label for="var-first-name">First Name</label>
                     <input type="text" id="var-first-name" value="Doctor" oninput="updateTemplateOutputs()">
@@ -631,9 +678,7 @@
                     </div>
                 </div>
 
-                <h4
-                    style="font-size: 0.8rem; text-transform: uppercase; color: var(--teal); margin-top: 0.5rem; margin-bottom: 0.2rem;">
-                    Meeting Info</h4>
+                <div class="section-label">Meeting Info</div>
                 <div class="input-row">
                     <div class="form-group">
                         <label for="var-meet-date">Date</label>
@@ -661,9 +706,7 @@
                     </div>
                 </div>
 
-                <h4
-                    style="font-size: 0.8rem; text-transform: uppercase; color: var(--teal); margin-top: 0.5rem; margin-bottom: 0.2rem;">
-                    Sender Signature</h4>
+                <div class="section-label">Sender Signature</div>
                 <div class="input-row">
                     <div class="form-group">
                         <label for="var-sender-name">Your Name</label>
@@ -686,16 +729,14 @@
             <!-- EXPORTS & UTILITIES -->
             <div class="card">
                 <div class="card-title">💾 Copy & Export</div>
-                <div class="action-row">
-                    <button class="btn" onclick="copyHTMLEmail()" style="flex: 2;">📋 Copy HTML Email</button>
-                    <button class="btn btn-outline" onclick="copyPlainText()" style="flex: 1;">Copy Plain Text</button>
-                </div>
-                <div class="action-row">
+                <button class="btn" onclick="copyHTMLEmail()">📋 Copy HTML Email</button>
+                <div class="export-grid">
+                    <button class="btn btn-outline" onclick="copyPlainText()">Copy Plain Text</button>
                     <button class="btn btn-outline" onclick="downloadEMLFile()">📥 Download .EML</button>
                     <button class="btn btn-outline" onclick="downloadHTMLFile()">Download .HTML</button>
                     <button class="btn btn-outline" onclick="downloadTXTFile()">Download .TXT</button>
                 </div>
-                <button class="btn btn-outline" onclick="generateGoogleCalendarLink()" style="margin-top: 0.5rem;">
+                <button class="btn btn-outline" onclick="generateGoogleCalendarLink()">
                     📅 Open Google Calendar Setup Link
                 </button>
             </div>
