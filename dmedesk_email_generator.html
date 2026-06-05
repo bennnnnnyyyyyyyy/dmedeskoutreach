@@ -1108,68 +1108,39 @@
             resultEl.textContent = "";
 
             try {
-                let data = null;
-                let success = false;
-                const errors = [];
                 const targetUrl = `https://npiregistry.cms.hhs.gov/api/?version=2.1&number=${npi}&limit=1`;
 
-                // 1. Direct Fetch
-                try {
-                    console.log("NPI Lookup: Attempting direct fetch...");
+                const fetchDirect = async () => {
+                    console.log("NPI Lookup: Starting direct fetch...");
                     const res = await fetch(targetUrl);
-                    if (res.ok) {
-                        data = await res.json();
-                        success = true;
-                        console.log("NPI Lookup: Direct fetch succeeded!");
-                    } else {
-                        throw new Error(`HTTP ${res.status}`);
-                    }
-                } catch (err) {
-                    console.warn("NPI Lookup: Direct fetch failed. Details:", err);
-                    errors.push(`Direct: ${err.message || err}`);
-                }
+                    if (!res.ok) throw new Error(`Direct: HTTP ${res.status}`);
+                    const json = await res.json();
+                    console.log("NPI Lookup: Direct fetch succeeded!");
+                    return json;
+                };
 
-                // 2. Try corsproxy.io
-                if (!success) {
-                    try {
-                        console.log("NPI Lookup: Attempting via corsproxy.io...");
-                        const proxyUrl = `https://corsproxy.io/?` + encodeURIComponent(targetUrl);
-                        const res = await fetch(proxyUrl);
-                        if (res.ok) {
-                            data = await res.json();
-                            success = true;
-                            console.log("NPI Lookup: Fetch via corsproxy.io succeeded!");
-                        } else {
-                            throw new Error(`HTTP ${res.status}`);
-                        }
-                    } catch (err) {
-                        console.warn("NPI Lookup: Fetch via corsproxy.io failed. Details:", err);
-                        errors.push(`corsproxy.io: ${err.message || err}`);
-                    }
-                }
+                const fetchAllOrigins = async () => {
+                    console.log("NPI Lookup: Starting api.allorigins.win proxy fetch...");
+                    const proxyUrl = `https://api.allorigins.win/raw?url=` + encodeURIComponent(targetUrl);
+                    const res = await fetch(proxyUrl);
+                    if (!res.ok) throw new Error(`api.allorigins.win: HTTP ${res.status}`);
+                    const json = await res.json();
+                    console.log("NPI Lookup: api.allorigins.win proxy succeeded!");
+                    return json;
+                };
 
-                // 3. Try api.allorigins.win
-                if (!success) {
-                    try {
-                        console.log("NPI Lookup: Attempting via api.allorigins.win...");
-                        const proxyUrl = `https://api.allorigins.win/raw?url=` + encodeURIComponent(targetUrl);
-                        const res = await fetch(proxyUrl);
-                        if (res.ok) {
-                            data = await res.json();
-                            success = true;
-                            console.log("NPI Lookup: Fetch via api.allorigins.win succeeded!");
-                        } else {
-                            throw new Error(`HTTP ${res.status}`);
-                        }
-                    } catch (err) {
-                        console.error("NPI Lookup: Fetch via api.allorigins.win failed. Details:", err);
-                        errors.push(`allorigins: ${err.message || err}`);
-                    }
-                }
+                const fetchCodetabs = async () => {
+                    console.log("NPI Lookup: Starting api.codetabs.com proxy fetch...");
+                    const proxyUrl = `https://api.codetabs.com/v1/proxy?quest=` + encodeURIComponent(targetUrl);
+                    const res = await fetch(proxyUrl);
+                    if (!res.ok) throw new Error(`api.codetabs.com: HTTP ${res.status}`);
+                    const json = await res.json();
+                    console.log("NPI Lookup: api.codetabs.com proxy succeeded!");
+                    return json;
+                };
 
-                if (!success) {
-                    throw new Error(`All lookup attempts failed:\n- ` + errors.join("\n- "));
-                }
+                console.log("NPI Lookup: Requesting NPI data in parallel...");
+                const data = await Promise.any([fetchDirect(), fetchAllOrigins(), fetchCodetabs()]);
 
                 if (!data.results || data.results.length === 0) {
                     resultEl.textContent = "✗ No provider found for this NPI.";
@@ -1207,6 +1178,9 @@
 
             } catch (err) {
                 console.error("NPI lookup error details:\n", err);
+                if (err.errors) {
+                    console.error("All parallel attempts failed:", err.errors.map(e => e.message || e));
+                }
                 resultEl.textContent = "✗ Lookup failed. Please check connection or try again. (See console for details)";
                 resultEl.style.color = "var(--red)";
             } finally {
