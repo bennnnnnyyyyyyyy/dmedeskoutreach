@@ -592,10 +592,19 @@
                 <div class="card-title">✉️ Choose Template</div>
                 <div class="form-group">
                     <select id="template-select" onchange="loadActiveTemplate()">
-                        <option value="cold">1. Cold Outreach (Base Template Style)</option>
-                        <option value="confirm">2. Demo Confirmation (Standard Invite)</option>
-                        <option value="followup">3. Post-Demo Follow-Up</option>
-                        <option value="noshow">4. No-Show Reschedule Request</option>
+                        <optgroup label="— Demo Sequences —">
+                            <option value="cold">1. Cold Outreach (Base Template Style)</option>
+                            <option value="confirm">2. Demo Confirmation (Standard Invite)</option>
+                            <option value="followup">3. Post-Demo Follow-Up</option>
+                            <option value="noshow">4. No-Show Reschedule Request</option>
+                        </optgroup>
+                        <optgroup label="— Cold Email Campaigns —">
+                            <option value="camp_a">Camp A — Missed Call Revenue Leak</option>
+                            <option value="camp_b">Camp B — Prior-Auth Bottleneck</option>
+                            <option value="camp_c">Camp C — After-Hours Black Hole</option>
+                            <option value="camp_d">Camp D — Competitive Bidding / CBP 2027</option>
+                            <option value="camp_e">Camp E — 5 Recovered Calls (Value Hook)</option>
+                        </optgroup>
                     </select>
                 </div>
             </div>
@@ -1243,6 +1252,16 @@
                 return `DMEDesk Demo Follow-up — ${companyName}`;
             } else if (templateName === 'noshow') {
                 return `Missed connection: DMEDesk Demo`;
+            } else if (templateName === 'camp_a') {
+                return `Quick question regarding ${companyName}'s missed calls`;
+            } else if (templateName === 'camp_b') {
+                return `Chasing prescriptions for ${companyName}`;
+            } else if (templateName === 'camp_c') {
+                return `Your front desk at ${companyName}`;
+            } else if (templateName === 'camp_d') {
+                return `Scaling ${companyName} for CBP 2027`;
+            } else if (templateName === 'camp_e') {
+                return `5 recovered orders at ${companyName}`;
             }
             return "Outreach Update";
         }
@@ -1319,6 +1338,77 @@ Best,
 ${senderName}
 DMEDesk | ${senderEmail} | dmedesk.ai`;
             }
+
+            else if (templateName === 'camp_a') {
+                return `Hi ${firstName},
+
+The average DME supplier misses 15–25% of their inbound calls. At a $400 average order value, that's roughly $50k in revenue walking over to your competitors every year because patients hit a voicemail and just call the next shop on the list.
+
+DMEDesk.ai ensures you never miss a referral again. Our AI answers in under a second, triages the patient, and writes the intake notes directly into your system.
+
+Can I show you a 20-minute live demo next Tuesday or Thursday? I'll actually have the AI call your phone so you can hear how it handles a new patient intake.
+
+Best,
+${senderName}
+DMEDesk | ${senderEmail} | dmedesk.ai`;
+            }
+
+            else if (templateName === 'camp_b') {
+                return `Hi ${firstName},
+
+With CMS expanding prior authorization to 7 new HCPCS codes this past April, the documentation workload for your staff just got a lot heavier.
+
+Most teams are losing 3–5 hours a day just chasing doctors for signatures and following up on pending auths. We built an AI agent named Aria specifically to handle those outbound "chase" calls so your staff can focus on fulfillment instead.
+
+Do you have 20 minutes for a quick screen share later this week? I'll show you exactly how we're automating the documentation follow-up for other suppliers.
+
+Best,
+${senderName}
+DMEDesk | ${senderEmail} | dmedesk.ai`;
+            }
+
+            else if (templateName === 'camp_c') {
+                return `Hi ${firstName},
+
+Over 40% of DME patient calls happen after-hours or on weekends. If those patients are hitting a voicemail, they aren't waiting for a callback — they are calling the supplier down the street.
+
+We provide a 24/7 "revenue desk" that handles after-hours intake, insurance verification, and resupply requests exactly like your best employee would. It doesn't replace your staff; it gives them a full queue of ready-to-fill orders when they walk in on Monday morning.
+
+Are you open to a 20-minute demo to see the after-hours workflow in action?
+
+Best,
+${senderName}
+DMEDesk | ${senderEmail} | dmedesk.ai`;
+            }
+
+            else if (templateName === 'camp_d') {
+                return `Hi ${firstName},
+
+With the 2027 Competitive Bidding Program contracts taking effect in 2028, the suppliers who win are the ones scaling their operations now without exploding their headcount costs.
+
+DMEDesk allows you to add new locations or referral sources without the constant cycle of recruiting and training new front-desk staff. We can have you live in 7 days, layered right on top of your existing phone system.
+
+I'd love to show you our ROI calculator and a live call. Do you have a window this Wednesday?
+
+Best,
+${senderName}
+DMEDesk | ${senderEmail} | dmedesk.ai`;
+            }
+
+            else if (templateName === 'camp_e') {
+                return `Hi ${firstName},
+
+Most DME owners tell me that if they could just recover 5 patients a month who would have otherwise hung up on a busy signal, the system would more than pay for itself.
+
+DMEDesk handles unlimited parallel calls during your peak hours, meaning zero hold times and zero missed intake opportunities. It's HIPAA-compliant, integrates with your PMS, and comes with a 30-day money-back guarantee.
+
+Can we jump on a 20-minute screen share to see if this fits your current workflow?
+
+Best,
+${senderName}
+DMEDesk | ${senderEmail} | dmedesk.ai`;
+            }
+
             return "";
         }
 
@@ -1518,6 +1608,181 @@ DMEDesk | ${senderEmail} | dmedesk.ai`;
                   <td style="border-radius:12px;background:#009E8E;">
                     <a href="${ctaLink}" class="cta-btn" style="display:inline-block;font-family:'Plus Jakarta Sans',Arial,sans-serif;font-size:16px;font-weight:700;color:#ffffff;padding:16px 36px;text-decoration:none;border-radius:12px;box-shadow: 0 4px 14px rgba(0, 158, 142, 0.2);">
                       Select a New Time Slot →
+                    </a>
+                  </td>
+                </tr>
+              </table>
+                `;
+            }
+
+            else if (templateName === 'camp_a') {
+                bodyHTMLContent = `
+              <!-- Salutation -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 20px 0;line-height:1.7;">
+                Hi <strong>${firstName}</strong>,
+              </p>
+
+              <!-- STAT HOOK -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 20px 0;line-height:1.7;">
+                The average DME supplier misses <strong>15–25% of their inbound calls</strong>. At a $400 average order value, that's roughly <strong>$50k in revenue</strong> walking over to your competitors every year — because patients hit a voicemail and just call the next shop on the list.
+              </p>
+
+              <!-- SOLUTION -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 24px 0;line-height:1.7;">
+                DMEDesk.ai ensures you <strong>never miss a referral again</strong>. Our AI answers in under a second, triages the patient, and writes the intake notes directly into your system.
+              </p>
+
+              <!-- CTA LINE -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 32px 0;line-height:1.7;">
+                Can I show you a 20-minute live demo next Tuesday or Thursday? I'll actually have the AI call your phone so you can hear how it handles a new patient intake.
+              </p>
+
+              <!-- CTA BUTTON -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <td style="border-radius:12px;background:#009E8E;">
+                    <a href="${ctaLink}" class="cta-btn" style="display:inline-block;font-family:'Plus Jakarta Sans',Arial,sans-serif;font-size:16px;font-weight:700;color:#ffffff;padding:16px 36px;text-decoration:none;border-radius:12px;box-shadow:0 4px 14px rgba(0,158,142,0.2);">
+                      Book a 20-Min Demo &rarr;
+                    </a>
+                  </td>
+                </tr>
+              </table>
+                `;
+            }
+
+            else if (templateName === 'camp_b') {
+                bodyHTMLContent = `
+              <!-- Salutation -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 20px 0;line-height:1.7;">
+                Hi <strong>${firstName}</strong>,
+              </p>
+
+              <!-- HOOK -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 20px 0;line-height:1.7;">
+                With CMS expanding prior authorization to <strong>7 new HCPCS codes</strong> this past April, the documentation workload for your staff just got a lot heavier.
+              </p>
+
+              <!-- PAIN -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 24px 0;line-height:1.7;">
+                Most teams are losing <strong>3–5 hours a day</strong> just chasing doctors for signatures and following up on pending auths. We built an AI agent named <strong>Aria</strong> specifically to handle those outbound &ldquo;chase&rdquo; calls so your staff can focus on fulfillment instead.
+              </p>
+
+              <!-- CTA LINE -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 32px 0;line-height:1.7;">
+                Do you have 20 minutes for a quick screen share later this week? I'll show you exactly how we're automating the documentation follow-up for other suppliers.
+              </p>
+
+              <!-- CTA BUTTON -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <td style="border-radius:12px;background:#009E8E;">
+                    <a href="${ctaLink}" class="cta-btn" style="display:inline-block;font-family:'Plus Jakarta Sans',Arial,sans-serif;font-size:16px;font-weight:700;color:#ffffff;padding:16px 36px;text-decoration:none;border-radius:12px;box-shadow:0 4px 14px rgba(0,158,142,0.2);">
+                      Book a 20-Min Screen Share &rarr;
+                    </a>
+                  </td>
+                </tr>
+              </table>
+                `;
+            }
+
+            else if (templateName === 'camp_c') {
+                bodyHTMLContent = `
+              <!-- Salutation -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 20px 0;line-height:1.7;">
+                Hi <strong>${firstName}</strong>,
+              </p>
+
+              <!-- STAT -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 20px 0;line-height:1.7;">
+                Over <strong>40% of DME patient calls</strong> happen after-hours or on weekends. If those patients are hitting a voicemail, they aren't waiting for a callback — they are calling the supplier down the street.
+              </p>
+
+              <!-- SOLUTION -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 24px 0;line-height:1.7;">
+                We provide a <strong>24/7 &ldquo;revenue desk&rdquo;</strong> that handles after-hours intake, insurance verification, and resupply requests exactly like your best employee would. It doesn't replace your staff; it gives them a full queue of ready-to-fill orders when they walk in on Monday morning.
+              </p>
+
+              <!-- CTA LINE -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 32px 0;line-height:1.7;">
+                Are you open to a 20-minute demo to see the after-hours workflow in action?
+              </p>
+
+              <!-- CTA BUTTON -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <td style="border-radius:12px;background:#009E8E;">
+                    <a href="${ctaLink}" class="cta-btn" style="display:inline-block;font-family:'Plus Jakarta Sans',Arial,sans-serif;font-size:16px;font-weight:700;color:#ffffff;padding:16px 36px;text-decoration:none;border-radius:12px;box-shadow:0 4px 14px rgba(0,158,142,0.2);">
+                      See the After-Hours Demo &rarr;
+                    </a>
+                  </td>
+                </tr>
+              </table>
+                `;
+            }
+
+            else if (templateName === 'camp_d') {
+                bodyHTMLContent = `
+              <!-- Salutation -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 20px 0;line-height:1.7;">
+                Hi <strong>${firstName}</strong>,
+              </p>
+
+              <!-- HOOK -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 20px 0;line-height:1.7;">
+                With the <strong>2027 Competitive Bidding Program</strong> contracts taking effect in 2028, the suppliers who win are the ones scaling their operations now — without exploding their headcount costs.
+              </p>
+
+              <!-- SOLUTION -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 24px 0;line-height:1.7;">
+                DMEDesk allows you to add new locations or referral sources <strong>without the constant cycle of recruiting and training new front-desk staff</strong>. We can have you live in <strong>7 days</strong>, layered right on top of your existing phone system.
+              </p>
+
+              <!-- CTA LINE -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 32px 0;line-height:1.7;">
+                I'd love to show you our ROI calculator and a live call. Do you have a window this Wednesday?
+              </p>
+
+              <!-- CTA BUTTON -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <td style="border-radius:12px;background:#009E8E;">
+                    <a href="${ctaLink}" class="cta-btn" style="display:inline-block;font-family:'Plus Jakarta Sans',Arial,sans-serif;font-size:16px;font-weight:700;color:#ffffff;padding:16px 36px;text-decoration:none;border-radius:12px;box-shadow:0 4px 14px rgba(0,158,142,0.2);">
+                      See the ROI Calculator &rarr;
+                    </a>
+                  </td>
+                </tr>
+              </table>
+                `;
+            }
+
+            else if (templateName === 'camp_e') {
+                bodyHTMLContent = `
+              <!-- Salutation -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 20px 0;line-height:1.7;">
+                Hi <strong>${firstName}</strong>,
+              </p>
+
+              <!-- HOOK -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 20px 0;line-height:1.7;">
+                Most DME owners tell me that if they could just recover <strong>5 patients a month</strong> who would have otherwise hung up on a busy signal, the system would more than pay for itself.
+              </p>
+
+              <!-- SOLUTION -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 24px 0;line-height:1.7;">
+                DMEDesk handles <strong>unlimited parallel calls</strong> during your peak hours, meaning zero hold times and zero missed intake opportunities. It's HIPAA-compliant, integrates with your PMS, and comes with a <strong>30-day money-back guarantee</strong>.
+              </p>
+
+              <!-- CTA LINE -->
+              <p class="body-text" style="font-family:'Inter',Arial,sans-serif;font-size:16px;color:#1E293B;margin:0 0 32px 0;line-height:1.7;">
+                Can we jump on a 20-minute screen share to see if this fits your current workflow?
+              </p>
+
+              <!-- CTA BUTTON -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <td style="border-radius:12px;background:#009E8E;">
+                    <a href="${ctaLink}" class="cta-btn" style="display:inline-block;font-family:'Plus Jakarta Sans',Arial,sans-serif;font-size:16px;font-weight:700;color:#ffffff;padding:16px 36px;text-decoration:none;border-radius:12px;box-shadow:0 4px 14px rgba(0,158,142,0.2);">
+                      Book a 20-Min Demo &rarr;
                     </a>
                   </td>
                 </tr>
